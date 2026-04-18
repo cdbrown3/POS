@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace POS.AvaloniaUI
+namespace AvaloniaUI
 {
     public partial class App : Application
     {
@@ -15,7 +15,7 @@ namespace POS.AvaloniaUI
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow();
+                desktop.MainWindow = new PaymentDialogView();
             }
 
             base.OnFrameworkInitializationCompleted();
