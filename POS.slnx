@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Backend/Backend.csproj" Id="63ac7c3e-00b7-4f9f-8dc9-e3bee8ca270f" />
+  <Project Path="POS.AvaloniaUI/AvaloniaUI.csproj" />
+  <Project Path="WinFormsUI/WinFormsUI.csproj" Id="bea21f9f-d331-4f8f-9474-7a997034dc35" />
+</Solution>
