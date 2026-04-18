@@ -26,4 +26,10 @@
   <ItemGroup>
     <Folder Include="resources\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LoginWindow.axaml.cs">
+      <DependentUpon>LoginWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
