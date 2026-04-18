@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaUI.PaymentDialogView"
-        Title="PaymentDialogView">
+        Title="Process Payment">
     <!-- Store all entries in a stack panel-->
     <StackPanel Background="{DynamicResource LightBackgroundColor}">
 		
