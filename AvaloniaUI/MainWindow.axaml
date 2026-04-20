@@ -8,8 +8,42 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaUI.MainWindow"
         x:DataType="local:MainWindow"
-        Title="AvaloniaUI">
+        Title="POS">
 
+    <!-- Main Window will be the hub hub for all pages to fill...
+        Left side: A white/off white banner will contain the Selected User/Employee and give options for their information...
+        Right side: will be split between two sections...
+            The top section will display a message like logged in as user and give contain the exit icon...
+            The botton section will contain the actual information that all forms build on such as list of employees, list of customers, list of items to order...
+    -->
 
-    <TextBlock Text="{Binding WelcomeText}"></TextBlock>
+    <Grid ShowGridLines="True">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <!-- Using a Grid for column 1 of the outer Grid to have precise control over placement of elements-->
+
+        <Grid Grid.Column="1" ShowGridLines="True">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+
+            <!-- Using a grid for the 0th row of the inner Grid to be able to control the placement of the text and exit button/icon-->
+            <Grid Grid.Row="0" ShowGridLines="True">
+                <Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="50"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="{Binding GetLoggedInAsMessage}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+
+            <!-- Area where all of the actual content will go --> 
+            <Border Grid.Row="1" Margin="20" Background="Blue" CornerRadius="20"></Border>
+        </Grid>
+    </Grid>
 </Window>

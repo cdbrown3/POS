@@ -23,5 +23,10 @@ namespace AvaloniaUI
         {
             get { return Model.getName() + " " + Controller.getName(); }
         }
+
+        public String GetLoggedInAsMessage
+        {
+            get { return "Logged in as Carson"; }
+        }
     }
 }

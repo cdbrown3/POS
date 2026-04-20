@@ -20,3 +20,8 @@ namespace AvaloniaUI
                 .LogToTrace();
     }
 }
+
+//NOTE: After the initial login Window, the user will be brought to a main window...
+//This will be the shell for all other views.
+//This is acheived by making those views into UserControls which is what enables you to
+//have multiple pages within the same app without calling duplicate windows, etc...
