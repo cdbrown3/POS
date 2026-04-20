@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace POS.AvaloniaUI
+namespace AvaloniaUI
 {
     internal class Program
     {

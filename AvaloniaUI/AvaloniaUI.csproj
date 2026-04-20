@@ -22,4 +22,16 @@
   <ItemGroup>
     <ProjectReference Include="..\Backend\Backend.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LoginWindow.axaml.cs">
+      <DependentUpon>LoginWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="resources\app_icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
