@@ -4,4 +4,5 @@
     <SolidColorBrush x:Key="InvalidInputColor" Color="#963939"></SolidColorBrush>
     <SolidColorBrush x:Key="NavyBackgroundColor" Color="#1c1e2e"></SolidColorBrush>
     <SolidColorBrush x:Key="LightBackgroundColor" Color="#eae8e9"></SolidColorBrush>
+    <SolidColorBrush x:Key="DarkButtonColor" Color="#815436"></SolidColorBrush>
 </ResourceDictionary>

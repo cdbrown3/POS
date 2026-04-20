@@ -42,13 +42,17 @@
             <!-- Using a grid for the 0th row of the inner Grid to be able to control the placement of the text and exit button/icon-->
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
 					<ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="50"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="{Binding GetLoggedInAsMessage}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <!-- Display time in the first column -->
+                <TextBlock Grid.Column="0" x:Name="TimeTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"></TextBlock>
+
+                <TextBlock Grid.Column="1" Text="{Binding GetLoggedInAsMessage}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 <!-- Button for user to click to leave the page and go back to log in screen-->
-                <Button Click="OnButtonExitClick" Grid.Column="1" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
+                <Button Click="OnButtonExitClick" Grid.Column="2" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
                     <!-- Add leaving icon to the button-->
                     <Image Source="avares://AvaloniaUI/resources/exit_icon.png" Width="50" Height="50"></Image>
                 </Button>

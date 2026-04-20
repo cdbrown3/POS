@@ -3,7 +3,39 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="AvaloniaUI.Window1"
-        Title="Window1">
-  Welcome to Avalonia!
+        x:Class="AvaloniaUI.LoginWindow"
+        Title="POS"
+        Background="{DynamicResource NavyBackgroundColor}"
+        Width="1300" Height="600"
+        MinWidth="1300" MinHeight="600">
+    
+    <Grid>
+	    <Grid.RowDefinitions>
+			<RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+  
+        <!-- All Login Information will be in a stack pannel in the center of the page...-->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+	        <Label Content="Login" Foreground="White" HorizontalAlignment="Center"></Label>
+            <TextBox x:Name="passwordTextBox" PasswordChar="*" Classes="revealPasswordButton" Watermark="Enter A Password" HorizontalAlignment="Center"></TextBox>
+            <Grid>
+			    <Grid.ColumnDefinitions>
+				    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <!-- Manager Login Button -->
+                <Button Grid.Column="0" x:Name="managerButton" Classes="LoginButton" Content="Manager" Click="ManagerLoginButton_Click"></Button>
+                <!-- Employee Login Button -->
+                <Button Grid.Column="1" x:Name="employeeButton" Classes="LoginButton" Content="Employee" Click="EmployeeLoginButton_Click"></Button>
+            </Grid>
+        </StackPanel>
+
+        <!-- Exit button -->
+        <Button Grid.Row="1" Click="OnButtonExitClick" Width="50" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
+            <!-- Add leaving icon to the button-->
+            <Image Source="avares://AvaloniaUI/resources/exit_icon.png" Width="50" Height="50"></Image>
+        </Button>
+    </Grid>
 </Window>

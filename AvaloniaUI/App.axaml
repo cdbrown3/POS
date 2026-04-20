@@ -6,12 +6,13 @@
     <Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceInclude Source="/resources/Colors.axaml"></ResourceInclude>
+				<ResourceInclude Source="avares://AvaloniaUI/resources/Colors.axaml"></ResourceInclude>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="avares://AvaloniaUI/resources/Styles.axaml"></StyleInclude>
     </Application.Styles>
 </Application>

@@ -32,6 +32,19 @@
   <ItemGroup>
 	<AvaloniaResource Include="resources\**"></AvaloniaResource>
   </ItemGroup>
+  
+  <ItemGroup>
+    <AvaloniaXaml Remove="resources\Styles.axaml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <AvaloniaResource Update="resources\Styles.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+    <AvaloniaResource Update="resources\Stylesaxaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+  </ItemGroup>
 
   <ItemGroup>
     <None Update="resources\add_user_icon.png">
