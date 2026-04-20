@@ -8,8 +8,11 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaUI.MainWindow"
         x:DataType="local:MainWindow"
-        Title="POS">
-
+        Title="POS"
+        Background="{DynamicResource NavyBackgroundColor}"
+        Width="1300" Height="600"
+        MinWidth="1300" MinHeight="600">
+        
     <!-- Main Window will be the hub hub for all pages to fill...
         Left side: A white/off white banner will contain the Selected User/Employee and give options for their information...
         Right side: will be split between two sections...
@@ -17,15 +20,19 @@
             The botton section will contain the actual information that all forms build on such as list of employees, list of customers, list of items to order...
     -->
 
-    <Grid ShowGridLines="True">
+    <Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <!-- Using a Grid for column 1 of the outer Grid to have precise control over placement of elements-->
+        <!-- This will be where all data is displayed for active users/exmployees-->
+        <StackPanel Grid.Column="0" Background="{DynamicResource LightBackgroundColor}">
+            <TextBlock x:Name="WindowSizeTextBlock" Text="Selected User: " Foreground="Black"></TextBlock>
+        </StackPanel>
 
-        <Grid Grid.Column="1" ShowGridLines="True">
+        <!-- Using a Grid for column 1 of the outer Grid to have precise control over placement of elements-->
+        <Grid Grid.Column="1">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="50"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -33,17 +40,22 @@
             
 
             <!-- Using a grid for the 0th row of the inner Grid to be able to control the placement of the text and exit button/icon-->
-            <Grid Grid.Row="0" ShowGridLines="True">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="50"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="{Binding GetLoggedInAsMessage}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <!-- Button for user to click to leave the page and go back to log in screen-->
+                <Button Click="OnButtonExitClick" Grid.Column="1" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
+                    <!-- Add leaving icon to the button-->
+                    <Image Source="avares://AvaloniaUI/resources/exit_icon.png" Width="50" Height="50"></Image>
+                </Button>
             </Grid>
 
             <!-- Area where all of the actual content will go --> 
-            <Border Grid.Row="1" Margin="20" Background="Blue" CornerRadius="20"></Border>
+            <Border Grid.Row="1" Margin="30" Background="{DynamicResource LightBackgroundColor}" CornerRadius="20"></Border>
         </Grid>
     </Grid>
 </Window>

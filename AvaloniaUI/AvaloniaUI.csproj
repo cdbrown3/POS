@@ -28,9 +28,19 @@
       <DependentUpon>LoginWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
+  
+  <ItemGroup>
+	<AvaloniaResource Include="resources\**"></AvaloniaResource>
+  </ItemGroup>
 
   <ItemGroup>
+    <None Update="resources\add_user_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="resources\app_icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\exit_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

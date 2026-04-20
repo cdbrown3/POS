@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace AvaloniaUI;
 
-public partial class PaymentDialogView : MainWindow
+public partial class PaymentDialogView : Window
 {
     public PaymentDialogView()
     {
