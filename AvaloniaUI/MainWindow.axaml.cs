@@ -13,13 +13,15 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
+using Backend.Models;
+
 namespace AvaloniaUI
 {
     //all windows will inherit MainWindow
     public partial class MainWindow : Window
     {
         //default to employee
-        private Backend.Models.UserRoles role = Backend.Models.UserRoles.Employee;
+        private UserRoles role;
         
 
         //Temporary variables
@@ -40,53 +42,38 @@ namespace AvaloniaUI
             IntializeTimer();
         }
 
-        public MainWindow(Backend.Models.UserRoles roleAtLogin) : this()
+        public MainWindow(UserRoles roleAtLogin) : this()
         {
             //set the role (specifically for manager
             role = roleAtLogin;
+
+            //open the pages for the content zones
+            LoadPagesByRole();
+
+            //set logged in as message 
+            SetLoggedInAsMessage();
         }
 
         //When the exit button is pressed this method creates a new login windows and closes the current main window.
         private void OnButtonExitClick(object? sender, RoutedEventArgs e)
         {
             //Go back to the login Screen
-            //Create a new loginWindow since the old one was closed
-            LoginWindow loginView = new LoginWindow();
-
-            //preserve size, state, and position
-            loginView.Width = this.Bounds.Width;
-            loginView.Height = this.Bounds.Height;
-            loginView.Position = this.Position;
-            loginView.WindowState = this.WindowState;
-
-            //check if we are running on a desktop...
-            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                desktop.MainWindow = loginView;
-            }
-
-            //show login and close this main window view
-            loginView.Show();
-            this.Close();
+            CreateLoginWindow();
         }
-
-        public String GetLoggedInAsMessage
+        
+        public void SetLoggedInAsMessage()
         {
-            get 
+            if (role == UserRoles.Manager)
             {
-                if (role == Backend.Models.UserRoles.Manager)
-                {
-                    return "Hello " + _name + ". You are logged in as a Manager with elevated privelidges.";
-                }
-                else if (role == Backend.Models.UserRoles.Employee)
-                {
-                    return "Hello " + _name + ". You are logged in as an employee.";
-
-                }
-                else
-                {
-                    return "Error: Could not identify user logged in... Automatically loggin out!";
-                }
+                loggedInMessageTextBox.Text = "Hello " + _name + ". You are logged in as a Manager with elevated privelidges.";
+            }
+            else if (role == UserRoles.Employee)
+            {
+                loggedInMessageTextBox.Text = "Hello " + _name + ". You are logged in as an employee.";
+            }
+            else
+            {
+                loggedInMessageTextBox.Text = "Error: Could not identify user logged in... Automatically loggin out!";
             }
         }
 
@@ -106,6 +93,47 @@ namespace AvaloniaUI
             _clockTimer.Interval = TimeSpan.FromSeconds(1);
             _clockTimer.Tick += ClockTimer_Tick;
             _clockTimer.Start();
+        }
+
+        private void LoadPagesByRole()
+        {
+            if (role == Backend.Models.UserRoles.Manager)
+            {
+                MainContent.Content = new ManagerView();
+                SelectedUserContent.Content = new SelectedEmployeeView();
+            }
+            else if (role == Backend.Models.UserRoles.Employee)
+            {
+                MainContent.Content = new EmployeeView();
+                SelectedUserContent.Content = new SelectedCustomerView();
+            }
+            else
+            {
+                //go back to login if no role is assigned but this should never happen
+                CreateLoginWindow();
+            }
+        }
+
+        private void CreateLoginWindow()
+        {
+            //Create a new loginWindow since the old one was closed
+            LoginWindow loginView = new LoginWindow();
+
+            //preserve size, state, and position
+            loginView.Width = this.Bounds.Width;
+            loginView.Height = this.Bounds.Height;
+            loginView.Position = this.Position;
+            loginView.WindowState = this.WindowState;
+
+            //check if we are running on a desktop...
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = loginView;
+            }
+
+            //show login and close this main window view
+            loginView.Show();
+            this.Close();
         }
     }
 }
