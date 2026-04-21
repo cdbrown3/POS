@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Backend.Model {
-    public class OrderInfo {
-        // -variables:
+    public class OrderInfo : IExportable {
+        // variables:
 
         // static counter used to generate UNIQUE IDs
         private static int Count = 0;
@@ -15,11 +15,11 @@ namespace Backend.Model {
         private string OrderID;                   // O00001 format
         private CustomerInfo Customer;            // customer who placed the order
         private EmployeeInfo Employee;            // employee handling the order
-        private List<MenuItemInfo> Items;         // items in the order
+        private List<OrderItemInfo> Items;         // items in the order
         private double Subtotal;                  // total before tax
         private double Tax;                       // tax amount
         private double Total;                     // final total after tax
-        private string Status;                    // New, Paid, Cancelled, etc.
+        private string Status;                    // new, paid, cancelled, etc.
 
         // constructors
         // call setters for validation
@@ -35,7 +35,7 @@ namespace Backend.Model {
             SetStatus(Status);
 
             // start with an empty list of items
-            this.Items = new List<MenuItemInfo>();
+            this.Items = new List<OrderItemInfo>();
 
             // default totals
             this.Subtotal = 0;
@@ -60,7 +60,7 @@ namespace Backend.Model {
             return Employee;
         }
 
-        public List<MenuItemInfo> GetItems() {
+        public List<OrderItemInfo> GetItems() {
             return Items;
         }
 
@@ -129,7 +129,7 @@ namespace Backend.Model {
         // helpers
 
         // add one menu item to the order
-        public void AddItem(MenuItemInfo item) {
+        public void AddItem(OrderItemInfo item) {
             if (item == null) {
                 throw new ArgumentException("Item cannot be null!");
             }
@@ -143,7 +143,7 @@ namespace Backend.Model {
         }
 
         // remove one menu item from the order
-        public void RemoveItem(MenuItemInfo item) {
+        public void RemoveItem(OrderItemInfo item) {
             if (item == null) {
                 throw new ArgumentException("Item cannot be null!");
             }
@@ -160,8 +160,8 @@ namespace Backend.Model {
         public void CalculateSubtotal() {
             Subtotal = 0;
 
-            foreach (MenuItemInfo item in Items) {
-                Subtotal += item.GetPrice();
+            foreach (OrderItemInfo item in Items) {
+                Subtotal += item.GetLineTotal();
             }
         }
 
@@ -190,8 +190,8 @@ namespace Backend.Model {
 
             output += "Items: ";
 
-            foreach (MenuItemInfo item in Items) {
-                output += item.GetName() + " ";
+            foreach (OrderItemInfo item in Items) {
+                output += item.GetMenuItem().GetName() + " ";
             }
 
             output += "\n";
@@ -213,8 +213,8 @@ namespace Backend.Model {
             output += Total + ",";
 
             // add all item IDs separated by |
-            foreach (MenuItemInfo item in Items) {
-                output += item.GetItemID() + "|";
+            foreach (OrderItemInfo item in Items) {
+                output += item.GetOrderItemID() + "|";
             }
 
             return output;

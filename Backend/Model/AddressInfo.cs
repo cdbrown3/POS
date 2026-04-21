@@ -1,0 +1,145 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace Backend.Model {
+        public class AddressInfo : IExportable {
+            // variables:
+
+            private string Street;
+            private string City;
+            private string State;
+            private string StateAbbreviation;
+            private string ZipCode;
+
+            // state list from CSV
+
+            private static List<(string Name, string Abbrev)> States = LoadStates("states.csv");
+
+            private static List<(string, string)> LoadStates(string filePath) {
+                List<(string, string)> results = new List<(string, string)>();
+
+                if (!File.Exists(filePath)) {
+                    throw new Exception("states.csv not found");
+                }
+
+                string[] lines = File.ReadAllLines(filePath);
+
+                for (int i = 1; i < lines.Length; i++) // skip header
+                {
+                    string[] parts = lines[i].Split(',');
+
+                    if (parts.Length == 2) {
+                        string name = parts[0].Trim();
+                        string abbrev = parts[1].Trim();
+
+                        results.Add((name, abbrev));
+                    }
+                }
+
+                return results;
+            }
+
+            // constructors
+
+            public AddressInfo(string Street, string City, string StateAbbreviation, string ZipCode) {
+                SetStreet(Street);
+                SetCity(City);
+                SetStateFromAbbreviation(StateAbbreviation);
+                SetZipCode(ZipCode);
+            }
+
+            // getters
+
+            public string GetStreet() { 
+                return Street; 
+            }
+            public string GetCity() { 
+                return City; 
+            }
+            public string GetState() { 
+                return State; 
+            }
+            public string GetStateAbbreviation() { 
+                return StateAbbreviation; 
+            }
+            public string GetZipCode() { 
+                return ZipCode; 
+            }
+
+            // setters
+
+            public void SetStreet(string value) {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("Street cannot be empty!");
+
+                bool hasNumber = false;
+
+                foreach (char c in value) { // must have a #
+                    if (char.IsDigit(c)) {
+                        hasNumber = true;
+                    }
+                }
+
+                if (!hasNumber)
+                    throw new ArgumentException("Street must contain a number!");
+
+                Street = value;
+            }
+
+            public void SetCity(string value) {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("City cannot be empty!");
+
+                foreach (char c in value) {
+                    if (!char.IsLetter(c) && c != ' ') { // only letters and spaces
+                        throw new ArgumentException("City can only contain letters and spaces");
+                    }
+                }
+
+                City = value;
+            }
+
+            public void SetStateFromAbbreviation(string abbrev) {
+                foreach (var state in States) {
+                    if (state.Abbrev.Equals(abbrev, StringComparison.OrdinalIgnoreCase)) {
+                        State = state.Name;
+                        StateAbbreviation = state.Abbrev;
+                        return;
+                    }
+                }
+
+                throw new ArgumentException("Invalid state abbreviation");
+            }
+
+            public void SetZipCode(string value) {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("Zip cannot be empty!");
+
+                if (value.Length != 5)
+                    throw new ArgumentException("Zip must be 5 digits!");
+
+                foreach (char c in value) {
+                    if (!char.IsDigit(c))
+                        throw new ArgumentException("Zip must be numbers only!");
+                }
+
+                ZipCode = value;
+            }
+
+            // ToString
+
+            public override string ToString() {
+                return Street + "\n" + City + ", " + StateAbbreviation + " " + ZipCode;
+            }
+
+            // ToCSV - storage
+
+            public string ToCSV() {
+                return Street + "," + City + "," + State + "," + StateAbbreviation + "," + ZipCode;
+            }
+        }
+    }

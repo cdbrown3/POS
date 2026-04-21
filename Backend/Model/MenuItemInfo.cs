@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Backend.Model {
-    public class MenuItemInfo {
+    public class MenuItemInfo : IExportable {
 
         // variables:
 

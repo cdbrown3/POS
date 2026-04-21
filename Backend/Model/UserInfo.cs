@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Backend.Model {
-    public class UserInfo {  // public so other classes can inherit and controller
+    public class UserInfo : IExportable {  // public so other classes can inherit and controller
     
         // variables:
 
