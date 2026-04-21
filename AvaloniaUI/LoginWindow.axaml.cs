@@ -23,12 +23,14 @@ public partial class LoginWindow : Window
 
     private void ManagerLoginButton_Click(object? sender, RoutedEventArgs e)
     {
-        CreateMainFromLogin(true);
+        Backend.Models.UserRoles userRole = Backend.Models.UserRoles.Manager;
+        CreateMainFromLogin(userRole);
     }
 
     private void EmployeeLoginButton_Click(object? sender, RoutedEventArgs e)
     {
-        CreateMainFromLogin(false);
+        Backend.Models.UserRoles userRole = Backend.Models.UserRoles.Employee;
+        CreateMainFromLogin(userRole);
     }
 
     private bool ValidatePasswordEntry()
@@ -47,7 +49,7 @@ public partial class LoginWindow : Window
         return retData;
     }
 
-    private void CreateMainFromLogin(Boolean isManager)
+    private void CreateMainFromLogin(Backend.Models.UserRoles role)
     {
         //reset color choice once the user enters a proper value
         passwordTextBox.ClearValue(TextBox.BackgroundProperty);
@@ -64,9 +66,8 @@ public partial class LoginWindow : Window
             //successfully validated password
 
             //if valid password entry then open main window
-            //consider passing in a enum for if you are manager or regular employee... maybe even just a bool.
 
-            MainWindow mainView = new MainWindow();
+            MainWindow mainView = new MainWindow(role);
 
             //copy the windows current size and position on the screen and window state like fullscreen etc...
             mainView.Width = this.Bounds.Width;

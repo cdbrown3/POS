@@ -18,17 +18,22 @@ namespace AvaloniaUI
     //all windows will inherit MainWindow
     public partial class MainWindow : Window
     {
+        //default to employee
+        private Backend.Models.UserRoles role = Backend.Models.UserRoles.Employee;
+        
 
         //Temporary variables
-        private Boolean _manager = false;
         private Boolean _employee = true;
         private String _name = "Carson";
 
         //System Time in top bar
         private DispatcherTimer _clockTimer;
 
-        public MainWindow()
+        public MainWindow(Backend.Models.UserRoles roleAtLogin)
         {
+            //set the role (specifically for manager
+            role = roleAtLogin;
+
             InitializeComponent();
             DataContext = this;
 
@@ -67,11 +72,11 @@ namespace AvaloniaUI
         {
             get 
             {
-                if (_manager)
+                if (role == Backend.Models.UserRoles.Manager)
                 {
                     return "Hello " + _name + ". You are logged in as a Manager with elevated privelidges.";
                 }
-                else if (_employee)
+                else if (role == Backend.Models.UserRoles.Employee)
                 {
                     return "Hello " + _name + ". You are logged in as an employee.";
 
