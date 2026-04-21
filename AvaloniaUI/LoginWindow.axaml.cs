@@ -8,7 +8,7 @@ using System;
 
 namespace AvaloniaUI;
 
-public partial class LoginWindow : Window
+public partial class LoginWindow : BaseWindow
 {
     public LoginWindow()
     {

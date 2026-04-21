@@ -5,37 +5,92 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaUI.LoginWindow"
         Title="POS"
-        Background="{DynamicResource NavyBackgroundColor}"
-        Width="1300" Height="600"
-        MinWidth="1300" MinHeight="600">
+        Background="{DynamicResource NavyBackgroundColor}">
     
     <Grid>
 	    <Grid.RowDefinitions>
 			<RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
   
         <!-- All Login Information will be in a stack pannel in the center of the page...-->
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-	        <Label Content="Login" Foreground="White" HorizontalAlignment="Center"></Label>
-            <TextBox x:Name="passwordTextBox" PasswordChar="*" Classes="revealPasswordButton" Watermark="Enter A Password" HorizontalAlignment="Center"></TextBox>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+	        <Label Content="Login" 
+                   Foreground="White" 
+                   HorizontalAlignment="Center"
+                   FontFamily="{DynamicResource MainFont}"
+                   FontWeight="SemiBold"
+                   FontSize="36">
+            </Label>
+            
             <Grid>
 			    <Grid.ColumnDefinitions>
 				    <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+				    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBox 
+                     Grid.Row="0"
+                     Grid.ColumnSpan="2"
+                     x:Name="passwordTextBox" 
+                     PasswordChar="*" 
+                     Classes="revealPasswordButton" 
+                     Watermark="Enter A Password" 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="24"
+                     Margin="2">
+                </TextBox>
 
                 <!-- Manager Login Button -->
-                <Button Grid.Column="0" x:Name="managerButton" Classes="LoginButton" Content="Manager" Click="ManagerLoginButton_Click"></Button>
+                <Button Grid.Column="0"
+                        Grid.Row="1"
+                        x:Name="managerButton" 
+                        Classes="LoginButton" 
+                        Content="Manager" 
+                        Click="ManagerLoginButton_Click"
+                        FontFamily="{DynamicResource MainFont}"
+                        FontWeight="Regular"
+                        FontSize="24"
+                        Margin="2">
+                </Button>
                 <!-- Employee Login Button -->
-                <Button Grid.Column="1" x:Name="employeeButton" Classes="LoginButton" Content="Employee" Click="EmployeeLoginButton_Click"></Button>
+                <Button Grid.Column="1"
+                        Grid.Row="1"
+                        x:Name="employeeButton" 
+                        Classes="LoginButton" 
+                        Content="Employee" 
+                        Click="EmployeeLoginButton_Click"
+                        FontFamily="{DynamicResource MainFont}"
+                        FontWeight="Regular"
+                        FontSize="24"
+                        Margin="2">
+                </Button>
             </Grid>
         </StackPanel>
 
         <!-- Exit button -->
-        <Button Grid.Row="1" Click="OnButtonExitClick" Width="50" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
+        <Button Grid.Row="1" 
+                Click="OnButtonExitClick" 
+                Width="100" 
+                Height="100" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Center" 
+                Background="Transparent" 
+                BorderBrush="Transparent">
             <!-- Add leaving icon to the button-->
-            <Image Source="avares://AvaloniaUI/Resources/Icons/exit_icon.png" Width="50" Height="50"></Image>
+            <Image Source="avares://AvaloniaUI/Resources/Icons/exit_icon.png" 
+                   Width="150" 
+                   Height="150"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center">
+            </Image>
         </Button>
     </Grid>
 </Window>

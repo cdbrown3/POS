@@ -17,8 +17,8 @@ using Backend.Models;
 
 namespace AvaloniaUI
 {
-    //all windows will inherit MainWindow
-    public partial class MainWindow : Window
+    //Both login window and main window inherit base window. It sets default size and gives icons.
+    public partial class MainWindow : BaseWindow
     {
         //default to employee
         private UserRoles role;
@@ -35,8 +35,6 @@ namespace AvaloniaUI
         {
             InitializeComponent();
             DataContext = this;
-
-            Icon = new WindowIcon("Resources/Icons/app_icon.ico");
 
             //sets up the timer for displaying time to the user.
             IntializeTimer();

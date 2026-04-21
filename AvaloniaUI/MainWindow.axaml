@@ -9,9 +9,7 @@
         x:Class="AvaloniaUI.MainWindow"
         x:DataType="local:MainWindow"
         Title="POS"
-        Background="{DynamicResource NavyBackgroundColor}"
-        Width="1300" Height="600"
-        MinWidth="1300" MinHeight="600">
+        Background="{DynamicResource NavyBackgroundColor}">
         
     <!-- Main Window will be the hub hub for all pages to fill...
         Left side: A white/off white banner will contain the Selected User/Employee and give options for their information...
@@ -19,7 +17,6 @@
             The top section will display a message like logged in as user and give contain the exit icon...
             The botton section will contain the actual information that all forms build on such as list of employees, list of customers, list of items to order...
     -->
-
     <Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"></ColumnDefinition>
@@ -27,7 +24,10 @@
         </Grid.ColumnDefinitions>
 
         <!-- This is where all of the selected user content windows/pages will appear-->
-        <ContentControl Grid.Column="0" x:Name="SelectedUserContent" Background="{DynamicResource LightBackgroundColor}"></ContentControl>
+        <ContentControl Grid.Column="0" 
+                        x:Name="SelectedUserContent" 
+                        Background="{DynamicResource LightBackgroundColor}">
+        </ContentControl>
 
         <!-- Using a Grid for column 1 of the outer Grid to have precise control over placement of elements-->
         <Grid Grid.Column="1">
@@ -46,19 +46,44 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Display time in the first column -->
-                <TextBlock Grid.Column="0" x:Name="TimeTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"></TextBlock>
+                <TextBlock Grid.Column="0" 
+                           x:Name="TimeTextBox" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           Foreground="White">
+                </TextBlock>
 
-                <TextBlock Grid.Column="1" x:Name="loggedInMessageTextBox" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Column="1" 
+                           x:Name="loggedInMessageTextBox" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"
+                           FontSize="20">
+                </TextBlock>
                 <!-- Button for user to click to leave the page and go back to log in screen-->
-                <Button Click="OnButtonExitClick" Grid.Column="2" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
+                <Button Click="OnButtonExitClick" 
+                        Grid.Column="2" 
+                        Width="50" 
+                        Height="50" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        Background="Transparent" 
+                        BorderBrush="Transparent">
                     <!-- Add leaving icon to the button-->
-                    <Image Source="avares://AvaloniaUI/Resources/Icons/exit_icon.png" Width="50" Height="50"></Image>
+                    <Image Source="avares://AvaloniaUI/Resources/Icons/exit_icon.png" 
+                           Width="50" 
+                           Height="50">
+                    </Image>
                 </Button>
             </Grid>
 
             <!-- Area where all of the actual content will go --> 
-            <Border Grid.Row="1" Margin="30" Background="{DynamicResource LightBackgroundColor}" CornerRadius="20">
-                <ContentControl x:Name="MainContent"></ContentControl>
+            <Border Grid.Row="1" 
+                    Margin="30" 
+                    Background="{DynamicResource LightBackgroundColor}" 
+                    CornerRadius="20">
+                <ContentControl 
+                    x:Name="MainContent">
+                </ContentControl>
             </Border>
         </Grid>
     </Grid>
