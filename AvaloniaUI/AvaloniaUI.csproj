@@ -30,30 +30,30 @@
   </ItemGroup>
   
   <ItemGroup>
-	<AvaloniaResource Include="resources\**"></AvaloniaResource>
+	<AvaloniaResource Include="Resources\**"></AvaloniaResource>
   </ItemGroup>
   
   <ItemGroup>
-    <AvaloniaXaml Remove="resources\Styles.axaml" />
+    <AvaloniaXaml Remove="Resources\Boiler\Styles.axaml" />
   </ItemGroup>
   
   <ItemGroup>
-    <AvaloniaResource Update="resources\Styles.axaml">
+    <AvaloniaResource Update="Resources\Boiler\Styles.axaml">
       <SubType>Designer</SubType>
     </AvaloniaResource>
-    <AvaloniaResource Update="resources\Stylesaxaml">
+    <AvaloniaResource Update="Resources\Boiler\Styles.axaml">
       <SubType>Designer</SubType>
     </AvaloniaResource>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="resources\add_user_icon.png">
+    <None Update="Resources\Icons\add_user_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="resources\app_icon.ico">
+    <None Update="Resources\Icons\app_icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="resources\exit_icon.png">
+    <None Update="Resources\Icons\exit_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

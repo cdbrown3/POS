@@ -54,7 +54,7 @@
                 <!-- Button for user to click to leave the page and go back to log in screen-->
                 <Button Click="OnButtonExitClick" Grid.Column="2" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
                     <!-- Add leaving icon to the button-->
-                    <Image Source="avares://AvaloniaUI/resources/exit_icon.png" Width="50" Height="50"></Image>
+                    <Image Source="avares://AvaloniaUI/Resources/Icons/exit_icon.png" Width="50" Height="50"></Image>
                 </Button>
             </Grid>
 

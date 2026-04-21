@@ -37,7 +37,7 @@ namespace AvaloniaUI
             InitializeComponent();
             DataContext = this;
 
-            Icon = new WindowIcon("resources/app_icon.ico");
+            Icon = new WindowIcon("Resources/Icons/app_icon.ico");
             
             //sets up the timer for displaying time to the user.
             IntializeTimer();
