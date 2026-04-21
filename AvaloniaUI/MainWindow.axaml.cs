@@ -29,20 +29,22 @@ namespace AvaloniaUI
         //System Time in top bar
         private DispatcherTimer _clockTimer;
 
-        public MainWindow(Backend.Models.UserRoles roleAtLogin)
+        public MainWindow()
         {
-            //set the role (specifically for manager
-            role = roleAtLogin;
-
             InitializeComponent();
             DataContext = this;
 
             Icon = new WindowIcon("Resources/Icons/app_icon.ico");
-            
+
             //sets up the timer for displaying time to the user.
             IntializeTimer();
         }
 
+        public MainWindow(Backend.Models.UserRoles roleAtLogin) : this()
+        {
+            //set the role (specifically for manager
+            role = roleAtLogin;
+        }
 
         //When the exit button is pressed this method creates a new login windows and closes the current main window.
         private void OnButtonExitClick(object? sender, RoutedEventArgs e)

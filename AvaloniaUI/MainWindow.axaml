@@ -26,10 +26,8 @@
             <ColumnDefinition Width="4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <!-- This will be where all data is displayed for active users/exmployees-->
-        <StackPanel Grid.Column="0" Background="{DynamicResource LightBackgroundColor}">
-            <TextBlock x:Name="WindowSizeTextBlock" Text="Selected User: " Foreground="Black"></TextBlock>
-        </StackPanel>
+        <!-- This is where all of the selected user content windows/pages will appear-->
+        <ContentControl Grid.Column="0" x:Name="SelectedUserContent"></ContentControl>
 
         <!-- Using a Grid for column 1 of the outer Grid to have precise control over placement of elements-->
         <Grid Grid.Column="1">
@@ -59,7 +57,9 @@
             </Grid>
 
             <!-- Area where all of the actual content will go --> 
-            <Border Grid.Row="1" Margin="30" Background="{DynamicResource LightBackgroundColor}" CornerRadius="20"></Border>
+            <Border Grid.Row="1" Margin="30" Background="{DynamicResource LightBackgroundColor}" CornerRadius="20">
+                <ContentControl x:Name="MainContent"></ContentControl>
+            </Border>
         </Grid>
     </Grid>
 </Window>
