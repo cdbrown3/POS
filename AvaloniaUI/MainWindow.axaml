@@ -23,10 +23,20 @@
             <ColumnDefinition Width="4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
+        <!-- Display time in the lower right -->
+                <TextBlock Grid.Column="1" 
+                           x:Name="TimeTextBox" 
+                           HorizontalAlignment="Right" 
+                           VerticalAlignment="Bottom" 
+                           Foreground="White"
+                           Margin="0,0,30,5">
+                </TextBlock>
+
         <!-- This is where all of the selected user content windows/pages will appear-->
         <ContentControl Grid.Column="0" 
                         x:Name="SelectedUserContent" 
-                        Background="{DynamicResource SidePanelGradient}">
+                        Background="{DynamicResource SidePanelGradient}"
+                        CornerRadius="0,20,20,0">
         </ContentControl>
 
         <!-- Using a Grid for column 1 of the outer Grid to have precise control over placement of elements-->
@@ -44,15 +54,6 @@
 					<ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="50"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-
-                <!-- Display time in the first column -->
-                <TextBlock Grid.Column="0" 
-                           x:Name="TimeTextBox" 
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Center" 
-                           Foreground="White"
-                           Margin="5">
-                </TextBlock>
 
                 <TextBlock Grid.Column="1" 
                            x:Name="loggedInMessageTextBox" 

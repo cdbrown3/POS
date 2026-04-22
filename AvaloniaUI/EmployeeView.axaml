@@ -2,11 +2,26 @@
              xmlns:collections="using:System.Collections"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:emit="using:System.Reflection.Emit"
+             xmlns:local="using:AvaloniaUI"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaUI.EmployeeView">
+             x:Class="AvaloniaUI.EmployeeView"
+             x:DataType="local:EmployeeView">
 
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-	    <TextBlock Text="Employee View Loaded" Foreground="Black"></TextBlock>
+    <StackPanel>
+	    <TextBlock Text="Customers" Foreground="Black"></TextBlock>
+        <ListBox x:Name="CustomersListBox"
+                 ItemsSource="{Binding Customers}">
+            <ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Margin="10">
+                        <TextBlock Text="{Binding Fullname}" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding Phone}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+			
+        </ListBox>
     </StackPanel>
 </UserControl>
