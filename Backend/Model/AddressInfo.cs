@@ -17,23 +17,23 @@ namespace Backend.Model {
 
             // state list from CSV
 
-            private static List<(string Name, string Abbrev)> States = LoadStates("states.csv");
+            private static List<(string Name, string Abbrev)> States = LoadStates("states.csv"); // loaded once
 
-            private static List<(string, string)> LoadStates(string filePath) {
-                List<(string, string)> results = new List<(string, string)>();
+            private static List<(string, string)> LoadStates(string filePath) { // return list of pairs
+                List<(string, string)> results = new List<(string, string)>(); // creates an empty list to store state and abbrevation
 
-                if (!File.Exists(filePath)) {
+                if (!File.Exists(filePath)) { // check if it exists
                     throw new Exception("states.csv not found");
                 }
 
-                string[] lines = File.ReadAllLines(filePath);
+                string[] lines = File.ReadAllLines(filePath); // read all lines in the file
 
-                for (int i = 1; i < lines.Length; i++) // skip header
+                for (int i = 1; i < lines.Length; i++) // skip header and then go through each line
                 {
-                    string[] parts = lines[i].Split(',');
+                    string[] parts = lines[i].Split(','); // split the line wherever there is a comma
 
-                    if (parts.Length == 2) {
-                        string name = parts[0].Trim();
+                    if (parts.Length == 2) { // only continue if the line has two parts
+                        string name = parts[0].Trim(); // removes the space = trim
                         string abbrev = parts[1].Trim();
 
                         results.Add((name, abbrev));

@@ -28,7 +28,7 @@ namespace Backend.Model {
             SetMenuItem(MenuItem);
             SetQuantity(Quantity);
 
-            // if null, create empty list
+            // if null -> create empty list
             this.SelectedOptions = SelectedOptions ?? new List<string>();
 
             // calculate line total
