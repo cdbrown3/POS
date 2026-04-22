@@ -21,13 +21,13 @@ namespace Backend.Model {
         private string LastName;
         private string PhoneNumber; // string b/c of '-' or '()'
         private string Email;
-        private string Address;
+        private AddressInfo Address;
 
         // constructors
         // minimum required information to create a user
         // First Name, Last Name, Phone, Email, Address
 
-        public UserInfo(string first, string last, string phone, string email, string address)
+        public UserInfo(string first, string last, string phone, string email, AddressInfo address)
         // easier to test and avoid complication
         {
             // TODO: Add validation if needed
@@ -65,37 +65,37 @@ namespace Backend.Model {
             return Email;
         }
 
-        public string GetAddress() {
+        public AddressInfo GetAddress() {
             return Address;
         }
 
-    // setters
+        // setters
 
-    public void SetFirstName(string value) {
+        public void SetFirstName(string value) {
         if (string.IsNullOrEmpty(value)) {
             throw new ArgumentException("First Name cannot be empty!");
         }
 
         FirstName = value;
-    }
+        }
 
-    public void SetLastName(string value) {
+        public void SetLastName(string value) {
         if (string.IsNullOrEmpty(value)) {
             throw new ArgumentException("Last Name cannot be empty!");
         }
 
         LastName = value;
-    }
+        }
 
-    public void SetPhoneNumber(string value) {
+        public void SetPhoneNumber(string value) {
         if (string.IsNullOrEmpty(value)) {
             throw new ArgumentException("Phone Number cannot be empty!");
         }
 
         PhoneNumber = value;
-    }
+        }
 
-    public void SetEmail(string value) {
+        public void SetEmail(string value) {
         if (string.IsNullOrEmpty(value)) {
             throw new ArgumentException("Email cannot be empty!");
         }
@@ -105,20 +105,20 @@ namespace Backend.Model {
         }
 
         Email = value;
-    }
-
-    public void SetAddress(string value) {
-        if (string.IsNullOrEmpty(value)) {
-            throw new ArgumentException("Address cannot be empty!");
         }
 
-        Address = value;
-    }
+        public void SetAddress(AddressInfo value) {
+            if (value == null) {
+                throw new ArgumentException("Address cannot be null!");
+            }
 
-    // helper - avoid repetition
+            Address = value;
+        }
 
-    // returns full name (for GUI)
-    public string GetFullName() {
+        // helper - avoid repetition
+
+        // returns full name (for GUI)
+        public string GetFullName() {
             return FirstName + " " + LastName;
         }
 
@@ -131,14 +131,14 @@ namespace Backend.Model {
             output += "Name: " + GetFullName() + "\n";
             output += "Phone: " + PhoneNumber + "\n";
             output += "Email: " + Email + "\n";
-            output += "Address: " + Address + "\n";
+            output += "Address: " + Address.ToString() + "\n";
 
             return output;
         }
 
         // CSV - storage
 
-        public string ToCSV() {
+        public virtual string ToCSV() {
             string output = "";
 
             output += userID + ",";
@@ -146,7 +146,7 @@ namespace Backend.Model {
             output += LastName + ",";
             output += PhoneNumber + ",";
             output += Email + ",";
-            output += Address;
+            output += Address.ToCSV();
 
             return output;
         }

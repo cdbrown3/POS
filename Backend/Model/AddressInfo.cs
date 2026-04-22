@@ -11,7 +11,6 @@ namespace Backend.Model {
 
             private string Street;
             private string City;
-            private string State;
             private string StateAbbreviation;
             private string ZipCode;
 
@@ -22,11 +21,11 @@ namespace Backend.Model {
             private static List<(string, string)> LoadStates(string filePath) { // return list of pairs
                 List<(string, string)> results = new List<(string, string)>(); // creates an empty list to store state and abbrevation
 
-                if (!File.Exists(filePath)) { // check if it exists
+                if (!File.Exists(filePath)) {
                     throw new Exception("states.csv not found");
                 }
 
-                string[] lines = File.ReadAllLines(filePath); // read all lines in the file
+            string[] lines = File.ReadAllLines(filePath); // read all lines in the file
 
                 for (int i = 1; i < lines.Length; i++) // skip header and then go through each line
                 {
@@ -59,9 +58,6 @@ namespace Backend.Model {
             }
             public string GetCity() { 
                 return City; 
-            }
-            public string GetState() { 
-                return State; 
             }
             public string GetStateAbbreviation() { 
                 return StateAbbreviation; 
@@ -106,7 +102,6 @@ namespace Backend.Model {
             public void SetStateFromAbbreviation(string abbrev) {
                 foreach (var state in States) {
                     if (state.Abbrev.Equals(abbrev, StringComparison.OrdinalIgnoreCase)) {
-                        State = state.Name;
                         StateAbbreviation = state.Abbrev;
                         return;
                     }
@@ -139,7 +134,7 @@ namespace Backend.Model {
             // ToCSV - storage
 
             public string ToCSV() {
-                return Street + "," + City + "," + State + "," + StateAbbreviation + "," + ZipCode;
+                return Street + "," + City + ","  + StateAbbreviation + "," + ZipCode;
             }
         }
     }

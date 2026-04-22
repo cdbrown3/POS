@@ -28,7 +28,7 @@ namespace Backend.Model {
             string Last,
             string Phone,
             string Email,
-            string Address,
+            AddressInfo Address,
             string Position,
             string Username,
             string Password, // string = if leading 0
@@ -139,7 +139,7 @@ namespace Backend.Model {
 
         // CSV - Storage
 
-        public string ToCSV() {
+        public override string ToCSV() {
             string output = "";
 
             // base class data (UserInfo)
@@ -148,7 +148,7 @@ namespace Backend.Model {
             output += GetLastName() + ",";
             output += GetPhoneNumber() + ",";
             output += GetEmail() + ",";
-            output += GetAddress() + ",";
+            output += GetAddress().ToCSV() + ",";
 
             // Employee specific data
             output += EmployeeID + ",";

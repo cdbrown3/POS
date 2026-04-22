@@ -25,7 +25,7 @@ namespace Backend.Model {
             string Last,
             string Phone,
             string Email,
-            string Address,
+            AddressInfo Address,
             int OrderHistoryCount,
             string Notes
         ) : base(First, Last, Phone, Email, Address) {
@@ -86,7 +86,7 @@ namespace Backend.Model {
 
         // CSV - storage
 
-        public string ToCSV() {
+        public override string ToCSV() {
             string output = "";
 
             // base class data (UserInfo)
@@ -95,7 +95,7 @@ namespace Backend.Model {
             output += GetLastName() + ",";
             output += GetPhoneNumber() + ",";
             output += GetEmail() + ",";
-            output += GetAddress() + ",";
+            output += GetAddress().ToCSV() + ",";
 
             // Customer specific data
             output += CustomerID + ",";
