@@ -9,6 +9,8 @@ namespace Backend.Models
     public enum UserRoles
     {
         Employee,
-        Manager
+        Manager,
+        Cook, 
+        Customer
     }
 }
