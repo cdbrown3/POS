@@ -30,8 +30,7 @@ namespace AvaloniaUI
                 }
                 else if ((args.Length == 2) && (String.Compare(args[1], "/cooklogin", true) == 0))
                 {
-                    //desktop.MainWindow = new CustomerLoginView();
-                    Console.WriteLine("Error: Not implemented yet");
+                    desktop.MainWindow = new CookLoginWindow();
                 }
                 else
                 {

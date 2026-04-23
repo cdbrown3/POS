@@ -63,7 +63,7 @@ namespace AvaloniaUI
             }
             else if (role == UserRoles.Cook)
             {
-                //create cook login window...
+                CreateCookLoginWindow();
             }
             else
             {
@@ -85,6 +85,10 @@ namespace AvaloniaUI
             else if (role == UserRoles.Customer)
             {
                 loggedInMessageTextBox.Text = "Hello " + _name + "!";
+            }
+            else if (role == UserRoles.Cook)
+            {
+                loggedInMessageTextBox.Text = "Hello " + _name + "! You are loggin in as a Cook!";
             }
             else
             {
@@ -126,12 +130,20 @@ namespace AvaloniaUI
             {
                 //show the different views that a customer should see.
             }
+            else if (role == Backend.Models.UserRoles.Cook)
+            {
+                //show the cook branches.
+            }
             else
             {
                 //go back to login if no role is assigned but this SHOULD never happen
                 if (role == UserRoles.Customer)
                 {
                     CreateKioskLoginWindow();
+                }
+                else if (role == UserRoles.Cook)
+                {
+                    CreateCookLoginWindow();
                 }
                 else
                 {
@@ -181,6 +193,28 @@ namespace AvaloniaUI
 
             //show login and close this main window view
             customerLoginView.Show();
+            this.Close();
+        }
+
+        private void CreateCookLoginWindow()
+        {
+            //Create a new loginWindow since the old one was closed
+            CookLoginWindow cookLoginView = new CookLoginWindow();
+
+            //preserve size, state, and position
+            cookLoginView.Width = this.Bounds.Width;
+            cookLoginView.Height = this.Bounds.Height;
+            cookLoginView.Position = this.Position;
+            cookLoginView.WindowState = this.WindowState;
+
+            //check if we are running on a desktop...
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = cookLoginView;
+            }
+
+            //show login and close this main window view
+            cookLoginView.Show();
             this.Close();
         }
     }
