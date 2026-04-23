@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300"
+             x:Class="AvaloniaUI.KioskLoginView">
+    <StackPanel HorizontalAlignment="Center"
+          VerticalAlignment="Center">
+		<TextBlock Margin="0,0,0,20"
+                   Text="Welcome Back" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Foreground="White"
+                   FontWeight="Bold"
+                   FontSize="36">
+        </TextBlock>
+
+        <!-- Button for existing customers -->
+        <Button Margin="0,0,0,3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Sign In"
+                Click="OnSignInButtonClick"
+                CornerRadius="10"
+                Width="200"
+                Height="40"
+                Background="White"
+                Foreground="Black"
+                FontSize="18"
+                FontWeight="SemiBold">
+        </Button>
+
+        <!-- Button for new customers -->
+        <Button HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Create Account"
+                Click="OnCreateAccountButtonClick"
+                CornerRadius="10"
+                Width="200"
+                Height="40"
+                Background="{DynamicResource DarkButtonColor}"
+                Foreground="Black"
+                FontSize="18"
+                FontWeight="SemiBold">
+        </Button>
+    </StackPanel>
+
+
+</UserControl>

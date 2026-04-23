@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Backend.Models;
+using AvaloniaUI;
 
 namespace AvaloniaUI
 {
@@ -55,8 +56,20 @@ namespace AvaloniaUI
         //When the exit button is pressed this method creates a new login windows and closes the current main window.
         private void OnButtonExitClick(object? sender, RoutedEventArgs e)
         {
-            //Go back to the login Screen
-            CreateLoginWindow();
+            //Go back to the login Screen / kiosk login
+            if (role == UserRoles.Customer)
+            {
+                CreateKioskLoginWindow();
+            }
+            else if (role == UserRoles.Cook)
+            {
+                //create cook login window...
+            }
+            else
+            {
+                CreateServerLoginWindow();
+            }
+
         }
         
         public void SetLoggedInAsMessage()
@@ -68,6 +81,10 @@ namespace AvaloniaUI
             else if (role == UserRoles.Employee)
             {
                 loggedInMessageTextBox.Text = "Hello " + _name + ". You are logged in as an employee.";
+            }
+            else if (role == UserRoles.Customer)
+            {
+                loggedInMessageTextBox.Text = "Hello " + _name + "!";
             }
             else
             {
@@ -105,14 +122,25 @@ namespace AvaloniaUI
                 MainContent.Content = new EmployeeView();
                 SelectedUserContent.Content = new SelectedCustomerView();
             }
+            else if (role == Backend.Models.UserRoles.Customer)
+            {
+                //show the different views that a customer should see.
+            }
             else
             {
-                //go back to login if no role is assigned but this should never happen
-                CreateLoginWindow();
+                //go back to login if no role is assigned but this SHOULD never happen
+                if (role == UserRoles.Customer)
+                {
+                    CreateKioskLoginWindow();
+                }
+                else
+                {
+                    CreateServerLoginWindow();
+                }
             }
         }
 
-        private void CreateLoginWindow()
+        private void CreateServerLoginWindow()
         {
             //Create a new loginWindow since the old one was closed
             LoginWindow loginView = new LoginWindow();
@@ -131,6 +159,28 @@ namespace AvaloniaUI
 
             //show login and close this main window view
             loginView.Show();
+            this.Close();
+        }
+
+        private void CreateKioskLoginWindow()
+        {
+            //Create a new loginWindow since the old one was closed
+            CustomerLoginView customerLoginView = new CustomerLoginView();
+
+            //preserve size, state, and position
+            customerLoginView.Width = this.Bounds.Width;
+            customerLoginView.Height = this.Bounds.Height;
+            customerLoginView.Position = this.Position;
+            customerLoginView.WindowState = this.WindowState;
+
+            //check if we are running on a desktop...
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = customerLoginView;
+            }
+
+            //show login and close this main window view
+            customerLoginView.Show();
             this.Close();
         }
     }

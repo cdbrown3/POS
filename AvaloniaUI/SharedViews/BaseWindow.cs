@@ -18,6 +18,7 @@ namespace AvaloniaUI
             Height = 600;
             MinWidth = 1300;
             MinHeight = 600;
+            Title = "POS";
         }
     }
 }

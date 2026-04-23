@@ -8,7 +8,6 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaUI.MainWindow"
         x:DataType="local:MainWindow"
-        Title="POS"
         Background="{DynamicResource NavyBackgroundColor}">
         
     <!-- Main Window will be the hub hub for all pages to fill...

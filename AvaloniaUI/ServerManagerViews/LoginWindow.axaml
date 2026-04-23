@@ -14,7 +14,10 @@
         </Grid.RowDefinitions>
   
         <!-- All Login Information will be in a stack pannel in the center of the page...-->
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+        <StackPanel Grid.Row="0" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Spacing="20">
 	        <Label Content="Login" 
                    Foreground="White" 
                    HorizontalAlignment="Center"

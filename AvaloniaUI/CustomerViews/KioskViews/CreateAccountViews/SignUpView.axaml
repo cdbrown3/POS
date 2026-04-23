@@ -1,0 +1,137 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300"
+             x:Class="AvaloniaUI.SignUpView">
+  
+    <StackPanel HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Spacing="20">
+	        <Label Content="Create Account" 
+                   Foreground="White" 
+                   HorizontalAlignment="Center"
+                   FontFamily="{DynamicResource MainFont}"
+                   FontWeight="SemiBold"
+                   FontSize="36">
+            </Label>
+            
+            <Grid>
+			    <Grid.ColumnDefinitions>
+				    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+				    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+
+                </Grid.RowDefinitions>
+
+               
+                <TextBox 
+                     Grid.Row="0"
+                     Grid.ColumnSpan="2"
+                     x:Name="nameTextBox" 
+                     Watermark="Enter your name..." 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="18"
+                     Margin="2">
+                </TextBox>
+
+                <TextBox 
+                     Grid.Row="1"
+                     Grid.ColumnSpan="2"
+                     x:Name="emailTextBox" 
+                     Watermark="Enter your email..." 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="18"
+                     Margin="2">
+                </TextBox>
+
+                <TextBox 
+                     Grid.Row="2"
+                     Grid.ColumnSpan="2"
+                     x:Name="phoneTextBox" 
+                     Watermark="Enter phone number..." 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="18"
+                     Margin="2">
+                </TextBox>
+
+                <TextBox 
+                     Grid.Row="3"
+                     Grid.ColumnSpan="2"
+                     x:Name="passwordTextBox" 
+                     PasswordChar="*" 
+                     Classes="revealPasswordButton" 
+                     Watermark="Enter A Password" 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="18"
+                     Margin="2">
+                </TextBox>
+                <TextBox 
+                     Grid.Row="4"
+                     Grid.ColumnSpan="2"
+                     x:Name="passwordCheckTextBox" 
+                     PasswordChar="*" 
+                     Classes="revealPasswordButton" 
+                     Watermark="Confirm Password" 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="18"
+                     Margin="2">
+                </TextBox>
+
+                <!-- Create Button -->
+                <Button Grid.Column="0"
+                        Grid.Row="5"
+                        x:Name="createAccountButton" 
+                        Classes="LoginButton" 
+                        Content="Create" 
+                        FontFamily="{DynamicResource MainFont}"
+                        FontWeight="Regular"
+                        FontSize="24"
+                        Margin="2">
+                </Button>
+                <!-- Back Button -->
+                <Button Grid.Column="1"
+                        Grid.Row="5"
+                        x:Name="backButton" 
+                        Classes="LoginButton"
+                        Content="Back" 
+                        FontFamily="{DynamicResource MainFont}"
+                        FontWeight="Regular"
+                        FontSize="24"
+                        Margin="2">
+                </Button>
+            </Grid>
+            
+            <!-- Section to display a message to the user -->
+            <TextBlock x:Name="errorTextBlock"
+				       FontWeight="Regular"
+                       FontSize="8"
+                       Margin="2"
+                       Foreground="{DynamicResource InvalidInputColor}">
+            </TextBlock>
+        </StackPanel> 
+</UserControl>
