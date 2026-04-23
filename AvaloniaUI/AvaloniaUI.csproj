@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="CustomerViews\KioskViews\CreateAccountViews\SignUpUserInfoView.axaml.cs">
+      <DependentUpon>SignUpUserInfoView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="ServerManagerViews\LoginWindow.axaml.cs">
       <DependentUpon>LoginWindow.axaml</DependentUpon>
     </Compile>

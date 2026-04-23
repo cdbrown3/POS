@@ -26,9 +26,14 @@ public partial class CustomerLoginView : BaseWindow
         this.MainContent.Content = new SignInView(this);
     }
 
-    public void LoadSignUpWindow()
+    public void LoadSignUpUserInfoWindow()
     {
-        this.MainContent.Content = new SignUpView(this);
+        this.MainContent.Content = new SignUpUserInfoView(this);
+    }
+
+    public void LoadSignUpAddressInfoWindow()
+    {
+        this.MainContent.Content = new SignUpAddressView(this);
     }
 
     public void LoadMainWindow()

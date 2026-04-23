@@ -32,6 +32,6 @@ public partial class KioskLoginView : UserControl
     public void OnCreateAccountButtonClick(object? sender, RoutedEventArgs e)
     {
         //load sign up page
-        customerLoginView.LoadSignUpWindow();
+        customerLoginView.LoadSignUpUserInfoWindow();
     }
 }

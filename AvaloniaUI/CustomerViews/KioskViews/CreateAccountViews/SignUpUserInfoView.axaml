@@ -3,12 +3,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
-             x:Class="AvaloniaUI.SignInView">
-    
+             x:Class="AvaloniaUI.SignUpUserInfoView">
+  
     <StackPanel HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
                 Spacing="20">
-	        <Label Content="Login" 
+	        <Label Content="Create Account" 
                    Foreground="White" 
                    HorizontalAlignment="Center"
                    FontFamily="{DynamicResource MainFont}"
@@ -25,23 +25,53 @@
 				    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
+               
                 <TextBox 
                      Grid.Row="0"
                      Grid.ColumnSpan="2"
-                     x:Name="emailTextBox" 
-                     Watermark="Email" 
+                     x:Name="nameTextBox" 
+                     Watermark="Enter your name..." 
                      HorizontalAlignment="Stretch"
                      HorizontalContentAlignment="Center"
                      FontFamily="{DynamicResource MainFont}"
                      FontWeight="Regular"
-                     FontSize="24"
+                     FontSize="18"
                      Margin="2">
                 </TextBox>
 
                 <TextBox 
                      Grid.Row="1"
+                     Grid.ColumnSpan="2"
+                     x:Name="emailTextBox" 
+                     Watermark="Enter your email..." 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="18"
+                     Margin="2">
+                </TextBox>
+
+                <TextBox 
+                     Grid.Row="2"
+                     Grid.ColumnSpan="2"
+                     x:Name="phoneTextBox" 
+                     Watermark="Enter phone number..." 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="18"
+                     Margin="2">
+                </TextBox>
+
+                <TextBox 
+                     Grid.Row="3"
                      Grid.ColumnSpan="2"
                      x:Name="passwordTextBox" 
                      PasswordChar="*" 
@@ -51,17 +81,31 @@
                      HorizontalContentAlignment="Center"
                      FontFamily="{DynamicResource MainFont}"
                      FontWeight="Regular"
-                     FontSize="24"
+                     FontSize="18"
+                     Margin="2">
+                </TextBox>
+                <TextBox 
+                     Grid.Row="4"
+                     Grid.ColumnSpan="2"
+                     x:Name="passwordCheckTextBox" 
+                     PasswordChar="*" 
+                     Classes="revealPasswordButton" 
+                     Watermark="Confirm Password" 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="18"
                      Margin="2">
                 </TextBox>
 
-                <!-- Login Button -->
+                <!-- Create Button -->
                 <Button Grid.Column="0"
-                        Grid.Row="2"
-                        x:Name="loginButton" 
+                        Grid.Row="5"
+                        x:Name="continueButton" 
                         Classes="LoginButton" 
-                        Click="OnButtonLoginClicked"
-                        Content="Login" 
+                        Click="OnContinueButtonClick"
+                        Content="Continue" 
                         FontFamily="{DynamicResource MainFont}"
                         FontWeight="Regular"
                         FontSize="24"
@@ -69,9 +113,9 @@
                 </Button>
                 <!-- Back Button -->
                 <Button Grid.Column="1"
-                        Grid.Row="2"
+                        Grid.Row="5"
                         x:Name="backButton" 
-                        Classes="LoginButton" 
+                        Classes="LoginButton"
                         Click="OnBackButtonClicked"
                         Content="Back" 
                         FontFamily="{DynamicResource MainFont}"
