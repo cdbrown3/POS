@@ -15,7 +15,7 @@ public partial class CookLoginWindow : BaseWindow
         InitializeComponent();
     }
 
-    private void OnButtonExit_Click(object? sender, RoutedEventArgs e)
+    private void OnButtonExitClick(object? sender, RoutedEventArgs e)
     {
         //For now when button exit is closed...
         Close();

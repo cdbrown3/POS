@@ -1,7 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using AvaloniaUI;
 using System.Data;
@@ -54,10 +53,5 @@ public partial class CustomerLoginView : BaseWindow
 
         mainView.Show();
         this.Close();
-    }
-
-    public void OnButtonExit_Click(object? sender, RoutedEventArgs e)
-    {
-        Close();
     }
 }
