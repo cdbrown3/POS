@@ -23,5 +23,20 @@
 			    <ContentControl x:Name="MainContent"></ContentControl>
             </Border>
         </Viewbox>
+        <!-- Button for user to click to leave the page and go back to log in screen-->
+        <Button Click="OnButtonExit_Click" 
+                Grid.Column="2" 
+                Width="100" 
+                Height="100" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Bottom" 
+                Background="Transparent" 
+                BorderBrush="Transparent">
+            <!-- Add leaving icon to the button-->
+            <Image Source="avares://AvaloniaUI/Resources/Icons/exit_icon.png" 
+                    Width="100" 
+                    Height="100">
+            </Image>
+        </Button>
     </Grid>
 </Window>
