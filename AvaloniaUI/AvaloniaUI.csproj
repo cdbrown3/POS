@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Update="CustomerViews\KioskViews\CreateAccountViews\SignUpUserInfoView.axaml.cs">
       <DependentUpon>SignUpUserInfoView.axaml</DependentUpon>
     </Compile>
@@ -60,5 +61,8 @@
     <None Update="Resources\Icons\exit_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+=======
+    <Folder Include="Model\" />
+>>>>>>> ba667efd37e2e1edf42e77bec094e172d5372d35
   </ItemGroup>
 </Project>
