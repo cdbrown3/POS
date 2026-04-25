@@ -79,7 +79,7 @@
 
             <!-- Area where all of the actual content will go --> 
             <Border Grid.Row="1" 
-                    Margin="30" 
+                    Margin="30,0,30,30" 
                     Background="{DynamicResource LightBackgroundColor}" 
                     CornerRadius="20">
                 <ContentControl 
