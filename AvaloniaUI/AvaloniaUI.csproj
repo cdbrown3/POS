@@ -13,19 +13,19 @@
     <PackageReference Include="Avalonia.Desktop" Version="11.3.12" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.12" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.12" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <!--Condition
+    below is needed to remove Avalonia.Diagnostics package from build output in Release
+    configuration.-->
     <PackageReference Include="Avalonia.Diagnostics" Version="11.3.12">
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Backend\Backend.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Update="CustomerViews\KioskViews\CreateAccountViews\SignUpUserInfoView.axaml.cs">
       <DependentUpon>SignUpUserInfoView.axaml</DependentUpon>
     </Compile>
@@ -33,15 +33,15 @@
       <DependentUpon>LoginWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
-  
+
   <ItemGroup>
-	<AvaloniaResource Include="Resources\**"></AvaloniaResource>
+    <AvaloniaResource Include="Resources\**"></AvaloniaResource>
   </ItemGroup>
-  
+
   <ItemGroup>
     <AvaloniaXaml Remove="Resources\Boiler\Styles.axaml" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <AvaloniaResource Update="Resources\Boiler\Styles.axaml">
       <SubType>Designer</SubType>
@@ -61,8 +61,6 @@
     <None Update="Resources\Icons\exit_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-=======
     <Folder Include="Model\" />
->>>>>>> ba667efd37e2e1edf42e77bec094e172d5372d35
   </ItemGroup>
 </Project>
