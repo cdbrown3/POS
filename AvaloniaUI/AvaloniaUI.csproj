@@ -39,6 +39,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Remove="Model\**" />
+    <Compile Remove="Model\**" />
+    <EmbeddedResource Remove="Model\**" />
+    <None Remove="Model\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AvaloniaXaml Remove="Resources\Boiler\Styles.axaml" />
   </ItemGroup>
 
@@ -61,6 +68,5 @@
     <None Update="Resources\Icons\exit_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Folder Include="Model\" />
   </ItemGroup>
 </Project>
