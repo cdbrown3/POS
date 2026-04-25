@@ -16,7 +16,7 @@ public partial class LoginWindow : BaseWindow
         InitializeComponent();
     }
 
-    private void OnButtonExitClick(object? sender, RoutedEventArgs e)
+    private void OnButtonExit_Click(object? sender, RoutedEventArgs e)
     {
         //For now when button exit is closed...
         Close();

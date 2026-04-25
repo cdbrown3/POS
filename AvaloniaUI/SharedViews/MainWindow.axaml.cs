@@ -54,7 +54,7 @@ namespace AvaloniaUI
         }
 
         //When the exit button is pressed this method creates a new login windows and closes the current main window.
-        private void OnButtonExitClick(object? sender, RoutedEventArgs e)
+        private void OnButtonExit_Click(object? sender, RoutedEventArgs e)
         {
             //Go back to the login Screen / kiosk login
             if (role == UserRoles.Customer)

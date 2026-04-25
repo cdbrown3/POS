@@ -61,7 +61,7 @@
                            FontSize="20">
                 </TextBlock>
                 <!-- Button for user to click to leave the page and go back to log in screen-->
-                <Button Click="OnButtonExitClick" 
+                <Button Click="OnButtonExit_Click" 
                         Grid.Column="2" 
                         Width="50" 
                         Height="50" 
