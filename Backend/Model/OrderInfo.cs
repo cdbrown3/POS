@@ -12,14 +12,53 @@ namespace Backend.Model {
         private static int Count = 0;
 
         // order specific fields
-        private string OrderID;                   // O00001 format
-        private CustomerInfo Customer;            // customer who placed the order
-        private EmployeeInfo Employee;            // employee handling the order
-        private List<OrderItemInfo> Items;         // items in the order
-        private double Subtotal;                  // total before tax
-        private double Tax;                       // tax amount
-        private double Total;                     // final total after tax
-        private string Status;                    // new, paid, cancelled, etc.
+        public string OrderID { get; private set; }                   // O00001 format
+
+        private CustomerInfo customer;
+        private EmployeeInfo employee;
+        private string status;
+
+        public CustomerInfo Customer
+        {
+            get { return customer; }
+            set
+            {
+                if (value == null) {
+                    throw new ArgumentException("Customer cannot be null!");
+                }
+                customer = value;
+            }
+        }
+
+        public EmployeeInfo Employee
+        {
+            get { return employee; }
+            set
+            {
+                if (value == null) {
+                    throw new ArgumentException("Employee cannot be null!");
+                }
+                employee = value;
+            }
+        }
+
+        public List<OrderItemInfo> Items { get; private set; }         // items in the order
+
+        public double Subtotal { get; private set; }                  // total before tax
+        public double Tax { get; private set; }                       // tax amount
+        public double Total { get; private set; }                     // final total after tax
+
+        public string Status
+        {
+            get { return status; }
+            set
+            {
+                if (string.IsNullOrEmpty(value)) {
+                    throw new ArgumentException("Status cannot be empty!");
+                }
+                status = value;
+            }
+        }
 
         // constructors
         // call setters for validation
@@ -30,9 +69,9 @@ namespace Backend.Model {
             EmployeeInfo Employee,
             string Status
         ) {
-            SetCustomer(Customer);
-            SetEmployee(Employee);
-            SetStatus(Status);
+            this.Customer = Customer;
+            this.Employee = Employee;
+            this.Status = Status;
 
             // start with an empty list of items
             this.Items = new List<OrderItemInfo>();
@@ -45,85 +84,6 @@ namespace Backend.Model {
             // generate UNIQUE Order ID
             Count++;
             this.OrderID = "O" + Count.ToString("D5");
-        }
-
-        // getters
-        public string GetOrderID() {
-            return OrderID;
-        }
-
-        public CustomerInfo GetCustomer() {
-            return Customer;
-        }
-
-        public EmployeeInfo GetEmployee() {
-            return Employee;
-        }
-
-        public List<OrderItemInfo> GetItems() {
-            return Items;
-        }
-
-        public double GetSubtotal() {
-            return Subtotal;
-        }
-
-        public double GetTax() {
-            return Tax;
-        }
-
-        public double GetTotal() {
-            return Total;
-        }
-
-        public string GetStatus() {
-            return Status;
-        }
-
-        // setters w/validation
-
-        public void SetCustomer(CustomerInfo value) {
-            if (value == null) {
-                throw new ArgumentException("Customer cannot be null!");
-            }
-
-            Customer = value;
-        }
-
-        public void SetEmployee(EmployeeInfo value) {
-            if (value == null) {
-                throw new ArgumentException("Employee cannot be null!");
-            }
-
-            Employee = value;
-        }
-
-        public void SetStatus(string value) {
-            if (string.IsNullOrEmpty(value)) {
-                throw new ArgumentException("Status cannot be empty!");
-            }
-
-            Status = value;
-        }
-
-        public void SetStatusToNew() {
-            Status = "New";
-        }
-
-        public void SetStatusToPreparing() {
-            Status = "Preparing";
-        }
-
-        public void SetStatusToReady() {
-            Status = "Ready";
-        }
-
-        public void SetStatusToPaid() {
-            Status = "Paid";
-        }
-
-        public void SetStatusToCancelled() {
-            Status = "Cancelled";
         }
 
         // helpers
@@ -157,22 +117,42 @@ namespace Backend.Model {
         }
 
         // calculate subtotal by adding up all item prices
-        public void CalculateSubtotal() {
+        private void CalculateSubtotal() {
             Subtotal = 0;
 
             foreach (OrderItemInfo item in Items) {
-                Subtotal += item.GetLineTotal();
+                Subtotal += item.LineTotal;
             }
         }
 
         // calculate tax as 10% of subtotal
-        public void CalculateTax() {
+        private void CalculateTax() {
             Tax = Subtotal * 0.10;
         }
 
         // calculate final total
-        public void CalculateTotal() {
+        private void CalculateTotal() {
             Total = Subtotal + Tax;
+        }
+
+        public void SetStatusToNew() {
+            Status = "New";
+        }
+
+        public void SetStatusToPreparing() {
+            Status = "Preparing";
+        }
+
+        public void SetStatusToReady() {
+            Status = "Ready";
+        }
+
+        public void SetStatusToPaid() {
+            Status = "Paid";
+        }
+
+        public void SetStatusToCancelled() {
+            Status = "Cancelled";
         }
 
         // ToString
@@ -191,7 +171,7 @@ namespace Backend.Model {
             output += "Items: ";
 
             foreach (OrderItemInfo item in Items) {
-                output += item.GetMenuItem().GetName() + " ";
+                output += item.MenuItem.Name + " ";
             }
 
             output += "\n";
@@ -205,8 +185,8 @@ namespace Backend.Model {
             string output = "";
 
             output += OrderID + ",";
-            output += Customer.GetCustomerID() + ",";
-            output += Employee.GetEmployeeID() + ",";
+            output += Customer.CustomerID + ",";
+            output += Employee.EmployeeID + ",";
             output += Status + ",";
             output += Subtotal + ",";
             output += Tax + ",";
@@ -214,7 +194,7 @@ namespace Backend.Model {
 
             // add all item IDs separated by |
             foreach (OrderItemInfo item in Items) {
-                output += item.GetOrderItemID() + "|";
+                output += item.OrderItemID + "|";
             }
 
             return output;
