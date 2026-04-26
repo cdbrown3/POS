@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:collections="using:System.Collections"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="using:Backend.Model"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="500"
+             x:Class="AvaloniaUI.OrderCardView"
+             x:DataType="model:OrderInfo"
+             Background="Transparent">
+    <Border Background="{DynamicResource NavyBackgroundColor}"
+            CornerRadius="30">
+        <Grid>
+            <Grid.RowDefinitions>
+			    <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+		    <Border Grid.Row="0"
+                    Background="{DynamicResource LightBackgroundColor}"
+                    Padding="10"
+                    Margin="30,10,30,10"
+                    CornerRadius="30">
+			    <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Spacing="5">
+				    <TextBlock Text="Order Number"
+                               Foreground="Black"
+                               FontWeight="Bold"
+                               FontSize="18">
+                    </TextBlock>
+                    <TextBlock x:Name="orderNumberTextBlock"
+                               Text="{Binding OrderNumber}"
+                               Foreground="Black"
+                               FontWeight="Bold"
+                               FontSize="18">
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Display the contents of the order -->
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto" 
+                          HorizontalScrollBarVisibility="Disabled"
+                          Margin="20,5,20,20">
+			    <TextBlock x:Name="itemsTextBlock"
+                           Text="{Binding OrderItems}"
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           FontSize="18">
+                </TextBlock>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

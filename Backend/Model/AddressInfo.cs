@@ -27,7 +27,7 @@ namespace Backend.Model {
 
             string[] lines = File.ReadAllLines(filePath); // read all lines in the file
 
-                for (int i = 1; i < lines.Length; i++) // skip header and then go through each line
+                for (int i = 0; i < lines.Length; i++) // skip header and then go through each line
                 {
                     string[] parts = lines[i].Split(','); // split the line wherever there is a comma
 

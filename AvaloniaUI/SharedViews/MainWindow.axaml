@@ -33,7 +33,7 @@
 
         <!-- This is where all of the selected user content windows/pages will appear-->
         <ContentControl Grid.Column="0" 
-                        x:Name="SelectedUserContent" 
+                        x:Name="SelectedContent" 
                         Background="{DynamicResource SidePanelGradient}"
                         CornerRadius="0,20,20,0">
         </ContentControl>

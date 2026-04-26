@@ -219,5 +219,27 @@ namespace Backend.Model {
 
             return output;
         }
+
+        public String OrderNumber 
+        {
+            get
+            {
+                return this.OrderID;
+            }
+        }
+
+        public String OrderItems
+        {
+            get
+            {
+                String output = "";
+                foreach (OrderItemInfo item in Items)
+                {
+                    foreach (string indItem in item.GetSelectedOptions())
+                    output += indItem+ System.Environment.NewLine;
+                }
+                return output;
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 using Backend.Models;
 using AvaloniaUI;
+using System.Runtime.CompilerServices;
 
 namespace AvaloniaUI
 {
@@ -88,7 +89,7 @@ namespace AvaloniaUI
             }
             else if (role == UserRoles.Cook)
             {
-                loggedInMessageTextBox.Text = "Hello " + _name + "! You are loggin in as a Cook!";
+                loggedInMessageTextBox.Text = "Hello " + _name + "! You are logged in as a Cook!";
             }
             else
             {
@@ -119,12 +120,12 @@ namespace AvaloniaUI
             if (role == Backend.Models.UserRoles.Manager)
             {
                 MainContent.Content = new ManagerView();
-                SelectedUserContent.Content = new SelectedEmployeeView();
+                SelectedContent.Content = new SelectedEmployeeView();
             }
             else if (role == Backend.Models.UserRoles.Employee)
             {
                 MainContent.Content = new EmployeeView();
-                SelectedUserContent.Content = new SelectedCustomerView();
+                SelectedContent.Content = new SelectedCustomerView();
             }
             else if (role == Backend.Models.UserRoles.Customer)
             {
@@ -133,6 +134,7 @@ namespace AvaloniaUI
             else if (role == Backend.Models.UserRoles.Cook)
             {
                 //show the cook branches.
+                MainContent.Content = new AllOrdersView(this);
             }
             else
             {
