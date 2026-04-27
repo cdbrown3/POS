@@ -11,14 +11,55 @@ namespace Backend.Model {
 
         private static int Count = 0;
 
-        private string ItemID;
-        private string Name;
-        private string Category;
-        private double Price;
-        private bool IsAvailable;
+        public string ItemID { get; private set; }
+
+        private string name;
+        private string category;
+        private double price;
+
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                if (string.IsNullOrEmpty(value)) {
+                    throw new ArgumentException("Item name cannot be empty!");
+                }
+
+                name = value;
+            }
+        }
+
+        public string Category
+        {
+            get { return category; }
+            set
+            {
+                if (string.IsNullOrEmpty(value)) {
+                    throw new ArgumentException("Category cannot be empty!");
+                }
+
+                category = value;
+            }
+        }
+
+        public double Price
+        {
+            get { return price; }
+            set
+            {
+                if (value < 0) {
+                    throw new ArgumentException("Price cannot be negative!");
+                }
+
+                price = value;
+            }
+        }
+
+        public bool IsAvailable { get; set; }
 
         // list of options
-        private List<string> Options;
+        public List<string> Options { get; set; }
 
         // constructors
 
@@ -28,74 +69,18 @@ namespace Backend.Model {
             double Price,
             List<string> Options
         ) {
-            SetName(Name);
-            SetCategory(Category);
-            SetPrice(Price);
+            this.Name = Name;
+            this.Category = Category;
+            this.Price = Price;
 
             // If null -> create empty list
             this.Options = Options ?? new List<string>();
-            
+
             // default value = assume it is in stock
             this.IsAvailable = true;
 
             Count++;
             this.ItemID = "M" + Count.ToString("D5"); // identify each menu item
-        }
-
-        // getters
-
-        public string GetItemID() {
-            return ItemID;
-        }
-
-        public string GetName() {
-            return Name;
-        }
-
-        public string GetCategory() {
-            return Category;
-        }
-
-        public double GetPrice() {
-            return Price;
-        }
-
-        public bool GetIsAvailable() {
-            return IsAvailable;
-        }
-
-        public List<string> GetOptions() {
-            return Options;
-        }
-
-        // setters w/validation
-
-        public void SetName(string value) {
-            if (string.IsNullOrEmpty(value)) {
-                throw new ArgumentException("Item name cannot be empty!");
-            }
-
-            Name = value;
-        }
-
-        public void SetCategory(string value) {
-            if (string.IsNullOrEmpty(value)) {
-                throw new ArgumentException("Category cannot be empty!");
-            }
-
-            Category = value;
-        }
-
-        public void SetPrice(double value) {
-            if (value < 0) {
-                throw new ArgumentException("Price cannot be negative!");
-            }
-
-            Price = value;
-        }
-
-        public void SetAvailable(bool value) {
-            IsAvailable = value;
         }
 
         // helpers

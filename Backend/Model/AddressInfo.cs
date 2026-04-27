@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using System.IO;
 
 namespace Backend.Model {
-        public class AddressInfo : IExportable {
-            // variables:
+    public class AddressInfo : IExportable {
+        // variables:
 
-            private string Street;
-            private string City;
-            private string StateAbbreviation;
-            private string ZipCode;
+        private string street;
+        private string city;
+        private string stateAbbreviation;
+        private string zipCode;
 
+<<<<<<< HEAD
             // state list from CSV
 
             private static List<(string Name, string Abbrev)> States = LoadStates("states.csv"); // loaded once
@@ -69,6 +70,13 @@ namespace Backend.Model {
             // setters
 
             public void SetStreet(string value) {
+=======
+        public string Street
+        {
+            get { return street; }
+            set
+            {
+>>>>>>> 73a7bb2933c0332ce9375de1aafc51cd2740e239
                 if (string.IsNullOrEmpty(value))
                     throw new ArgumentException("Street cannot be empty!");
 
@@ -83,10 +91,15 @@ namespace Backend.Model {
                 if (!hasNumber)
                     throw new ArgumentException("Street must contain a number!");
 
-                Street = value;
+                street = value;
             }
+        }
 
-            public void SetCity(string value) {
+        public string City
+        {
+            get { return city; }
+            set
+            {
                 if (string.IsNullOrEmpty(value))
                     throw new ArgumentException("City cannot be empty!");
 
@@ -96,21 +109,31 @@ namespace Backend.Model {
                     }
                 }
 
-                City = value;
+                city = value;
             }
+        }
 
-            public void SetStateFromAbbreviation(string abbrev) {
+        public string StateAbbreviation
+        {
+            get { return stateAbbreviation; }
+            set
+            {
                 foreach (var state in States) {
-                    if (state.Abbrev.Equals(abbrev, StringComparison.OrdinalIgnoreCase)) {
-                        StateAbbreviation = state.Abbrev;
+                    if (state.Abbrev.Equals(value, StringComparison.OrdinalIgnoreCase)) {
+                        stateAbbreviation = state.Abbrev;
                         return;
                     }
                 }
 
                 throw new ArgumentException("Invalid state abbreviation");
             }
+        }
 
-            public void SetZipCode(string value) {
+        public string ZipCode
+        {
+            get { return zipCode; }
+            set
+            {
                 if (string.IsNullOrEmpty(value))
                     throw new ArgumentException("Zip cannot be empty!");
 
@@ -122,19 +145,57 @@ namespace Backend.Model {
                         throw new ArgumentException("Zip must be numbers only!");
                 }
 
-                ZipCode = value;
-            }
-
-            // ToString
-
-            public override string ToString() {
-                return Street + "\n" + City + ", " + StateAbbreviation + " " + ZipCode;
-            }
-
-            // ToCSV - storage
-
-            public string ToCSV() {
-                return Street + "," + City + ","  + StateAbbreviation + "," + ZipCode;
+                zipCode = value;
             }
         }
+
+        // state list from CSV
+
+        private static List<(string Name, string Abbrev)> States = LoadStates("states.csv"); // loaded once
+
+        private static List<(string, string)> LoadStates(string filePath) { // return list of pairs
+            List<(string, string)> results = new List<(string, string)>(); // creates an empty list to store state and abbrevation
+
+            if (!File.Exists(filePath)) {
+                throw new Exception("states.csv not found");
+            }
+
+            string[] lines = File.ReadAllLines(filePath); // read all lines in the file
+
+            for (int i = 1; i < lines.Length; i++) // skip header and then go through each line
+            {
+                string[] parts = lines[i].Split(','); // split the line wherever there is a comma
+
+                if (parts.Length == 2) { // only continue if the line has two parts
+                    string name = parts[0].Trim(); // removes the space = trim
+                    string abbrev = parts[1].Trim();
+
+                    results.Add((name, abbrev));
+                }
+            }
+
+            return results;
+        }
+
+        // constructors
+
+        public AddressInfo(string Street, string City, string StateAbbreviation, string ZipCode) {
+            this.Street = Street;
+            this.City = City;
+            this.StateAbbreviation = StateAbbreviation;
+            this.ZipCode = ZipCode;
+        }
+
+        // ToString
+
+        public override string ToString() {
+            return Street + "\n" + City + ", " + StateAbbreviation + " " + ZipCode;
+        }
+
+        // ToCSV - storage
+
+        public string ToCSV() {
+            return Street + "," + City + "," + StateAbbreviation + "," + ZipCode;
+        }
     }
+}

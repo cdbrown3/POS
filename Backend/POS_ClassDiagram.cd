@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Backend.Model.AddressInfo">
+    <Position X="3.75" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAQAgAAAAAAAMAAAACABAAAAAAggBAQIABAAAAAA=</HashCode>
+      <FileName>Model\AddressInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Backend.Model.CustomerInfo">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAACEAAAAAARAEAAAAAAAAgAAAAAQIAA=</HashCode>
+      <FileName>Model\CustomerInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Backend.Model.EmployeeInfo">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>gAIAAAAIAAAACAAkEQAAIAVAAAAAAAACAAAAAgAAAAA=</HashCode>
+      <FileName>Model\EmployeeInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Backend.Model.MenuItemInfo">
+    <Position X="6" Y="7.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAQAAAAAEgAgAAARBAAAEAAAAAAAIAIBACAA=</HashCode>
+      <FileName>Model\MenuItemInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Backend.Model.OrderInfo">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAUEABAFAAAkCBAEAAAIoBTAiAIAQAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Model\OrderInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Backend.Model.OrderItemInfo">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AABABAAAAAQAADAEAAAQAERAAAAAAACAIAAAgAAAAAA=</HashCode>
+      <FileName>Model\OrderItemInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Backend.Model.PaymentInfo">
+    <Position X="7.75" Y="1.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IAEBACABAACAAAAUAAAAEARAAAIAARAAAAACAAAAAAA=</HashCode>
+      <FileName>Model\PaymentInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Backend.Model.UserInfo">
+    <Position X="1.75" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACBAAAAkAAAAQAxAAEIAAAAKAAAACAAAAAg=</HashCode>
+      <FileName>Model\UserInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Backend.Model.IExportable">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\IExportable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
