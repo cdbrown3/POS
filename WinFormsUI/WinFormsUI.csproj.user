@@ -1,8 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <ItemGroup>
-        <Compile Update="Form1.cs">
-            <SubType>Form</SubType>
-        </Compile>
-    </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CookLoginWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="CookWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="KioskLoginWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MainLoginWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UserControls(Views)\TacoOrderView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls(Views)\HamburgerOrderView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls(Views)\BaseOrderView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls(Views)\EmployeeMethodPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls(Views)\ManagerMethodPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls(Views)\EmployeeInfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls(Views)\CustomerInfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls(Views)\MainListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls(Views)\SubmitChangesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

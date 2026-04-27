@@ -12,5 +12,9 @@ namespace POS.Backend
         {
             return "Controller";
         }
+        public static void Connector()
+        {
+           
+        }
     }
 }
