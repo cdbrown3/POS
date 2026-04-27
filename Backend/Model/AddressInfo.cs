@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Backend.Model {
-    public class AddressInfo : IExportable {
+namespace Backend.Model
+{
+    public class AddressInfo : IExportable
+    {
         // variables:
 
         private string street;
@@ -14,76 +16,20 @@ namespace Backend.Model {
         private string stateAbbreviation;
         private string zipCode;
 
-<<<<<<< HEAD
-            // state list from CSV
-
-            private static List<(string Name, string Abbrev)> States = LoadStates("states.csv"); // loaded once
-
-            private static List<(string, string)> LoadStates(string filePath) { // return list of pairs
-                List<(string, string)> results = new List<(string, string)>(); // creates an empty list to store state and abbrevation
-
-                if (!File.Exists(filePath)) {
-                    throw new Exception("states.csv not found");
-                }
-
-            string[] lines = File.ReadAllLines(filePath); // read all lines in the file
-
-                for (int i = 0; i < lines.Length; i++) // skip header and then go through each line
-                {
-                    string[] parts = lines[i].Split(','); // split the line wherever there is a comma
-
-                    if (parts.Length == 2) { // only continue if the line has two parts
-                        string name = parts[0].Trim(); // removes the space = trim
-                        string abbrev = parts[1].Trim();
-
-                        results.Add((name, abbrev));
-                    }
-                }
-
-                return results;
-            }
-
-            // constructors
-
-            public AddressInfo(string Street, string City, string StateAbbreviation, string ZipCode) {
-                SetStreet(Street);
-                SetCity(City);
-                SetStateFromAbbreviation(StateAbbreviation);
-                SetZipCode(ZipCode);
-            }
-
-            // getters
-
-            public string GetStreet() { 
-                return Street; 
-            }
-            public string GetCity() { 
-                return City; 
-            }
-            public string GetStateAbbreviation() { 
-                return StateAbbreviation; 
-            }
-            public string GetZipCode() { 
-                return ZipCode; 
-            }
-
-            // setters
-
-            public void SetStreet(string value) {
-=======
         public string Street
         {
             get { return street; }
             set
             {
->>>>>>> 73a7bb2933c0332ce9375de1aafc51cd2740e239
                 if (string.IsNullOrEmpty(value))
                     throw new ArgumentException("Street cannot be empty!");
 
                 bool hasNumber = false;
 
-                foreach (char c in value) { // must have a #
-                    if (char.IsDigit(c)) {
+                foreach (char c in value)
+                { // must have a #
+                    if (char.IsDigit(c))
+                    {
                         hasNumber = true;
                     }
                 }
@@ -103,8 +49,10 @@ namespace Backend.Model {
                 if (string.IsNullOrEmpty(value))
                     throw new ArgumentException("City cannot be empty!");
 
-                foreach (char c in value) {
-                    if (!char.IsLetter(c) && c != ' ') { // only letters and spaces
+                foreach (char c in value)
+                {
+                    if (!char.IsLetter(c) && c != ' ')
+                    { // only letters and spaces
                         throw new ArgumentException("City can only contain letters and spaces");
                     }
                 }
@@ -118,8 +66,10 @@ namespace Backend.Model {
             get { return stateAbbreviation; }
             set
             {
-                foreach (var state in States) {
-                    if (state.Abbrev.Equals(value, StringComparison.OrdinalIgnoreCase)) {
+                foreach (var state in States)
+                {
+                    if (state.Abbrev.Equals(value, StringComparison.OrdinalIgnoreCase))
+                    {
                         stateAbbreviation = state.Abbrev;
                         return;
                     }
@@ -140,7 +90,8 @@ namespace Backend.Model {
                 if (value.Length != 5)
                     throw new ArgumentException("Zip must be 5 digits!");
 
-                foreach (char c in value) {
+                foreach (char c in value)
+                {
                     if (!char.IsDigit(c))
                         throw new ArgumentException("Zip must be numbers only!");
                 }
@@ -153,20 +104,23 @@ namespace Backend.Model {
 
         private static List<(string Name, string Abbrev)> States = LoadStates("states.csv"); // loaded once
 
-        private static List<(string, string)> LoadStates(string filePath) { // return list of pairs
+        private static List<(string, string)> LoadStates(string filePath)
+        { // return list of pairs
             List<(string, string)> results = new List<(string, string)>(); // creates an empty list to store state and abbrevation
 
-            if (!File.Exists(filePath)) {
+            if (!File.Exists(filePath))
+            {
                 throw new Exception("states.csv not found");
             }
 
             string[] lines = File.ReadAllLines(filePath); // read all lines in the file
 
-            for (int i = 1; i < lines.Length; i++) // skip header and then go through each line
+            for (int i = 0; i < lines.Length; i++) // skip header and then go through each line
             {
                 string[] parts = lines[i].Split(','); // split the line wherever there is a comma
 
-                if (parts.Length == 2) { // only continue if the line has two parts
+                if (parts.Length == 2)
+                { // only continue if the line has two parts
                     string name = parts[0].Trim(); // removes the space = trim
                     string abbrev = parts[1].Trim();
 
@@ -179,7 +133,8 @@ namespace Backend.Model {
 
         // constructors
 
-        public AddressInfo(string Street, string City, string StateAbbreviation, string ZipCode) {
+        public AddressInfo(string Street, string City, string StateAbbreviation, string ZipCode)
+        {
             this.Street = Street;
             this.City = City;
             this.StateAbbreviation = StateAbbreviation;
@@ -188,13 +143,15 @@ namespace Backend.Model {
 
         // ToString
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return Street + "\n" + City + ", " + StateAbbreviation + " " + ZipCode;
         }
 
         // ToCSV - storage
 
-        public string ToCSV() {
+        public string ToCSV()
+        {
             return Street + "," + City + "," + StateAbbreviation + "," + ZipCode;
         }
     }
