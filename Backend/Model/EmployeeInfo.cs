@@ -13,12 +13,76 @@ namespace Backend.Model {
         private static int Count = 0;
 
         // employee specific fields
-        private string EmployeeID;   // E00001 format
-        private string Position;
-        private string Username;
-        private string Password;     // senstive
-        private double HourlyRate; // double = $12.75
-        private bool IsActive;  // bool = true or false
+        public string EmployeeID { get; private set; }   // E00001 format
+
+        private string position;
+        private string username;
+        private string password;     // senstive
+        private double hourlyRate; // double = $12.75
+        public bool IsActive { get; set; }  // bool = true or false
+
+        public string Position
+        {
+            get { return position; }
+            set
+            {
+                if (string.IsNullOrEmpty(value)) {
+                    throw new ArgumentException("Position cannot be empty!");
+                }
+
+                position = value;
+            }
+        }
+
+        public string Username
+        {
+            get { return username; }
+            set
+            {
+                if (string.IsNullOrEmpty(value)) {
+                    throw new ArgumentException("Username cannot be empty!");
+                }
+
+                username = value;
+            }
+        }
+
+        public string Password
+        {
+            private get { return password; }
+            set
+            {
+                if (string.IsNullOrEmpty(value)) {
+                    throw new ArgumentException("PIN cannot be empty!");
+                }
+
+                if (value.Length != 4) {
+                    throw new ArgumentException("PIN must be exactly 4 digits!");
+                }
+
+                // check that all characters are digits - How to only have a password be 4 digits in VSCode in Setters
+                foreach (char c in value) { // go through each value in the strong one time
+                    if (!char.IsDigit(c)) { // if char is a number
+                        throw new ArgumentException("PIN must contain only numbers!");
+                    }
+                }
+
+                password = value;
+            }
+        }
+
+        public double HourlyRate
+        {
+            get { return hourlyRate; }
+            set
+            {
+                if (value < 0) {
+                    throw new ArgumentException("Hourly rate cannot be negative!");
+                }
+
+                hourlyRate = value;
+            }
+        }
 
         // constructors
         // calls base constructor for UserInfo fields
@@ -36,10 +100,10 @@ namespace Backend.Model {
         ) : base(First, Last, Phone, Email, Address) { // base to avoid duplication since they are a user first
             // calls the constructors in UserInfo
             // Use setters for validation
-            SetUsername(Username);
-            SetPassword(Password);
-            SetPosition(Position);
-            SetHourlyRate(HourlyRate);
+            this.Username = Username;
+            this.Password = Password;
+            this.Position = Position;
+            this.HourlyRate = HourlyRate;
 
             // default value - new employee will start active
             this.IsActive = true;
@@ -47,74 +111,6 @@ namespace Backend.Model {
             // generate UNIQUE Employee ID
             Count++;
             this.EmployeeID = "E" + Count.ToString("D5");
-        }
-
-        // getters
-
-        public string GetEmployeeID() {
-            return EmployeeID;
-        }
-
-        public string GetPosition() {
-            return Position;
-        }
-
-        public string GetUsername() {
-            return Username;
-        }
-
-        public double GetHourlyRate() {
-            return HourlyRate;
-        }
-
-        public bool GetIsActive() {
-            return IsActive;
-        }
-
-    // setters w/validation
-        public void SetUsername(string value) {
-            if (string.IsNullOrEmpty(value)) {
-                throw new ArgumentException("Username cannot be empty!");
-            }
-
-            Username = value;
-        }
-        public void SetPassword(string value) {
-            if (string.IsNullOrEmpty(value)) {
-                throw new ArgumentException("PIN cannot be empty!");
-            }
-
-            if (value.Length != 4) {
-                throw new ArgumentException("PIN must be exactly 4 digits!");
-            }
-
-            // check that all characters are digits - How to only have a password be 4 digits in VSCode in Setters
-            foreach (char c in value) { // go through each value in the strong one time
-                if (!char.IsDigit(c)) { // if char is a number
-                    throw new ArgumentException("PIN must contain only numbers!");
-                }
-            }
-
-            Password = value;
-        }
-        public void SetPosition(string value) {
-                if (string.IsNullOrEmpty(value)) {
-                    throw new ArgumentException("Position cannot be empty!");
-                }
-
-                Position = value;
-            }
-
-        public void SetHourlyRate(double value) {
-            if (value < 0) {
-                throw new ArgumentException("Hourly rate cannot be negative!");
-            }
-
-            HourlyRate = value;
-        }
-
-        public void SetActive(bool value) {
-            IsActive = value;
         }
 
         // login validation:
@@ -143,12 +139,12 @@ namespace Backend.Model {
             string output = "";
 
             // base class data (UserInfo)
-            output += GetUserID() + ",";
-            output += GetFirstName() + ",";
-            output += GetLastName() + ",";
-            output += GetPhoneNumber() + ",";
-            output += GetEmail() + ",";
-            output += GetAddress().ToCSV() + ",";
+            output += UserID + ",";
+            output += FirstName + ",";
+            output += LastName + ",";
+            output += PhoneNumber + ",";
+            output += Email + ",";
+            output += Address.ToCSV() + ",";
 
             // Employee specific data
             output += EmployeeID + ",";

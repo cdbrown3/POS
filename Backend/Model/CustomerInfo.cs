@@ -13,9 +13,32 @@ namespace Backend.Model {
         private static int Count = 0;
 
         // customer specific fields
-        private string CustomerID;          // C00001 format
-        private int OrderHistoryCount;      // number of past orders
-        private string Notes;               // extra notes for customer
+        public string CustomerID { get; private set; }          // C00001 format
+
+        private int orderHistoryCount;      // number of past orders
+        private string notes;               // extra notes for customer
+
+        public int OrderHistoryCount
+        {
+            get { return orderHistoryCount; }
+            set
+            {
+                if (value < 0) {
+                    throw new ArgumentException("Order history count cannot be negative!");
+                }
+                orderHistoryCount = value;
+            }
+        }
+
+        public string Notes
+        {
+            get { return notes; }
+            set
+            {
+                // if null -> store as empty string instead
+                notes = value ?? "";
+            }
+        }
 
         // constructors
         // calls base constructor for UserInfo fields
@@ -30,41 +53,12 @@ namespace Backend.Model {
             string Notes
         ) : base(First, Last, Phone, Email, Address) {
             // using setters for validation
-            SetOrderHistoryCount(OrderHistoryCount);
-            SetNotes(Notes);
+            this.OrderHistoryCount = OrderHistoryCount;
+            this.Notes = Notes;
 
             // generate UNIQUE Employee ID
             Count++;
             this.CustomerID = "C" + Count.ToString("D5");
-        }
-
-        // getters
-
-        public string GetCustomerID() {
-            return CustomerID;
-        }
-
-        public int GetOrderHistoryCount() {
-            return OrderHistoryCount;
-        }
-
-        public string GetNotes() {
-            return Notes;
-        }
-
-        // setters w/ validation
-
-        public void SetOrderHistoryCount(int value) {
-            if (value < 0) {
-                throw new ArgumentException("Order history count cannot be negative!");
-            }
-
-            OrderHistoryCount = value;
-        }
-
-        public void SetNotes(string value) {
-            // if null -> store as empty string instead
-            Notes = value ?? "";
         }
 
         // helper
@@ -90,12 +84,12 @@ namespace Backend.Model {
             string output = "";
 
             // base class data (UserInfo)
-            output += GetUserID() + ",";
-            output += GetFirstName() + ",";
-            output += GetLastName() + ",";
-            output += GetPhoneNumber() + ",";
-            output += GetEmail() + ",";
-            output += GetAddress().ToCSV() + ",";
+            output += UserID + ",";
+            output += FirstName + ",";
+            output += LastName + ",";
+            output += PhoneNumber + ",";
+            output += Email + ",";
+            output += Address.ToCSV() + ",";
 
             // Customer specific data
             output += CustomerID + ",";

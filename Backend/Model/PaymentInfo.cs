@@ -12,11 +12,62 @@ namespace Backend.Model {
         private static int Count = 0;
 
         // payment specific fields
-        private string PaymentID;         // P00001 format
-        private OrderInfo Order;          // order being paid for
-        private string CardNumber;        // card number entered
-        private double AmountPaid;        // amount paid
-        private string PaymentStatus;     // pending, paid, failed
+        public string PaymentID { get; private set; }         // P00001 format
+
+        private OrderInfo order;
+        private string cardNumber;
+        private string paymentStatus;
+
+        public OrderInfo Order
+        {
+            get { return order; }
+            set
+            {
+                if (value == null) {
+                    throw new ArgumentException("Order cannot be null!");
+                }
+                order = value;
+            }
+        }
+
+        public string CardNumber
+        {
+            private get { return cardNumber; }
+            set
+            {
+                if (string.IsNullOrEmpty(value)) {
+                    throw new ArgumentException("Card number cannot be empty!");
+                }
+
+                // card number must be exactly 16 digits
+                if (value.Length != 16) {
+                    throw new ArgumentException("Card number must be exactly 16 digits!");
+                }
+
+                // check that all characters are digits
+                foreach (char c in value) {
+                    if (!char.IsDigit(c)) {
+                        throw new ArgumentException("Card number must contain only numbers!");
+                    }
+                }
+
+                cardNumber = value;
+            }
+        }
+
+        public double AmountPaid { get; private set; }        // amount paid
+
+        public string PaymentStatus
+        {
+            get { return paymentStatus; }
+            set
+            {
+                if (string.IsNullOrEmpty(value)) {
+                    throw new ArgumentException("Payment status cannot be empty!");
+                }
+                paymentStatus = value;
+            }
+        }
 
         // constructors
 
@@ -24,8 +75,8 @@ namespace Backend.Model {
             OrderInfo Order,
             string CardNumber
         ) {
-            SetOrder(Order);
-            SetCardNumber(CardNumber);
+            this.Order = Order;
+            this.CardNumber = CardNumber;
 
             // payment starts as pending
             this.AmountPaid = 0;
@@ -34,58 +85,6 @@ namespace Backend.Model {
             // generate UNIQUE Payment ID
             Count++;
             this.PaymentID = "P" + Count.ToString("D5");
-        }
-
-        // getters
-
-        public string GetPaymentID() {
-            return PaymentID;
-        }
-
-        public OrderInfo GetOrder() {
-            return Order;
-        }
-
-        public string GetCardNumber() {
-            return CardNumber;
-        }
-
-        public double GetAmountPaid() {
-            return AmountPaid;
-        }
-
-        public string GetPaymentStatus() {
-            return PaymentStatus;
-        }
-
-        // setters w/validation
-
-        public void SetOrder(OrderInfo value) {
-            if (value == null) {
-                throw new ArgumentException("Order cannot be null!");
-            }
-
-            Order = value;
-        }
-
-        public void SetCardNumber(string value) {
-            if (string.IsNullOrEmpty(value)) {
-                throw new ArgumentException("Card number cannot be empty!");
-            }
-
-            // card number must be exactly 16 digits
-            if (value.Length != 16) {
-                throw new ArgumentException("Card number must be exactly 16 digits!");
-            }
-
-            // check that all characters are digits
-            foreach (char c in value) {
-                if (!char.IsDigit(c)) {
-                    throw new ArgumentException("Card number must contain only numbers!");
-                }
-            }
-
-            CardNumber = value;
         }
 
         // status for payment
@@ -106,7 +105,7 @@ namespace Backend.Model {
 
         // process payment for the full order total
         public void ProcessPayment() {
-            AmountPaid = Order.GetTotal();
+            AmountPaid = Order.Total;
             SetStatusToPaid();
         }
 
@@ -116,7 +115,7 @@ namespace Backend.Model {
             string output = "";
 
             output += "Payment ID: " + PaymentID + "\n";
-            output += "Order ID: " + Order.GetOrderID() + "\n";
+            output += "Order ID: " + Order.OrderID + "\n";
             output += "Amount Paid: $" + AmountPaid + "\n";
             output += "Payment Status: " + PaymentStatus + "\n";
 
@@ -129,7 +128,7 @@ namespace Backend.Model {
             string output = "";
 
             output += PaymentID + ",";
-            output += Order.GetOrderID() + ",";
+            output += Order.OrderID + ",";
             output += CardNumber + ",";
             output += AmountPaid + ",";
             output += PaymentStatus;
