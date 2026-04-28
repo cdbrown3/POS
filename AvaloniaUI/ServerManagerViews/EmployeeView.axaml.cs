@@ -1,8 +1,12 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Backend.Model;
+using POS.Backend;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,33 +16,25 @@ namespace AvaloniaUI;
 
 public partial class EmployeeView : UserControl
 {
+    //need observable list for the views to update...
+    public ObservableCollection<CustomerInfo> Customers { get; set; } = new ObservableCollection<CustomerInfo>();
     public EmployeeView()
     {
         InitializeComponent();
+
+        //Customers = controller.getCustomers;
+        AddCustomer();
+        AddCustomer();
     }
 
-    public List<Customer> Customers { get; set; } = new List<Customer>()
+    public void AddCustomer()
     {
-        new Customer("Carson", "Brown", "256-486-5343")
-    };
-}
-
-public class Customer
-{
-    //String fullname;
-    //String lname;
-    //String phone;
-
-    public Customer(String fname, String lname, String phone)
-    {
-        Fullname = fname;
-        Lastname = lname;
-        Phone = phone;
+        CustomerInfo customer = new CustomerInfo("Carson", "Brown", "256-486-5343", "cdbrown3@gmail.com", new AddressInfo("181 Atwood Brown Rd", "Guntersville", "AL", "35976"), 0, "None");
+        Customers.Add(customer);
     }
 
-    public String Fullname { get; set; }
-
-    public String Lastname { get; set; }
-
-    public String Phone { get; set; }
+    public void OnCustomerTab_Click(object? sender, RoutedEventArgs e)
+    {
+        this.selectedUserType.Content = new CustomerListView(Customers);
+    }
 }

@@ -24,6 +24,16 @@
         <Setter Property="FontSize" Value="24"></Setter>
     </Style>
 
+    <Style Selector="Button.Tab">
+	    <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+        <Setter Property="FontSize" Value="24"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="CornerRadius" Value="5"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+    </Style>
+
     <!-- Style for each order card in the cook view -->
     <Style Selector="ListBox.OrderCards ListBoxItem">
         <Setter Property="Background" Value="Transparent"></Setter>
@@ -45,5 +55,20 @@
     <Style Selector="ListBox.OrderCards ListBoxItem:selected:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="Transparent"/>
 		<Setter Property="RenderTransform" Value="scale(1.03)"></Setter>
+    </Style>
+
+
+    <!-- Style for the lists of customers/employees -->
+    <Style Selector="TextBlock.DisplayUser">
+		<Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="FontSize" Value="24"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+    </Style>
+
+    <!-- Selected Customer/Employee Header-->
+    <Style Selector="TextBlock.SelectedHeader">
+        <Setter Property="FontSize" Value="24"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+        <Setter Property="Foreground" Value="Black"></Setter>
     </Style>
 </Styles>

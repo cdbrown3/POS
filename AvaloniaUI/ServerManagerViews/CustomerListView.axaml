@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:backend="using:POS.Backend"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:AvaloniaUI"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="using:Backend.Model"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaUI.CustomerListView"
+             x:DataType="model:CustomerInfo">
+  
+    <ListBox x:Name="customersListBox"
+             Background="Transparent"
+             SelectionChanged="Customer_SelectionChanged">
+        <ListBox.ItemTemplate>
+		    <DataTemplate x:DataType="model:CustomerInfo">
+			    <StackPanel Margin="10"
+                            Orientation="Horizontal"
+                            Spacing="20">
+                    <TextBlock Text="{Binding FirstName}" 
+                               Classes="DisplayUser">
+                    </TextBlock>
+                    <TextBlock Text="{Binding LastName}"
+                               Classes="DisplayUser">
+                    </TextBlock>
+                    <TextBlock Text="{Binding Email}"
+                               Classes="DisplayUser">
+                    </TextBlock>
+                    <TextBlock Text="{Binding PhoneNumber}"
+                               Classes="DisplayUser">
+                    </TextBlock>
+                </StackPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</UserControl>

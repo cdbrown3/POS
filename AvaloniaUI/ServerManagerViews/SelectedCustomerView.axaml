@@ -4,7 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaUI.SelectedCustomerView">
-  <StackPanel>
-	  <TextBlock Text="Selected Customer: " Foreground="Black" HorizontalAlignment="Center"></TextBlock>
-  </StackPanel>
+  <Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Spacing="5">
+			<TextBlock Text="Order Number"
+                       Classes="SelectedHeader">
+            </TextBlock>
+            <TextBlock x:Name="selectedCustomerTextBlock"
+                       Text="XXXX"
+                       Classes="SelectedHeader">
+            </TextBlock>
+        </StackPanel>
+    </Grid>
 </UserControl>
