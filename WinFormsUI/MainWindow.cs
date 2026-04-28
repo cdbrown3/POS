@@ -65,8 +65,8 @@ namespace WinFormsUI
             if (SelectedTitle == Title.Employee)
             {
                 // CustomerList = ImportCustomersFromCSV("Customers.txt");
-                serverController.LoadCustomersFromCSV("Customers2.txt"); // creating a customers list
-                ManagerController.LoadEmployeesFromCSV("Employees2.txt"); // creating an employee list
+                serverController.LoadCustomers("Customers2.txt", "CSV"); // creating a customers list
+                ManagerController.LoadEmployees("Employees2.txt", "CSV"); // creating an employee list
                 EmployeeList = ManagerController.GetAllEmployees();
                 CustomerList = serverController.GetAllCustomers();
                 // MessageBox.Show(CustomerList[0].GetFullName());
@@ -77,8 +77,8 @@ namespace WinFormsUI
             }
             else if (SelectedTitle == Title.Manager)
             {
-                serverController.LoadCustomersFromCSV("Customers2.txt");
-                ManagerController.LoadEmployeesFromCSV("Employees2.txt");
+                serverController.LoadCustomers("Customers2.txt", "CSV");
+                ManagerController.LoadEmployees("Employees2.txt", "CSV");
                 EmployeeList = ManagerController.GetAllEmployees();
                 CustomerList = serverController.GetAllCustomers();
                 LoadLeftPanelManager();
@@ -240,7 +240,7 @@ namespace WinFormsUI
             //Loads our menu for our orders
         {
             ManagerController managerController = new ManagerController();
-            managerController.LoadMenuFromCSV("Menu.txt");
+            managerController.LoadMenu("Menu.txt", "CSV");
             Menu = managerController.GetAllMenuItems();
             MainPanel.Controls.Clear();
             foreach (MenuItemInfo item in Menu) {

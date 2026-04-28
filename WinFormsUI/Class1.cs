@@ -42,7 +42,7 @@ namespace WinFormsUI
             ServerController serverController = new ServerController();
             ManagerController managerController = new ManagerController();
             List<OrderInfo> orders = new List<OrderInfo>();
-            managerController.LoadMenuFromCSV("Menu.txt");
+            managerController.LoadMenu("Menu.txt", "CSV");
             menuItems = managerController.GetAllMenuItems();
             
             if (!System.IO.File.Exists(filePath))
@@ -140,8 +140,8 @@ namespace WinFormsUI
             ServerController serverController = new ServerController();
             ManagerController managerController = new ManagerController();
             List<OrderInfo> orders = new List<OrderInfo>();
-            managerController.LoadEmployeesFromCSV("Employees2.txt");
-            serverController.LoadCustomersFromCSV("Customers2.txt");
+            managerController.LoadEmployees("Employees2.txt", "CSV");
+            serverController.LoadCustomers("Customers2.txt", "CSV");
             customers = serverController.GetAllCustomers();
             employees = managerController.GetAllEmployees();
             if (!System.IO.File.Exists(filePath))
