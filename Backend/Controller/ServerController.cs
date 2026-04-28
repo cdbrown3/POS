@@ -15,6 +15,11 @@ namespace Backend.Controller
             this.customers = new List<CustomerInfo>();
         }
 
+        public List<CustomerInfo> GetCustomers()
+        {
+            return (this.customers);
+        }
+
         // GUI Link: Triggered by a "Save" or "Submit" button on a "New Customer Registration" form.
         // Takes all the text boxes (first name, last name, etc.) as parameters.
         public bool CreateCustomer(string first, string last, string phone, string email, AddressInfo address, int historyCount, string notes)

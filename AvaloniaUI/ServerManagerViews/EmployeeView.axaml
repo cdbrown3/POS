@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:collections="using:System.Collections"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:emit="using:System.Reflection.Emit"
+             xmlns:local="using:AvaloniaUI"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaUI.EmployeeView"
+             x:DataType="local:EmployeeView"
+             Background="Transparent">
+
+    <Grid>
+        <Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+			<Button Grid.Column="0"
+                    Content="Customers"
+                    Classes="Tab"
+                    Click="OnCustomerTab_Click"
+                    Margin="20,10,10,10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    MinHeight="50">
+            </Button>
+
+            <Button Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Height="50"
+                    Width="50"
+                    Margin="0,0,10,0"
+                    Background="Transparent">
+				<Image Source="avares://AvaloniaUI/Resources/Icons/add_user_icon.png"
+					   Width="75" 
+                       Height="75"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
+                </Image>
+            </Button>
+        </Grid>
+        <ContentControl Grid.Row="1"
+                        x:Name="selectedUserType">
+        </ContentControl>
+    </Grid>
+</UserControl>

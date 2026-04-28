@@ -1,0 +1,22 @@
+{
+  "profiles": {
+    "AvaloniaUI": {
+      "commandName": "Project"
+    },
+    "AvaloniaUI_Server": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\carso\\Documents\\EE333\\Final\\POS\\AvaloniaUI\\bin\\Debug\\net8.0\\AvaloniaUI.exe",
+      "commandLineArgs": "/login"
+    },
+    "AvaloniaUI_Customer": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\carso\\Documents\\EE333\\Final\\POS\\AvaloniaUI\\bin\\Debug\\net8.0\\AvaloniaUI.exe",
+      "commandLineArgs": "/customerlogin"
+    },
+    "AvaloniaUI_Cook": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\carso\\Documents\\EE333\\Final\\POS\\AvaloniaUI\\bin\\Debug\\net8.0\\AvaloniaUI.exe",
+      "commandLineArgs": "/cooklogin"
+    }
+  }
+}

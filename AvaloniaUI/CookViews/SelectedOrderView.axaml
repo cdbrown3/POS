@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="600"
+             x:Class="AvaloniaUI.SelectedOrderView">
+  
+    <Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Spacing="5">
+			<TextBlock Text="Order Number"
+                       Foreground="Black"
+                       FontWeight="Bold"
+                       FontSize="18">
+            </TextBlock>
+            <TextBlock x:Name="orderNumberTextBlock"
+                       Text="XXXX"
+                       Foreground="Black"
+                       FontSize="18"
+                       FontWeight="Bold">
+            </TextBlock>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto">
+			<TextBlock x:Name="orderInfoTextBlock"></TextBlock>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
