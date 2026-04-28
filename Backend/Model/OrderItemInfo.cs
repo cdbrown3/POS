@@ -12,11 +12,41 @@ namespace Backend.Model {
         private static int Count = 0;
 
         // order item fields
-        private string OrderItemID;                 // I00001 format
-        private MenuItemInfo MenuItem;              // item being ordered
-        private int Quantity;                       // how many of this item
-        private List<string> SelectedOptions;       // chosen options for this item
-        private double LineTotal;                   // total for this one order item
+        public string OrderItemID { get; private set; }                 // I00001 format
+
+        private MenuItemInfo menuItem;              // item being ordered
+        private int quantity;                       // how many of this item
+
+        public MenuItemInfo MenuItem
+        {
+            get { return menuItem; }
+            set
+            {
+                if (value == null) {
+                    throw new ArgumentException("Menu item cannot be null!");
+                }
+
+                menuItem = value;
+                CalculateLineTotal();
+            }
+        }
+
+        public int Quantity
+        {
+            get { return quantity; }
+            set
+            {
+                if (value <= 0) {
+                    throw new ArgumentException("Quantity must be greater than 0!");
+                }
+
+                quantity = value;
+                CalculateLineTotal();
+            }
+        }
+
+        public List<string> SelectedOptions { get; set; }       // chosen options for this item
+        public double LineTotal { get; private set; }           // total for this one order item
 
         // constructors
 
@@ -25,8 +55,8 @@ namespace Backend.Model {
             int Quantity,
             List<string> SelectedOptions
         ) {
-            SetMenuItem(MenuItem);
-            SetQuantity(Quantity);
+            this.MenuItem = MenuItem;
+            this.Quantity = Quantity;
 
             // if null -> create empty list
             this.SelectedOptions = SelectedOptions ?? new List<string>();
@@ -37,52 +67,6 @@ namespace Backend.Model {
             // generate UNIQUE Order Item ID
             Count++;
             this.OrderItemID = "I" + Count.ToString("D5");
-        }
-
-        // getters
-
-        public string GetOrderItemID() {
-            return OrderItemID;
-        }
-
-        public MenuItemInfo GetMenuItem() {
-            return MenuItem;
-        }
-
-        public int GetQuantity() {
-            return Quantity;
-        }
-
-        public List<string> GetSelectedOptions() {
-            return SelectedOptions;
-        }
-
-        public double GetLineTotal() {
-            return LineTotal;
-        }
-
-        // setters w/validation
-
-        public void SetMenuItem(MenuItemInfo value) {
-            if (value == null) {
-                throw new ArgumentException("Menu item cannot be null!");
-            }
-
-            MenuItem = value;
-            CalculateLineTotal();
-        }
-
-        public void SetQuantity(int value) {
-            if (value <= 0) {
-                throw new ArgumentException("Quantity must be greater than 0!");
-            }
-
-            Quantity = value;
-            CalculateLineTotal();
-        }
-
-        public void SetSelectedOptions(List<string> value) {
-            SelectedOptions = value ?? new List<string>();
         }
 
         // helpers
@@ -97,10 +81,10 @@ namespace Backend.Model {
             SelectedOptions.Remove(option);
         }
 
-        public void CalculateLineTotal() {
+        private void CalculateLineTotal() {
             // only calculate if MenuItem exists
             if (MenuItem != null) {
-                LineTotal = MenuItem.GetPrice() * Quantity;
+                LineTotal = MenuItem.Price * Quantity;
             }
         }
 
@@ -110,7 +94,7 @@ namespace Backend.Model {
             string output = "";
 
             output += "Order Item ID: " + OrderItemID + "\n";
-            output += "Menu Item: " + MenuItem.GetName() + "\n";
+            output += "Menu Item: " + MenuItem.Name + "\n";
             output += "Quantity: " + Quantity + "\n";
             output += "Line Total: $" + LineTotal + "\n";
 
@@ -131,7 +115,7 @@ namespace Backend.Model {
             string output = "";
 
             output += OrderItemID + ",";
-            output += MenuItem.GetItemID() + ",";
+            output += MenuItem.ItemID + ",";
             output += Quantity + ",";
             output += LineTotal + ",";
 
