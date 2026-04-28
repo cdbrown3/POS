@@ -1,0 +1,92 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+             x:Class="AvaloniaUI.SignInView">
+    
+    <StackPanel HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Spacing="20">
+	        <Label Content="Login" 
+                   Foreground="White" 
+                   HorizontalAlignment="Center"
+                   FontFamily="{DynamicResource MainFont}"
+                   FontWeight="SemiBold"
+                   FontSize="36">
+            </Label>
+            
+            <Grid>
+			    <Grid.ColumnDefinitions>
+				    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+				    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBox 
+                     Grid.Row="0"
+                     Grid.ColumnSpan="2"
+                     x:Name="emailTextBox" 
+                     Watermark="Email" 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="24"
+                     Margin="2">
+                </TextBox>
+
+                <TextBox 
+                     Grid.Row="1"
+                     Grid.ColumnSpan="2"
+                     x:Name="passwordTextBox" 
+                     PasswordChar="*" 
+                     Classes="revealPasswordButton" 
+                     Watermark="Enter A Password" 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Center"
+                     FontFamily="{DynamicResource MainFont}"
+                     FontWeight="Regular"
+                     FontSize="24"
+                     Margin="2">
+                </TextBox>
+
+                <!-- Login Button -->
+                <Button Grid.Column="0"
+                        Grid.Row="2"
+                        x:Name="loginButton" 
+                        Classes="LoginButton" 
+                        Click="OnButtonLoginClicked"
+                        Content="Login" 
+                        FontFamily="{DynamicResource MainFont}"
+                        FontWeight="Regular"
+                        FontSize="24"
+                        Margin="2">
+                </Button>
+                <!-- Back Button -->
+                <Button Grid.Column="1"
+                        Grid.Row="2"
+                        x:Name="backButton" 
+                        Classes="LoginButton" 
+                        Click="OnBackButtonClicked"
+                        Content="Back" 
+                        FontFamily="{DynamicResource MainFont}"
+                        FontWeight="Regular"
+                        FontSize="24"
+                        Margin="2">
+                </Button>
+            </Grid>
+            
+            <!-- Section to display a message to the user -->
+            <TextBlock x:Name="errorTextBlock"
+				       FontWeight="Regular"
+                       FontSize="8"
+                       Margin="2"
+                       Foreground="{DynamicResource InvalidInputColor}">
+            </TextBlock>
+        </StackPanel> 
+</UserControl>

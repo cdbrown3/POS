@@ -1,0 +1,74 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Design.PreviewWith>
+    <Border Padding="20">
+      <!-- Add Controls for Previewer Here -->
+    </Border>
+  </Design.PreviewWith>
+
+  <!-- Add Styles Here -->
+  <Style Selector="Button.LoginButton">
+	  <Setter Property="Background" Value="{DynamicResource DarkButtonColor}"></Setter>
+      <Setter Property="CornerRadius" Value ="5"></Setter>
+      <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+      <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+      <Setter Property="BorderBrush" Value="Transparent"></Setter>
+      <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+      <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+  </Style>
+    
+  <!-- Tabs for each window for showing customers, employees, orders, etc...-->
+    <Style Selector="TextBlock.Tab">
+	    <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+        <Setter Property="FontSize" Value="24"></Setter>
+    </Style>
+
+    <Style Selector="Button.Tab">
+	    <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+        <Setter Property="FontSize" Value="24"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="CornerRadius" Value="5"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+    </Style>
+
+    <!-- Style for each order card in the cook view -->
+    <Style Selector="ListBox.OrderCards ListBoxItem">
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Padding" Value="0"></Setter>
+        <Setter Property="Margin" Value="10"></Setter>
+    </Style>
+
+    <Style Selector="ListBox.OrderCards ListBoxItem:selected /template/ ContentPresenter">
+        <Setter Property="Background" Value ="Transparent"></Setter>
+        <Setter Property="RenderTransform" Value="scale(1.03)"></Setter>
+    </Style>
+
+    <Style Selector="ListBox.OrderCards ListBoxItem:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value ="#b9c0c7"></Setter>
+		<Setter Property="RenderTransform" Value="scale(1.03)"></Setter>
+    </Style>
+
+    
+    <Style Selector="ListBox.OrderCards ListBoxItem:selected:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent"/>
+		<Setter Property="RenderTransform" Value="scale(1.03)"></Setter>
+    </Style>
+
+
+    <!-- Style for the lists of customers/employees -->
+    <Style Selector="TextBlock.DisplayUser">
+		<Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="FontSize" Value="24"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+    </Style>
+
+    <!-- Selected Customer/Employee Header-->
+    <Style Selector="TextBlock.SelectedHeader">
+        <Setter Property="FontSize" Value="24"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+        <Setter Property="Foreground" Value="Black"></Setter>
+    </Style>
+</Styles>
