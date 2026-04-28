@@ -1,0 +1,6 @@
+UserID,FirstName,LastName,Phone,Email,Street,City,State,Zip,CustomerID,OrderHistoryCount,Notes
+U00001,John,Doe,205-111-2222,john.doe@email.com,123 Main St,Birmingham,AL,35210,C00001,5,VIP customer
+U00002,Jane,Smith,205-333-4444,jane.smith@email.com,456 Oak Ave,Hoover,AL,35226,C00002,2,Prefers email contact
+U00003,Mike,Johnson,205-555-6666,mike.j@email.com,789 Pine Rd,Trussville,AL,35173,C00003,10,Frequent buyer
+U00004,Emily,Davis,205-777-8888,emily.d@email.com,321 Maple Dr,Irondale,AL,35210,C00004,1,New customer
+U00005,Chris,Brown,205-999-0000,chris.b@email.com,654 Cedar St,Leeds,AL,35094,C00005,7,Leave package at door
