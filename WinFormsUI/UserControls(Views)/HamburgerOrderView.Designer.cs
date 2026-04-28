@@ -35,6 +35,9 @@
             ConfirmButton = new Button();
             OrderLabel = new Label();
             panel1 = new Panel();
+            label1 = new Label();
+            QTYUpDown = new NumericUpDown();
+            ConfimOrderItemButton = new Button();
             OnionChheckBox = new CheckBox();
             PickelsCheckBox = new CheckBox();
             TomatoCheckBox = new CheckBox();
@@ -45,6 +48,7 @@
             button1 = new Button();
             BunCheckBox = new CheckBox();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)QTYUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PattyCountUpDown).BeginInit();
             SuspendLayout();
             // 
@@ -111,6 +115,9 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(28, 30, 46);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(QTYUpDown);
+            panel1.Controls.Add(ConfimOrderItemButton);
             panel1.Controls.Add(OnionChheckBox);
             panel1.Controls.Add(PickelsCheckBox);
             panel1.Controls.Add(TomatoCheckBox);
@@ -124,6 +131,40 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(341, 476);
             panel1.TabIndex = 14;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 15F);
+            label1.ForeColor = SystemColors.ButtonHighlight;
+            label1.Location = new Point(18, 334);
+            label1.Name = "label1";
+            label1.Size = new Size(51, 28);
+            label1.TabIndex = 30;
+            label1.Text = "QTY:";
+            // 
+            // QTYUpDown
+            // 
+            QTYUpDown.BackColor = Color.FromArgb(28, 30, 46);
+            QTYUpDown.BorderStyle = BorderStyle.None;
+            QTYUpDown.Font = new Font("Segoe UI", 15F);
+            QTYUpDown.ForeColor = SystemColors.ButtonHighlight;
+            QTYUpDown.Location = new Point(75, 335);
+            QTYUpDown.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            QTYUpDown.Name = "QTYUpDown";
+            QTYUpDown.Size = new Size(163, 30);
+            QTYUpDown.TabIndex = 29;
+            // 
+            // ConfimOrderItemButton
+            // 
+            ConfimOrderItemButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ConfimOrderItemButton.Location = new Point(33, 427);
+            ConfimOrderItemButton.Name = "ConfimOrderItemButton";
+            ConfimOrderItemButton.Size = new Size(285, 46);
+            ConfimOrderItemButton.TabIndex = 21;
+            ConfimOrderItemButton.Text = "Confirm";
+            ConfimOrderItemButton.UseVisualStyleBackColor = true;
+            ConfimOrderItemButton.Click += ConfimOrderItemButton_Click;
             // 
             // OnionChheckBox
             // 
@@ -234,7 +275,7 @@
             BunCheckBox.UseVisualStyleBackColor = true;
             BunCheckBox.CheckedChanged += BunCheckBox_CheckedChanged;
             // 
-            // UserControl9
+            // HamburgerOrderView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -245,10 +286,11 @@
             Controls.Add(ConfirmButton);
             Controls.Add(OrderLabel);
             Controls.Add(panel1);
-            Name = "UserControl9";
+            Name = "HamburgerOrderView";
             Size = new Size(975, 496);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)QTYUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)PattyCountUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -272,5 +314,8 @@
         private CheckBox PickelsCheckBox;
         private CheckBox TomatoCheckBox;
         private CheckBox CheeseCheckBox;
+        private Button ConfimOrderItemButton;
+        private Label label1;
+        private NumericUpDown QTYUpDown;
     }
 }

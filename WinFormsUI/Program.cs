@@ -18,10 +18,12 @@ namespace WinFormsUI
             if ((argv.Length == 2) && (String.Compare(argv[1], "/Manage_Login", true) == 0))
             {
                 Application.Run(new MainLoginWindow());
-            } else if ((argv.Length == 2) && (String.Compare(argv[1], "/Cook_Login", true) == 0))
+            }
+            else if ((argv.Length == 2) && (String.Compare(argv[1], "/Cook_Login", true) == 0))
             {
                 Application.Run(new CookLoginWindow());
-            } else if ((argv.Length == 2) && (String.Compare(argv[1], "/Kiosk_Login", true) == 0))
+            }
+            else if ((argv.Length == 2) && (String.Compare(argv[1], "/Kiosk_Login", true) == 0))
             {
                 Application.Run(new KioskLoginWindow());
             }

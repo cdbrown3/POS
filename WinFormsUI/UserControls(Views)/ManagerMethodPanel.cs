@@ -27,5 +27,10 @@ namespace WinFormsUI.UserControls_Views_
         {
             Instance.EditUser();
         }
+
+        private void NewOrderButton_Click(object sender, EventArgs e)
+        {
+            Instance.DeleteEmployee();
+        }
     }
 }

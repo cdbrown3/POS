@@ -1,4 +1,6 @@
 ﻿using Backend.Model;
+using Backend.Controller;
+using POS.Backend;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -26,92 +28,33 @@ namespace WinFormsUI
         public int SelectedUserIndex;
         public String SelectedUserField;
         public String SelectedUserValue;
-        public int SelectedUserNumber;
+        public EmployeeInfo LoggedInEmployee;
+        public EmployeeInfo LoggedInManager;
+        public MenuItemInfo SelectedMenuItem;
+        public OrderInfo PotOrder;
+        public ServerController serverController = new ServerController();
+        public ManagerController ManagerController = new ManagerController();
         public List<CustomerInfo> CustomerList = new List<CustomerInfo>();
         public List<EmployeeInfo> EmployeeList = new List<EmployeeInfo>();
+        public List<MenuItemInfo> Menu = new List<MenuItemInfo>();
+        public List<OrderInfo> OrderList = new List<OrderInfo>();
+        List<MenuItem> items = new List<MenuItem>();
         private bool isEditing = false;
-
-
-        public List<CustomerInfo> ImportCustomersFromCSV(string filePath)
-        {
-            List<CustomerInfo> customers = new List<CustomerInfo>();
-
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException("CSV file not found.");
-
-            string[] lines = File.ReadAllLines(filePath);
-            foreach (String line in lines)
-            {
-                string[] values = line.Split(",");
-                string first = values[0];
-                string last = values[1];
-                string phone = values[2];
-                string email = values[3];
-
-                // Address (adjust if your constructor is different)
-                AddressInfo address = new AddressInfo(
-                    values[4], // Street
-                    values[5], // City
-                    values[6], // State
-                    values[7]  // Zip
-                );
-
-                // Customer-specific fields
-                int orderHistoryCount = 0;
-                int.TryParse(values[8], out orderHistoryCount);
-
-                string notes = values[9];
-                CustomerInfo customer = new CustomerInfo(
-            first,
-            last,
-            phone,
-            email,
-            address,
-            orderHistoryCount,
-            notes);
-                customers.Add(customer);
-            }
-
-            MessageBox.Show(customers.Count.ToString());
-            return customers;
-        }
-
-        public static List<EmployeeInfo> ImportEmployeesFromCSV(string path)
-        {
-            List<EmployeeInfo> employees = new List<EmployeeInfo>();
-            string[] lines = File.ReadAllLines(path);
-            foreach (String line in lines)
-            {
-                string[] chunks = line.Split(",");
-                string first = chunks[0];
-                string last = chunks[1];
-                string phone = chunks[2];
-                string email = chunks[3];
-
-                AddressInfo Address = new AddressInfo(chunks[4], chunks[5], chunks[6], chunks[7]);
-                string positon = chunks[8];
-                string username = chunks[9];
-                string password = chunks[10];
-                double wage;
-                double.TryParse(chunks[11], out wage);
-                bool active;
-                bool.TryParse(chunks[12], out active);
-                EmployeeInfo Employee = new EmployeeInfo(first, last, phone, email, Address, positon, username, password, wage);
-                employees.Add(Employee);
-            }
-            return (employees);
-        }
-
+        public static String SpecialInstructions;
+        public ChangedProperty Prop;
+        public bool ispressed = false;
         public MainWindow()
         {
             InitializeComponent();
         }
-        public MainWindow(Title title) : this()
+        public MainWindow(Title title, EmployeeInfo employee) : this() // employee that just logged in and their Title(Employee/Manager) 
         {
+            LoggedInEmployee = employee;
+            LoadSigninName(); // sets top line ("signed in")
             SelectedTitle = title;
-            LoadViews();
+            LoadViews(); // loads main views
         }
-        public void ReloadListBox()
+        public void ReloadListBox() // reloads the MainPanel, mainly the listbox within the main panel
         {
             MainPanel.Controls.Clear();
             MainListView MainPanelAdd = new MainListView(this);
@@ -121,19 +64,23 @@ namespace WinFormsUI
         {
             if (SelectedTitle == Title.Employee)
             {
-                CustomerList = ImportCustomersFromCSV("Customers.txt");
+                // CustomerList = ImportCustomersFromCSV("Customers.txt");
+                serverController.LoadCustomersFromCSV("Customers2.txt"); // creating a customers list
+                ManagerController.LoadEmployeesFromCSV("Employees2.txt"); // creating an employee list
+                EmployeeList = ManagerController.GetAllEmployees();
+                CustomerList = serverController.GetAllCustomers();
                 // MessageBox.Show(CustomerList[0].GetFullName());
                 MainListView MainPanelAdd = new MainListView(this);
-                CustomerInfoView LeftDockPanelEmployee = new CustomerInfoView(this);
-                EmployeeMethodPanel ButtonsPanelEmployee = new EmployeeMethodPanel(this);
                 MainPanel.Controls.Add(MainPanelAdd);
-                LeftDockPanel.Controls.Add(LeftDockPanelEmployee);
-                LeftDockPanelEmployee.Dock = DockStyle.Left;
-                ButtonsPanel.Controls.Add(ButtonsPanelEmployee);
+                LoadLeftPanelEmployee();
+                LoadButtonsPanel(Title.Employee);
             }
             else if (SelectedTitle == Title.Manager)
             {
-                EmployeeList = ImportEmployeesFromCSV("Employees.txt");
+                serverController.LoadCustomersFromCSV("Customers2.txt");
+                ManagerController.LoadEmployeesFromCSV("Employees2.txt");
+                EmployeeList = ManagerController.GetAllEmployees();
+                CustomerList = serverController.GetAllCustomers();
                 LoadLeftPanelManager();
                 MainListView MainPanelAdd = new MainListView(this);
                 MainPanel.Controls.Add(MainPanelAdd);
@@ -141,14 +88,14 @@ namespace WinFormsUI
 
             }
         }
-        public void LoadLeftPanelManager()
+        public void LoadLeftPanelManager() // ManagerView LeftPanel
         {
             EmployeeInfoView LeftDockPanelManager = new EmployeeInfoView(this, EmployeeList[SelectedUserIndex], false);
             LeftDockPanel.Controls.Clear();
             LeftDockPanel.Controls.Add(LeftDockPanelManager);
             LoadButtonsPanel(Title.Manager);
         }
-        public void LoadLeftPanelEmployee()
+        public void LoadLeftPanelEmployee() // EmployeeView LeftPanel
         {
             CustomerInfoView panel = new CustomerInfoView(this);
             LeftDockPanel.Controls.Clear();
@@ -160,13 +107,13 @@ namespace WinFormsUI
             ButtonsPanel.Controls.Clear();
             if (title == Title.Manager)
             {
-                ManagerMethodPanel buttons = new ManagerMethodPanel(this);
+                ManagerMethodPanel buttons = new ManagerMethodPanel(this); // manager buttons (archive and editemployee)
                 buttons.Dock = DockStyle.Fill;
                 ButtonsPanel.Controls.Add(buttons);
             }
             else if (title == Title.Employee)
             {
-                EmployeeMethodPanel buttons = new EmployeeMethodPanel(this);
+                EmployeeMethodPanel buttons = new EmployeeMethodPanel(this); // Employee buttons (new order and editcustomer)
                 buttons.Dock = DockStyle.Fill;
                 ButtonsPanel.Controls.Add(buttons);
             }
@@ -174,13 +121,14 @@ namespace WinFormsUI
 
         public void NewOrder()
         {
-            BaseOrderView OrderPanel = new BaseOrderView(this);
             MainPanel.Controls.Clear();
-            MainPanel.Controls.Add(OrderPanel);
+            // passes the customer that is selected and the logged in employee so the order is created with accurate values already
+            this.PotOrder = new OrderInfo(CustomerList[SelectedUserIndex], LoggedInEmployee, "New");
+            LoadMenu(); // loading the menu of MenuItemInfo
         }
-        public void EditUser()
+        public void EditUser() // called when button edit(employee or manager) is pressed
         {
-            MessageBox.Show("EditUser Called");
+            // MessageBox.Show("EditUser Called");
             if (SelectedTitle == Title.Employee)
             {
                 LeftDockPanel.Controls.Clear();
@@ -202,10 +150,11 @@ namespace WinFormsUI
             ButtonsPanel.Controls.Add(user);
             user.Dock = DockStyle.Fill;
             ButtonsPanel.BringToFront();
-            MessageBox.Show("EditUser END - controls: " + ButtonsPanel.Controls.Count);
+            // MessageBox.Show("EditUser END - controls: " + ButtonsPanel.Controls.Count);
             isEditing = false;
         }
-        public void SubmitChanges()
+        public void SubmitChanges() 
+            //called when submit changes is pressed after editing a user, resets the panel and calls editlist()
         {
             ButtonsPanel.Visible = true;
             ButtonsPanel.Controls.Clear();
@@ -217,50 +166,56 @@ namespace WinFormsUI
             {
                 LoadButtonsPanel(Title.Manager);
             }
-            EditListFirst();
+            EditList();
         }
         public void DeleteEmployee()
         {
-
+            EmployeeList[SelectedUserIndex].IsActive = false;
+            LoadLeftPanelManager();
         }
-        public void EditListFirst()
+        public void EditList()
+            // edits the property that was changed during the instance of editing the user
+            //***IMPROVE*** 
+            // only one property can be changed during a button click
         {
             if (SelectedTitle == Title.Employee)
             {
-                CustomerList[SelectedUserIndex].SetFirstName(SelectedUserValue);
+                if (Prop == ChangedProperty.First)
+                {
+                    CustomerList[SelectedUserIndex].FirstName = SelectedUserValue;
+                }
+                else if (Prop == ChangedProperty.Last)
+                {
+                    CustomerList[SelectedUserIndex].LastName = SelectedUserValue;
+                }
+                else if (Prop == ChangedProperty.Phone)
+                {
+                    CustomerList[SelectedUserIndex].PhoneNumber = SelectedUserValue;
+                }
+                else if (Prop == ChangedProperty.Notes)
+                {
+                    string[] notes = SelectedUserValue.Split(": ");
+                    CustomerList[SelectedUserIndex].Notes = notes[1];
+                }
             }
             else if (SelectedTitle == Title.Manager)
             {
-                EmployeeList[SelectedUserIndex].SetFirstName(SelectedUserValue);
+                if (Prop == ChangedProperty.First)
+                {
+                    EmployeeList[SelectedUserIndex].FirstName = SelectedUserValue;
+                }
+                else if (Prop == ChangedProperty.Last)
+                {
+                    EmployeeList[SelectedUserIndex].LastName = SelectedUserValue;
+                }
+                else if (Prop == ChangedProperty.Phone)
+                {
+                    EmployeeList[SelectedUserIndex].PhoneNumber = SelectedUserValue;
+                }
             }
-            ReloadListBox();
-        }
-        public void EditListLast()
-        {
-            CustomerList[SelectedUserIndex].SetLastName(SelectedUserValue);
-        }
-        public void EditListPhone()
-        {
-            CustomerList[SelectedUserIndex].SetPhoneNumber(SelectedUserValue);
-        }
-        public void EditListOrderHisttory()
-        {
-            CustomerList[SelectedUserIndex].SetOrderHistoryCount(SelectedUserNumber);
-        }
-
-        public void AddHamburger()
-        {
-            HamburgerOrderView RightPanel = new HamburgerOrderView(this);
-            MainPanel.Controls.Clear();
-            MainPanel.Controls.Add(RightPanel);
-        }
-        public void AddTacos()
-        {
-            TacoOrderView RightPanel = new TacoOrderView(this);
-            MainPanel.Controls.Clear();
-            MainPanel.Controls.Add(RightPanel);
         }
         public void PopulateTextBoxes()
+            //when the selected user changes the Leftpanel populates with their properties
         {
             if (SelectedTitle == Title.Employee)
             {
@@ -275,8 +230,41 @@ namespace WinFormsUI
                 LeftDockPanel.Controls.Add(LeftPanel);
             }
         }
+        public void AddMenuItem()
+        {
+            //MenuItem menuItem = new MenuItem(this, SelectedMenuItem);
+            //BaseOrderView MenuView = new BaseOrderView(this, menuItem);
+            //MainPanel.Controls.Add(MenuView);
+        }
+        public void LoadMenu()
+            //Loads our menu for our orders
+        {
+            ManagerController managerController = new ManagerController();
+            managerController.LoadMenuFromCSV("Menu.txt");
+            Menu = managerController.GetAllMenuItems();
+            MainPanel.Controls.Clear();
+            foreach (MenuItemInfo item in Menu) {
+                MenuItem menuItem = new MenuItem(this, item);
+                this.items.Add(menuItem);
+            }
+                BaseOrderView MenuView = new BaseOrderView(this, items);
+                MainPanel.Controls.Add(MenuView);
+        }
+        public void LoadOrderPanel()
+            //loads orderview when New Order is pressed
+        {
+            MainPanel.Controls.Clear();
+            MenuItem menuItem = new MenuItem(this, SelectedMenuItem);
+            BaseOrderView MenuView = new BaseOrderView(this, this.items);
+            MainPanel.Controls.Add(MenuView);
+        }
+        public void LoadSigninName()
+        {
+            label1.Text = "Signed In As: " + LoggedInEmployee.Username; 
+        }
 
         private void ExitButton_Click(object sender, EventArgs e)
+            // When the Exit button is pressed the dialog box makes a confirmation question to close the form
         {
             var result =MessageBox.Show(
             "Are you sure you want to quit?",
@@ -287,7 +275,14 @@ namespace WinFormsUI
             if (result == DialogResult.Yes)
             {
                 this.Close();
+                string[] strings = new string[this.OrderList.Count];
+                for (int i = 0; i < this.OrderList.Count; i++)
+                {
+                    strings[i] = OrderList[i].ToCSV();
+                }
+                System.IO.File.WriteAllLines("OrderList.txt", strings);
             }
+
         }
     }
 }

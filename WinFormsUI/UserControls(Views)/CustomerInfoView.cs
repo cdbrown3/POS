@@ -28,17 +28,19 @@ namespace WinFormsUI
             InitializeComponent();
             this.Instance = Instance;
 
-            NameTextBox.Clear();
-            NameTextBox.Text = SelectedCustomer.GetFullName();
+            FirstNameTextBox.Clear();
+            FirstNameTextBox.Text = SelectedCustomer.FirstName;
+            LastNameTextBox.Clear();
+            LastNameTextBox.Text = SelectedCustomer.LastName;
             PhoneTextBox.Clear();
-            PhoneTextBox.Text = SelectedCustomer.GetPhoneNumber();
+            PhoneTextBox.Text = SelectedCustomer.PhoneNumber;
             OrderHistoryTextBox.Clear();
-            OrderHistoryTextBox.Text = SelectedCustomer.GetOrderHistoryCount().ToString();
-            IDTextBox.Text = SelectedCustomer.GetCustomerID().ToString();
-            NotesTextBox.AppendText(SelectedCustomer.GetNotes());
+            OrderHistoryTextBox.Text = SelectedCustomer.OrderHistoryCount.ToString();
+            IDTextBox.Text = SelectedCustomer.CustomerID;
+            NotesTextBox.AppendText(SelectedCustomer.Notes);
             if (iseditable == true)
             {
-                NameTextBox.ReadOnly = false; PhoneTextBox.ReadOnly = false; OrderHistoryTextBox.ReadOnly = false;
+                FirstNameTextBox.ReadOnly = false; LastNameTextBox.ReadOnly = false; PhoneTextBox.ReadOnly = false; OrderHistoryTextBox.ReadOnly = false; NotesTextBox.ReadOnly = false;
             }
         }
 
@@ -49,7 +51,11 @@ namespace WinFormsUI
 
         private void NameTextBox_TextChanged(object sender, EventArgs e)
         {
-            Instance.SelectedUserValue = NameTextBox.Text;
+            if (FirstNameTextBox.Text.Length != 0)
+            {
+                Instance.SelectedUserValue = FirstNameTextBox.Text;
+                Instance.Prop = ChangedProperty.First;
+            }
         }
 
         private void NameTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -59,6 +65,33 @@ namespace WinFormsUI
             //    Instance.EditListFirst();
             //    e.Handled = true;
             //}
+        }
+
+        private void LastNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (LastNameTextBox.Text.Length != 0)
+            {
+                Instance.SelectedUserValue = LastNameTextBox.Text;
+                Instance.Prop = ChangedProperty.Last;
+            }
+        }
+
+        private void PhoneTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (PhoneTextBox.Text.Length != 0)
+            {
+                Instance.SelectedUserValue = PhoneTextBox.Text;
+                Instance.Prop = ChangedProperty.Phone;
+            }
+        }
+
+        private void NotesTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (NotesTextBox.Text.Length != 0)
+            {
+                Instance.SelectedUserValue = NotesTextBox.Text;
+                Instance.Prop = ChangedProperty.Notes;
+            }
         }
     }
 }

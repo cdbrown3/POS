@@ -30,15 +30,11 @@ namespace WinFormsUI
             this.EmployeeList = Instance.EmployeeList;
             if (Instance.SelectedTitle == Title.Manager)
             {
-                foreach (EmployeeInfo employee in EmployeeList)
-                {
-                    CustomerListBox.Items.Add(employee.GetFullName());
-                }
                 EmployeesLabel.Visible = true;
             }
             else if (Instance.SelectedTitle == Title.Employee)
             {
-                foreach (CustomerInfo Customer in CustomerList)
+                foreach (CustomerInfo Customer in this.CustomerList)
                 {
                     CustomerListBox.Items.Add(Customer.GetFullName());
                 }
@@ -49,27 +45,31 @@ namespace WinFormsUI
 
         private void CustomersLabel_Click(object sender, EventArgs e)
         {
-            //'if (EmployeesLabel.Visible == true)
-            //{
             Instance.LoadLeftPanelEmployee();
-            //}
-            //else
-            //{
-
-            //}
+            CustomerListBox.Items.Clear();
+            Instance.SelectedTitle = Title.Employee;
+            foreach (CustomerInfo Customer in this.CustomerList)
+            {
+                CustomerListBox.Items.Add(Customer.GetFullName());
+            }
         }
 
         private void EmployeesLabel_Click(object sender, EventArgs e)
         {
             Instance.LoadLeftPanelManager();
+            CustomerListBox.Items.Clear();
             Instance.SelectedTitle = Title.Manager;
+            foreach (EmployeeInfo employee in EmployeeList)
+            {
+                CustomerListBox.Items.Add(employee.GetFullName());
+            }
+
         }
 
         private void CustomerListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = CustomerListBox.SelectedIndex;
             Instance.SelectedUserIndex = index;
-            MessageBox.Show(index.ToString());
             Instance.PopulateTextBoxes();
         }
 
@@ -78,7 +78,17 @@ namespace WinFormsUI
             AddressInfo Address = new AddressInfo("123 N/A", "NA", "AL", "00000");
             this.Customer = new CustomerInfo("A", "B", "000-000-0000", "abc@123.com", Address, 0, "N/A");
             CustomerList.Add(Customer);
-            Instance.ReloadListBox(); 
+            Instance.ReloadListBox();
+        }
+
+        private void SearchTextBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SearchTextBox_TextChanged(object sender, EventArgs e)
+        {
+ 
         }
     }
 }

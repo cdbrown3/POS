@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Quic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -37,6 +38,18 @@ namespace WinFormsUI
             {
                 BunCheckBox.Checked = false;
             }
+        }
+
+        private void ConfimOrderItemButton_Click(object sender, EventArgs e)
+        {
+            if (BunCheckBox.Checked == true)
+            {
+                String Bun = "Bun";
+            } else
+            {
+                String Bun = "NoBun";
+            }
+            
         }
     }
 }

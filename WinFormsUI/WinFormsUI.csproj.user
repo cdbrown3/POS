@@ -22,6 +22,15 @@
     <Compile Update="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="OrderCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="OrderConfirmationWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UserControls(Views)\MenuItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UserControls(Views)\TacoOrderView.cs">
       <SubType>UserControl</SubType>
     </Compile>

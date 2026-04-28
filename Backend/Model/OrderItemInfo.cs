@@ -8,7 +8,7 @@ namespace Backend.Model {
     public class OrderItemInfo : IExportable {
         // variables
 
-        // static counter for UNIQUE Order Item IDs
+        // static counter for UNIQUE Order Item ID
         private static int Count = 0;
 
         // order item fields

@@ -69,13 +69,14 @@
             NewOrderButton.TabIndex = 19;
             NewOrderButton.Text = "Archive";
             NewOrderButton.UseVisualStyleBackColor = false;
+            NewOrderButton.Click += NewOrderButton_Click;
             // 
-            // UserControl5
+            // ManagerMethodPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel2);
-            Name = "UserControl5";
+            Name = "ManagerMethodPanel";
             Size = new Size(271, 67);
             panel2.ResumeLayout(false);
             ResumeLayout(false);

@@ -26,34 +26,51 @@ namespace WinFormsUI.UserControls_Views_
             InitializeComponent();
             this.Instance = Instance;
 
-            NameTextBox.Clear();
-            NameTextBox.Text = Employee.GetFullName();
+            FirstNameTextBox.Clear();
+            FirstNameTextBox.Text = Employee.FirstName;
+            LastNameTextBox.Clear();
+            LastNameTextBox.Text= Employee.LastName;
             PhoneTextBox.Clear();
-            PhoneTextBox.Text = Employee.GetPhoneNumber();
+            PhoneTextBox.Text = Employee.PhoneNumber;
             PositionTextBox.Clear();
-            PositionTextBox.Text = Employee.GetPosition().ToString();
-            IDTextBox.Text = Employee.GetEmployeeID().ToString();
-            ActiveTextBox.Text = Employee.GetIsActive().ToString();
-            if (iseditable == false)
+            PositionTextBox.Text = Employee.Position.ToString();
+            IDTextBox.Text = Employee.EmployeeID.ToString();
+            ActiveTextBox.Text = Employee.IsActive.ToString();
+            if (iseditable == true)
             {
-                NameTextBox.ReadOnly = true; PhoneTextBox.ReadOnly = true; PositionTextBox.ReadOnly = true; ActiveTextBox.ReadOnly = true;
+                FirstNameTextBox.ReadOnly = false; LastNameTextBox.ReadOnly = false; PhoneTextBox.ReadOnly = false; PositionTextBox.ReadOnly = false; ActiveTextBox.ReadOnly = false;
             }
         }
         private void EditEmployeeButton_Click(object sender, EventArgs e)
         {
-            if (Instance == null)
-            {
-                MessageBox.Show("Instance is NULL");
-                return;
-            }
             Instance.EditUser();
-            MessageBox.Show("Instance Hash: " + Instance.GetHashCode());
-            MessageBox.Show("CLICKED");
         }
 
         private void NameTextBox_TextChanged(object sender, EventArgs e)
         {
-            Instance.SelectedUserValue = NameTextBox.Text;
+            if (FirstNameTextBox.Text.Length != 0)
+            {
+                Instance.SelectedUserValue = FirstNameTextBox.Text;
+                Instance.Prop = ChangedProperty.First;
+            }
+        }
+
+        private void LastNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (LastNameTextBox.Text.Length != 0)
+            {
+                Instance.SelectedUserValue = LastNameTextBox.Text;
+                Instance.Prop = ChangedProperty.Last;
+            }
+        }
+
+        private void PhoneTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (PhoneTextBox.Text.Length != 0)
+            {
+                Instance.SelectedUserValue = PhoneTextBox.Text;
+                Instance.Prop = ChangedProperty.Phone;
+            }
         }
     }
 }

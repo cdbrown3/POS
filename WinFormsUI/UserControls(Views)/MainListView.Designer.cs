@@ -33,8 +33,6 @@
             panel1 = new Panel();
             EmployeesLabel = new Label();
             CustomersLabel = new Label();
-            SearchTextBox = new TextBox();
-            NameTextBox = new TextBox();
             CustomerListBox = new ListBox();
             AddUserButton = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)ExitButton).BeginInit();
@@ -56,8 +54,6 @@
             panel1.BackColor = Color.FromArgb(234, 232, 233);
             panel1.Controls.Add(EmployeesLabel);
             panel1.Controls.Add(CustomersLabel);
-            panel1.Controls.Add(SearchTextBox);
-            panel1.Controls.Add(NameTextBox);
             panel1.Controls.Add(CustomerListBox);
             panel1.Controls.Add(AddUserButton);
             panel1.Location = new Point(3, 3);
@@ -87,37 +83,15 @@
             CustomersLabel.Text = "Customers";
             CustomersLabel.Click += CustomersLabel_Click;
             // 
-            // SearchTextBox
-            // 
-            SearchTextBox.Font = new Font("Segoe UI", 18F);
-            SearchTextBox.ForeColor = SystemColors.ScrollBar;
-            SearchTextBox.Location = new Point(17, 44);
-            SearchTextBox.Name = "SearchTextBox";
-            SearchTextBox.Size = new Size(148, 39);
-            SearchTextBox.TabIndex = 5;
-            SearchTextBox.Text = "search";
-            SearchTextBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // NameTextBox
-            // 
-            NameTextBox.Font = new Font("Segoe UI", 18F);
-            NameTextBox.ForeColor = SystemColors.ScrollBar;
-            NameTextBox.Location = new Point(181, 44);
-            NameTextBox.Name = "NameTextBox";
-            NameTextBox.Size = new Size(270, 39);
-            NameTextBox.TabIndex = 4;
-            NameTextBox.Text = "name";
-            NameTextBox.TextAlign = HorizontalAlignment.Center;
-            // 
             // CustomerListBox
             // 
             CustomerListBox.BackColor = Color.FromArgb(234, 232, 233);
             CustomerListBox.Font = new Font("Segoe UI", 18F);
             CustomerListBox.FormattingEnabled = true;
             CustomerListBox.ItemHeight = 32;
-            CustomerListBox.Location = new Point(17, 99);
+            CustomerListBox.Location = new Point(17, 54);
             CustomerListBox.Name = "CustomerListBox";
-            CustomerListBox.Size = new Size(434, 356);
+            CustomerListBox.Size = new Size(434, 420);
             CustomerListBox.TabIndex = 3;
             CustomerListBox.SelectedIndexChanged += CustomerListBox_SelectedIndexChanged;
             // 
@@ -131,14 +105,14 @@
             AddUserButton.TabStop = false;
             AddUserButton.Click += AddUserButton_Click;
             // 
-            // UserControl2
+            // MainListView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(28, 30, 46);
             Controls.Add(panel1);
             Controls.Add(ExitButton);
-            Name = "UserControl2";
+            Name = "MainListView";
             Size = new Size(975, 496);
             ((System.ComponentModel.ISupportInitialize)ExitButton).EndInit();
             panel1.ResumeLayout(false);
@@ -153,8 +127,6 @@
         private Panel panel1;
         private PictureBox AddUserButton;
         private ListBox CustomerListBox;
-        private TextBox SearchTextBox;
-        private TextBox NameTextBox;
         private Label CustomersLabel;
         private Label EmployeesLabel;
     }

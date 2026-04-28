@@ -29,21 +29,23 @@
         private void InitializeComponent()
         {
             LeftDockPanel = new Panel();
+            LastNameTextBox = new TextBox();
             panel2 = new Panel();
             EditCustomerButton = new Button();
             NewOrderButton = new Button();
+            label2 = new Label();
             ActiveTextBox = new TextBox();
-            IDTextBox = new TextBox();
-            PositionTextBox = new TextBox();
             PhoneTextBox = new TextBox();
-            NameTextBox = new TextBox();
+            IDTextBox = new TextBox();
+            FirstNameTextBox = new TextBox();
+            PositionTextBox = new TextBox();
+            label4 = new Label();
             label5 = new Label();
+            label7 = new Label();
             label1 = new Label();
             richTextBox1 = new RichTextBox();
             label6 = new Label();
-            label4 = new Label();
             label3 = new Label();
-            label2 = new Label();
             panel1 = new Panel();
             EditEmployeeButton = new Button();
             button1 = new Button();
@@ -54,23 +56,37 @@
             // 
             // LeftDockPanel
             // 
+            LeftDockPanel.Controls.Add(LastNameTextBox);
             LeftDockPanel.Controls.Add(panel2);
+            LeftDockPanel.Controls.Add(label2);
             LeftDockPanel.Controls.Add(ActiveTextBox);
-            LeftDockPanel.Controls.Add(IDTextBox);
-            LeftDockPanel.Controls.Add(PositionTextBox);
             LeftDockPanel.Controls.Add(PhoneTextBox);
-            LeftDockPanel.Controls.Add(NameTextBox);
+            LeftDockPanel.Controls.Add(IDTextBox);
+            LeftDockPanel.Controls.Add(FirstNameTextBox);
+            LeftDockPanel.Controls.Add(PositionTextBox);
+            LeftDockPanel.Controls.Add(label4);
             LeftDockPanel.Controls.Add(label5);
+            LeftDockPanel.Controls.Add(label7);
             LeftDockPanel.Controls.Add(label1);
             LeftDockPanel.Controls.Add(richTextBox1);
             LeftDockPanel.Controls.Add(label6);
-            LeftDockPanel.Controls.Add(label4);
             LeftDockPanel.Controls.Add(label3);
-            LeftDockPanel.Controls.Add(label2);
             LeftDockPanel.Location = new Point(0, 0);
             LeftDockPanel.Name = "LeftDockPanel";
             LeftDockPanel.Size = new Size(265, 481);
             LeftDockPanel.TabIndex = 3;
+            // 
+            // LastNameTextBox
+            // 
+            LastNameTextBox.BackColor = Color.FromArgb(234, 232, 233);
+            LastNameTextBox.BorderStyle = BorderStyle.None;
+            LastNameTextBox.Font = new Font("Segoe UI", 18F);
+            LastNameTextBox.Location = new Point(97, 78);
+            LastNameTextBox.Name = "LastNameTextBox";
+            LastNameTextBox.ReadOnly = true;
+            LastNameTextBox.Size = new Size(145, 32);
+            LastNameTextBox.TabIndex = 36;
+            LastNameTextBox.TextChanged += LastNameTextBox_TextChanged;
             // 
             // panel2
             // 
@@ -108,72 +124,104 @@
             NewOrderButton.Text = "New Order";
             NewOrderButton.UseVisualStyleBackColor = false;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(14, 75);
+            label2.Name = "label2";
+            label2.Size = new Size(64, 32);
+            label2.TabIndex = 35;
+            label2.Text = "Last:";
+            // 
             // ActiveTextBox
             // 
             ActiveTextBox.BackColor = Color.FromArgb(234, 232, 233);
             ActiveTextBox.BorderStyle = BorderStyle.None;
             ActiveTextBox.Font = new Font("Segoe UI", 18F);
-            ActiveTextBox.Location = new Point(109, 227);
+            ActiveTextBox.Location = new Point(108, 245);
             ActiveTextBox.Name = "ActiveTextBox";
             ActiveTextBox.Size = new Size(145, 32);
             ActiveTextBox.TabIndex = 23;
-            // 
-            // IDTextBox
-            // 
-            IDTextBox.BackColor = Color.FromArgb(234, 232, 233);
-            IDTextBox.BorderStyle = BorderStyle.None;
-            IDTextBox.Font = new Font("Segoe UI", 18F);
-            IDTextBox.Location = new Point(64, 185);
-            IDTextBox.Name = "IDTextBox";
-            IDTextBox.Size = new Size(145, 32);
-            IDTextBox.TabIndex = 22;
-            // 
-            // PositionTextBox
-            // 
-            PositionTextBox.BackColor = Color.FromArgb(234, 232, 233);
-            PositionTextBox.BorderStyle = BorderStyle.None;
-            PositionTextBox.Font = new Font("Segoe UI", 18F);
-            PositionTextBox.Location = new Point(117, 142);
-            PositionTextBox.Name = "PositionTextBox";
-            PositionTextBox.Size = new Size(145, 32);
-            PositionTextBox.TabIndex = 21;
             // 
             // PhoneTextBox
             // 
             PhoneTextBox.BackColor = Color.FromArgb(234, 232, 233);
             PhoneTextBox.BorderStyle = BorderStyle.None;
             PhoneTextBox.Font = new Font("Segoe UI", 18F);
-            PhoneTextBox.Location = new Point(109, 96);
+            PhoneTextBox.Location = new Point(98, 113);
             PhoneTextBox.Name = "PhoneTextBox";
+            PhoneTextBox.ReadOnly = true;
             PhoneTextBox.Size = new Size(145, 32);
-            PhoneTextBox.TabIndex = 20;
+            PhoneTextBox.TabIndex = 34;
+            PhoneTextBox.TextChanged += PhoneTextBox_TextChanged;
             // 
-            // NameTextBox
+            // IDTextBox
             // 
-            NameTextBox.BackColor = Color.FromArgb(234, 232, 233);
-            NameTextBox.BorderStyle = BorderStyle.None;
-            NameTextBox.Font = new Font("Segoe UI", 18F);
-            NameTextBox.Location = new Point(105, 51);
-            NameTextBox.Name = "NameTextBox";
-            NameTextBox.Size = new Size(145, 32);
-            NameTextBox.TabIndex = 19;
-            NameTextBox.TextChanged += NameTextBox_TextChanged;
+            IDTextBox.BackColor = Color.FromArgb(234, 232, 233);
+            IDTextBox.BorderStyle = BorderStyle.None;
+            IDTextBox.Font = new Font("Segoe UI", 18F);
+            IDTextBox.Location = new Point(63, 203);
+            IDTextBox.Name = "IDTextBox";
+            IDTextBox.Size = new Size(145, 32);
+            IDTextBox.TabIndex = 22;
+            // 
+            // FirstNameTextBox
+            // 
+            FirstNameTextBox.BackColor = Color.FromArgb(234, 232, 233);
+            FirstNameTextBox.BorderStyle = BorderStyle.None;
+            FirstNameTextBox.Font = new Font("Segoe UI", 18F);
+            FirstNameTextBox.Location = new Point(97, 40);
+            FirstNameTextBox.Name = "FirstNameTextBox";
+            FirstNameTextBox.ReadOnly = true;
+            FirstNameTextBox.Size = new Size(145, 32);
+            FirstNameTextBox.TabIndex = 33;
+            // 
+            // PositionTextBox
+            // 
+            PositionTextBox.BackColor = Color.FromArgb(234, 232, 233);
+            PositionTextBox.BorderStyle = BorderStyle.None;
+            PositionTextBox.Font = new Font("Segoe UI", 18F);
+            PositionTextBox.Location = new Point(116, 160);
+            PositionTextBox.Name = "PositionTextBox";
+            PositionTextBox.Size = new Size(145, 32);
+            PositionTextBox.TabIndex = 21;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(10, 113);
+            label4.Name = "label4";
+            label4.Size = new Size(89, 32);
+            label4.TabIndex = 32;
+            label4.Text = "Phone:";
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(14, 227);
+            label5.Location = new Point(13, 245);
             label5.Name = "label5";
             label5.Size = new Size(87, 32);
             label5.TabIndex = 18;
             label5.Text = "Active:";
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Location = new Point(14, 37);
+            label7.Name = "label7";
+            label7.Size = new Size(66, 32);
+            label7.TabIndex = 31;
+            label7.Text = "First:";
+            // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(14, 142);
+            label1.Location = new Point(13, 160);
             label1.Name = "label1";
             label1.Size = new Size(106, 32);
             label1.TabIndex = 17;
@@ -191,21 +239,11 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(14, 185);
+            label6.Location = new Point(13, 203);
             label6.Name = "label6";
             label6.Size = new Size(44, 32);
             label6.TabIndex = 12;
             label6.Text = "ID:";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(14, 96);
-            label4.Name = "label4";
-            label4.Size = new Size(89, 32);
-            label4.TabIndex = 10;
-            label4.Text = "Phone:";
             // 
             // label3
             // 
@@ -217,16 +255,6 @@
             label3.TabIndex = 9;
             label3.Text = "Selected Employee";
             label3.TextAlign = ContentAlignment.TopCenter;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(14, 51);
-            label2.Name = "label2";
-            label2.Size = new Size(85, 32);
-            label2.TabIndex = 8;
-            label2.Text = "Name:";
             // 
             // panel1
             // 
@@ -264,14 +292,14 @@
             button1.Text = "Archive";
             button1.UseVisualStyleBackColor = false;
             // 
-            // UserControl6
+            // EmployeeInfoView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(234, 232, 233);
             Controls.Add(panel1);
             Controls.Add(LeftDockPanel);
-            Name = "UserControl6";
+            Name = "EmployeeInfoView";
             Size = new Size(1284, 561);
             LeftDockPanel.ResumeLayout(false);
             LeftDockPanel.PerformLayout();
@@ -285,21 +313,23 @@
         private Panel LeftDockPanel;
         private RichTextBox richTextBox1;
         private Label label6;
-        private Label label4;
         private Label label3;
-        private Label label2;
         private Label label1;
         private Label label5;
-        private TextBox NameTextBox;
         private TextBox ActiveTextBox;
         private TextBox IDTextBox;
         private TextBox PositionTextBox;
-        private TextBox PhoneTextBox;
         private Panel panel2;
         private Button EditCustomerButton;
         private Button NewOrderButton;
         private Panel panel1;
         private Button EditEmployeeButton;
         private Button button1;
+        private TextBox LastNameTextBox;
+        private Label label2;
+        private TextBox PhoneTextBox;
+        private TextBox FirstNameTextBox;
+        private Label label4;
+        private Label label7;
     }
 }

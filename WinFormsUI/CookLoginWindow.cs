@@ -16,5 +16,11 @@ namespace WinFormsUI
         {
             InitializeComponent();
         }
+
+        private void SignInButton_Click(object sender, EventArgs e)
+        {
+           CookWindow Cook = new CookWindow();
+           Cook.Show();
+        }
     }
 }

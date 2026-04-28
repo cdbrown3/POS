@@ -34,6 +34,7 @@
             richTextBox1 = new RichTextBox();
             ButtonsPanel = new Panel();
             ExitButton = new PictureBox();
+            label1 = new Label();
             LeftDockPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ExitButton).BeginInit();
             SuspendLayout();
@@ -81,23 +82,36 @@
             ExitButton.TabStop = false;
             ExitButton.Click += ExitButton_Click;
             // 
-            // Form2
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 18F);
+            label1.ForeColor = Color.Tomato;
+            label1.Location = new Point(518, 8);
+            label1.Name = "label1";
+            label1.Size = new Size(159, 32);
+            label1.TabIndex = 6;
+            label1.Text = "Signed In As: ";
+            // 
+            // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(28, 30, 46);
             ClientSize = new Size(1284, 561);
+            Controls.Add(label1);
             Controls.Add(ExitButton);
             Controls.Add(ButtonsPanel);
             Controls.Add(LeftDockPanel);
             Controls.Add(MainPanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1300, 600);
-            Name = "Form2";
+            Name = "MainWindow";
             Text = "Form2";
             LeftDockPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)ExitButton).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -107,5 +121,6 @@
         private RichTextBox richTextBox1;
         private Panel ButtonsPanel;
         private PictureBox ExitButton;
+        private Label label1;
     }
 }
