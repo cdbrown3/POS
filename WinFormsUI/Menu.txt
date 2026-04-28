@@ -1,0 +1,16 @@
+ItemID,Name,Category,Price,IsAvailable,Options
+M00001,Cheeseburger,Entree,10.99,true,American|Swiss|No Onion|Extra Cheese|
+M00002,Bacon Burger,Entree,12.49,true,No Pickles|Extra Bacon|Medium Rare|
+M00003,Chicken Tenders,Entree,9.25,true,Ranch|Honey Mustard|BBQ Sauce|
+M00004,Caesar Salad,Appetizer,7.50,true,Add Chicken|No Croutons|Extra Dressing|
+M00005,French Fries,Side,3.99,true,Large|Extra Salt|No Salt|
+M00006,Mozzarella Sticks,Appetizer,6.75,true,Marinara|Ranch|
+M00007,Grilled Chicken Sandwich,Entree,11.25,true,No Mayo|Add Bacon|Pepper Jack|
+M00008,Chocolate Milkshake,Dessert,5.50,true,Whipped Cream|Cherry|
+M00009,Soft Drink,Drink,2.49,true,Coke|Diet Coke|Sprite|Dr Pepper|
+M00010,Iced Tea,Drink,2.25,false,Sweet|Unsweet|Lemon|
+M00011,Pepperoni Pizza,Entree,14.99,true,Extra Cheese|Thin Crust|Stuffed Crust|
+M00012,Onion Rings,Side,4.50,true,Ranch|BBQ Sauce|
+M00013,Vanilla Ice Cream,Dessert,3.75,true,Chocolate Syrup|Sprinkles|
+M00014,Steak Sandwich,Entree,15.99,true,Medium Rare|No Onions|Add Mushrooms|
+M00015,Coffee,Drink,1.99,true,Cream|Sugar|Decaf|
