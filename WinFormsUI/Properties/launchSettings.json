@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "WinFormsUI_Manage": {
+      "commandName": "Project",
+      "commandLineArgs": "/Manage_Login"
+    },
+    "WinFormsUI_Cook": {
+      "commandName": "Project",
+      "commandLineArgs": "/Cook_Login"
+    },
+    "WinFormsUI_Kiosk": {
+      "commandName": "Project",
+      "commandLineArgs": "/Kiosk_Login"
+    }
+  }
+}
