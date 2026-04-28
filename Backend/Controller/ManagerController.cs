@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using Backend.Model;
 
 namespace Backend.Controller
 {
     public class ManagerController
     {
-
         private List<EmployeeInfo> employees;
         private List<MenuItemInfo> menuItems;
 
@@ -18,112 +19,101 @@ namespace Backend.Controller
 
         // === CORE HIRING & MENU METHODS ===
 
-        // GUI Link: Triggered by a "Hire New Staff" button on the Manager Dashboard.
-        // Form takes basic info, plus sets their system login (Username/PIN) and wage.
         public bool HireEmployee(string first, string last, string phone, string email, AddressInfo address, string position, string username, string pin, double hourlyRate)
         {
+            bool isSuccessful = false;
+
             if (first == "")
             {
                 Console.WriteLine("Error: Missing first name for employee.");
-                return false;
             }
-
-            if (last == "")
+            else if (last == "")
             {
                 Console.WriteLine("Error: Missing last name for employee.");
-                return false;
             }
-
-            if (address == null)
+            else if (address == null)
             {
                 Console.WriteLine("Error: Missing address for employee.");
-                return false;
+            }
+            else
+            {
+                try
+                {
+                    EmployeeInfo newEmployee = new EmployeeInfo(first, last, phone, email, address, position, username, pin, hourlyRate);
+                    employees.Add(newEmployee);
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught: " + e.Message);
+                }
             }
 
-            try
-            {
-                // MODEL LINK: Calls EmployeeInfo constructor. Triggers the setter validations in the model 
-                // (for example, ensuring the PIN is exactly 4 digits & hourly rate isn't negative).
-                EmployeeInfo newEmployee = new EmployeeInfo(first, last, phone, email, address, position, username, pin, hourlyRate);
-                employees.Add(newEmployee);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught: " + e.Message);
-                return false;
-            }
+            return isSuccessful;
         }
 
-        // GUI Link: Triggered by an "Add to Menu" button inside the Kitchen/Menu Management settings screen.
         public bool CreateMenuItem(string name, string category, double price, List<string> options)
         {
+            bool isSuccessful = false;
+
             if (name == "")
             {
                 Console.WriteLine("Error: Menu item name cannot be empty.");
-                return false;
             }
-
-            if (category == "")
+            else if (category == "")
             {
                 Console.WriteLine("Error: Menu item category cannot be empty.");
-                return false;
             }
-
-            if (price < 0)
+            else if (price < 0)
             {
                 Console.WriteLine("Error: Menu item price cannot be negative.");
-                return false;
+            }
+            else
+            {
+                try
+                {
+                    MenuItemInfo newItem = new MenuItemInfo(name, category, price, options);
+                    menuItems.Add(newItem);
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught: " + e.Message);
+                }
             }
 
-            try
-            {
-                // MODEL LINK: Calls the MenuItemInfo constructor. Automatically sets IsAvailable to true
-                // and generates a unique ItemID (e.g., M00001).
-                MenuItemInfo newItem = new MenuItemInfo(name, category, price, options);
-                menuItems.Add(newItem);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught: " + e.Message);
-                return false;
-            }
+            return isSuccessful;
         }
 
-        // GUI Link: Crucial for the initial Login Screen! When a user types their username and hits "Enter",
-        // the GUI calls this method to find the matching employee record to verify their PIN to let them in (if valid).
         public EmployeeInfo FindEmployeeByUsername(string targetUsername)
         {
+            EmployeeInfo foundEmployee = null;
+
             if (targetUsername == "")
             {
                 Console.WriteLine("Error: Username search term is empty.");
-                return null; // Tells the GUI the user doesn't exist
             }
-
-            EmployeeInfo foundEmployee = null;
-            bool isFound = false;
-            int index = 0;
-
-            // Loops through the entire staff list until the username matches.
-            // Uses boolean instead of a 'break' statement.
-            while (index < employees.Count && isFound == false)
+            else
             {
-                // MODEL LINK: Accesses the Username property getter in the EmployeeInfo model
-                if (employees[index].Username == targetUsername)
+                bool isFound = false;
+                int index = 0;
+
+                while (index < employees.Count && isFound == false)
                 {
-                    foundEmployee = employees[index];
-                    isFound = true; // Flips the flag to exit the loop
+                    if (employees[index].Username == targetUsername)
+                    {
+                        foundEmployee = employees[index];
+                        isFound = true;
+                    }
+                    index++;
                 }
-                index++;
             }
 
-            return foundEmployee; // Returns the full employee object back to the GUI for the next step (PIN validation)
+            return foundEmployee;
         }
 
         // === RETRIEVAL METHODS ===
 
-        // GUI Link: Used to populate ListViews/DataGrids on the Manager Dashboard.
         public List<EmployeeInfo> GetAllEmployees()
         {
             return employees;
@@ -134,199 +124,396 @@ namespace Backend.Controller
             return menuItems;
         }
 
-        // === CSV SAVING METHODS ===
+        // === SAVING METHODS (CSV & XML) ===
 
-        // GUI Link: Triggered by a background autosave timer or manual "Save All Data" button.
-        public bool SaveEmployeesToCSV(string filePath)
+        public bool SaveEmployees(string filePath, string format)
         {
+            bool isSuccessful = false;
+
             if (filePath == "")
             {
                 Console.WriteLine("Error: File path cannot be empty.");
-                return false;
             }
-
-            try
+            else if (format.ToUpper() == "CSV")
             {
-                List<string> lines = new List<string>();
-                lines.Add("UserID,FirstName,LastName,Phone,Email,Street,City,State,Zip,EmployeeID,Position,HourlyRate,IsActive");
-
-                int index = 0;
-                while (index < employees.Count)
+                try
                 {
-                    // MODEL LINK: Calls the EmployeeInfo ToCSV() method.
-                    lines.Add(employees[index].ToCSV());
-                    index++;
-                }
+                    List<string> lines = new List<string>();
+                    lines.Add("UserID,FirstName,LastName,Phone,Email,Street,City,State,Zip,EmployeeID,Position,HourlyRate,IsActive");
 
-                System.IO.File.WriteAllLines(filePath, lines);
-                Console.WriteLine("Successfully saved " + employees.Count + " employees.");
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught while saving employees: " + e.Message);
-                return false;
-            }
-        }
-
-        // GUI Link: Saving menu changes after a manager edits prices or adds new items.
-        public bool SaveMenuToCSV(string filePath)
-        {
-            if (filePath == "")
-            {
-                Console.WriteLine("Error: File path cannot be empty.");
-                return false;
-            }
-
-            try
-            {
-                List<string> lines = new List<string>();
-                lines.Add("ItemID,Name,Category,Price,IsAvailable,Options");
-
-                int index = 0;
-                while (index < menuItems.Count)
-                {
-                    // MODEL LINK: Calls the MenuItemInfo ToCSV() method. Notice how it formats the 
-                    // List<string> Options by putting a '|' character between them.
-                    lines.Add(menuItems[index].ToCSV());
-                    index++;
-                }
-
-                System.IO.File.WriteAllLines(filePath, lines);
-                Console.WriteLine("Successfully saved " + menuItems.Count + " menu items.");
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught while saving menu: " + e.Message);
-                return false;
-            }
-        }
-
-        // === CSV LOADING METHODS ===
-
-        // GUI Link: Called during application startup to load the staff database into memory.
-        public bool LoadEmployeesFromCSV(string filePath)
-        {
-            if (!System.IO.File.Exists(filePath))
-            {
-                Console.WriteLine("Error: Employee CSV file not found at " + filePath);
-                return false;
-            }
-
-            try
-            {
-                string[] lines = System.IO.File.ReadAllLines(filePath);
-                int index = 1;
-
-                while (index < lines.Length)
-                {
-                    string[] parts = lines[index].Split(',');
-
-                    if (parts.Length >= 13)
+                    int index = 0;
+                    while (index < employees.Count)
                     {
-                        // MODEL LINK: Rebuilding the AddressInfo object
-                        AddressInfo address = new AddressInfo(parts[5], parts[6], parts[7], parts[8]);
+                        lines.Add(employees[index].ToCSV());
+                        index++;
+                    }
 
-                        double hourlyRate = 0;
-                        double.TryParse(parts[11], out hourlyRate);
+                    File.WriteAllLines(filePath, lines);
+                    Console.WriteLine("Successfully saved " + employees.Count + " employees to CSV.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while saving employees to CSV: " + e.Message);
+                }
+            }
+            else if (format.ToUpper() == "XML")
+            {
+                try
+                {
+                    using (StreamWriter writer = new StreamWriter(filePath))
+                    {
+                        writer.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+                        writer.WriteLine("<Employees>");
 
-                        // As a workaround since username/password aren't in the CSV output currently, 
-                        // we build a temporary one to satisfy the model constructor requirements.
-                        string loadedUsername = parts[1].ToLower() + parts[2].ToLower();
-                        string tempPassword = "0000";
+                        int index = 0;
+                        while (index < employees.Count)
+                        {
+                            writer.WriteLine("  <Employee>");
+                            writer.WriteLine("    <UserID>" + employees[index].UserID + "</UserID>");
+                            writer.WriteLine("    <FirstName>" + employees[index].FirstName + "</FirstName>");
+                            writer.WriteLine("    <LastName>" + employees[index].LastName + "</LastName>");
+                            writer.WriteLine("    <Phone>" + employees[index].PhoneNumber + "</Phone>");
+                            writer.WriteLine("    <Email>" + employees[index].Email + "</Email>");
+                            writer.WriteLine("    <Street>" + employees[index].Address.Street + "</Street>");
+                            writer.WriteLine("    <City>" + employees[index].Address.City + "</City>");
+                            writer.WriteLine("    <State>" + employees[index].Address.StateAbbreviation + "</State>");
+                            writer.WriteLine("    <Zip>" + employees[index].Address.ZipCode + "</Zip>");
+                            writer.WriteLine("    <EmployeeID>" + employees[index].EmployeeID + "</EmployeeID>");
+                            writer.WriteLine("    <Position>" + employees[index].Position + "</Position>");
+                            writer.WriteLine("    <HourlyRate>" + employees[index].HourlyRate + "</HourlyRate>");
+                            writer.WriteLine("    <IsActive>" + employees[index].IsActive + "</IsActive>");
+                            writer.WriteLine("  </Employee>");
+                            index++;
+                        }
+                        writer.WriteLine("</Employees>");
+                    }
+                    Console.WriteLine("Successfully saved " + employees.Count + " employees to XML.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while saving employees to XML: " + e.Message);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Error: Unsupported format. Use 'CSV' or 'XML'.");
+            }
 
-                        // MODEL LINK: Rebuilding the EmployeeInfo object
-                        EmployeeInfo loadedEmployee = new EmployeeInfo(
-                            parts[1], parts[2], parts[3], parts[4],
-                            address, parts[10], loadedUsername,
-                            tempPassword, hourlyRate
+            return isSuccessful;
+        }
+
+        public bool SaveMenu(string filePath, string format)
+        {
+            bool isSuccessful = false;
+
+            if (filePath == "")
+            {
+                Console.WriteLine("Error: File path cannot be empty.");
+            }
+            else if (format.ToUpper() == "CSV")
+            {
+                try
+                {
+                    List<string> lines = new List<string>();
+                    lines.Add("ItemID,Name,Category,Price,IsAvailable,Options");
+
+                    int index = 0;
+                    while (index < menuItems.Count)
+                    {
+                        lines.Add(menuItems[index].ToCSV());
+                        index++;
+                    }
+
+                    File.WriteAllLines(filePath, lines);
+                    Console.WriteLine("Successfully saved " + menuItems.Count + " menu items to CSV.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while saving menu to CSV: " + e.Message);
+                }
+            }
+            else if (format.ToUpper() == "XML")
+            {
+                try
+                {
+                    using (StreamWriter writer = new StreamWriter(filePath))
+                    {
+                        writer.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+                        writer.WriteLine("<MenuItems>");
+
+                        int index = 0;
+                        while (index < menuItems.Count)
+                        {
+                            writer.WriteLine("  <MenuItem>");
+                            writer.WriteLine("    <ItemID>" + menuItems[index].ItemID + "</ItemID>");
+                            writer.WriteLine("    <Name>" + menuItems[index].Name + "</Name>");
+                            writer.WriteLine("    <Category>" + menuItems[index].Category + "</Category>");
+                            writer.WriteLine("    <Price>" + menuItems[index].Price + "</Price>");
+                            writer.WriteLine("    <IsAvailable>" + menuItems[index].IsAvailable + "</IsAvailable>");
+
+                            writer.WriteLine("    <Options>");
+                            int optIndex = 0;
+                            while (optIndex < menuItems[index].Options.Count)
+                            {
+                                writer.WriteLine("      <Option>" + menuItems[index].Options[optIndex] + "</Option>");
+                                optIndex++;
+                            }
+                            writer.WriteLine("    </Options>");
+
+                            writer.WriteLine("  </MenuItem>");
+                            index++;
+                        }
+                        writer.WriteLine("</MenuItems>");
+                    }
+                    Console.WriteLine("Successfully saved " + menuItems.Count + " menu items to XML.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while saving menu to XML: " + e.Message);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Error: Unsupported format. Use 'CSV' or 'XML'.");
+            }
+
+            return isSuccessful;
+        }
+
+        // === LOADING METHODS (CSV & XML) ===
+
+        public bool LoadEmployees(string filePath, string format)
+        {
+            bool isSuccessful = false;
+
+            if (!File.Exists(filePath))
+            {
+                Console.WriteLine("Error: Employee file not found at " + filePath);
+            }
+            else if (format.ToUpper() == "CSV")
+            {
+                try
+                {
+                    string[] lines = File.ReadAllLines(filePath);
+                    int index = 1;
+
+                    while (index < lines.Length)
+                    {
+                        string[] parts = lines[index].Split(',');
+
+                        if (parts.Length >= 13)
+                        {
+                            AddressInfo address = new AddressInfo(parts[5], parts[6], parts[7], parts[8]);
+
+                            double hourlyRate = 0;
+                            double.TryParse(parts[11], out hourlyRate);
+
+                            string loadedUsername = parts[1].ToLower() + parts[2].ToLower();
+                            string tempPassword = "0000";
+
+                            EmployeeInfo loadedEmployee = new EmployeeInfo(
+                                parts[1], parts[2], parts[3], parts[4],
+                                address, parts[10], loadedUsername,
+                                tempPassword, hourlyRate
+                            );
+
+                            bool isActive = true;
+                            bool.TryParse(parts[12], out isActive);
+                            loadedEmployee.IsActive = isActive;
+
+                            employees.Add(loadedEmployee);
+                        }
+                        index++;
+                    }
+
+                    Console.WriteLine("Successfully loaded " + employees.Count + " employees from CSV.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while loading employees from CSV: " + e.Message);
+                }
+            }
+            else if (format.ToUpper() == "XML")
+            {
+                try
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(filePath);
+                    XmlNodeList nodes = doc.SelectNodes("/Employees/Employee");
+
+                    int index = 0;
+                    while (index < nodes.Count)
+                    {
+                        XmlNode node = nodes[index];
+                        AddressInfo address = new AddressInfo(
+                            node["Street"]?.InnerText,
+                            node["City"]?.InnerText,
+                            node["State"]?.InnerText,
+                            node["Zip"]?.InnerText
                         );
 
-                        // MODEL LINK: Explicitly sets the Active status property
+                        double hourlyRate = 0;
+                        double.TryParse(node["HourlyRate"]?.InnerText, out hourlyRate);
+
+                        string loadedUsername = node["FirstName"]?.InnerText.ToLower() + node["LastName"]?.InnerText.ToLower();
+                        string tempPassword = "0000";
+
+                        EmployeeInfo loadedEmployee = new EmployeeInfo(
+                            node["FirstName"]?.InnerText,
+                            node["LastName"]?.InnerText,
+                            node["Phone"]?.InnerText,
+                            node["Email"]?.InnerText,
+                            address,
+                            node["Position"]?.InnerText,
+                            loadedUsername,
+                            tempPassword,
+                            hourlyRate
+                        );
+
                         bool isActive = true;
-                        bool.TryParse(parts[12], out isActive);
+                        bool.TryParse(node["IsActive"]?.InnerText, out isActive);
                         loadedEmployee.IsActive = isActive;
 
                         employees.Add(loadedEmployee);
+                        index++;
                     }
-                    index++;
-                }
 
-                Console.WriteLine("Successfully loaded " + employees.Count + " employees.");
-                return true;
+                    Console.WriteLine("Successfully loaded " + employees.Count + " employees from XML.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while loading employees from XML: " + e.Message);
+                }
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine("Exception caught while loading employees: " + e.Message);
-                return false;
+                Console.WriteLine("Error: Unsupported format. Use 'CSV' or 'XML'.");
             }
+
+            return isSuccessful;
         }
 
-        // GUI Link: Called during application startup to load the restaurant's menu into memory.
-        public bool LoadMenuFromCSV(string filePath)
+        public bool LoadMenu(string filePath, string format)
         {
-            if (!System.IO.File.Exists(filePath))
+            bool isSuccessful = false;
+
+            if (!File.Exists(filePath))
             {
-                Console.WriteLine("Error: Menu CSV file not found at " + filePath);
-                return false;
+                Console.WriteLine("Error: Menu file not found at " + filePath);
             }
-
-            try
+            else if (format.ToUpper() == "CSV")
             {
-                string[] lines = System.IO.File.ReadAllLines(filePath);
-                int index = 1;
-
-                while (index < lines.Length)
+                try
                 {
-                    string[] parts = lines[index].Split(',');
+                    string[] lines = File.ReadAllLines(filePath);
+                    int index = 1;
 
-                    if (parts.Length >= 5)
+                    while (index < lines.Length)
                     {
-                        double price = 0;
-                        double.TryParse(parts[3], out price);
+                        string[] parts = lines[index].Split(',');
 
-                        // MODEL LINK: Rebuilding the options list. Needs to split the string again 
-                        // using the '|' character we used when saving the CSV.
-                        List<string> options = new List<string>();
-                        if (parts.Length == 6 && parts[5] != "")
+                        if (parts.Length >= 5)
                         {
-                            string[] optionArray = parts[5].Split('|');
-                            int optIndex = 0;
+                            double price = 0;
+                            double.TryParse(parts[3], out price);
 
-                            while (optIndex < optionArray.Length)
+                            List<string> options = new List<string>();
+                            if (parts.Length == 6 && parts[5] != "")
                             {
-                                if (optionArray[optIndex] != "")
+                                string[] optionArray = parts[5].Split('|');
+                                int optIndex = 0;
+
+                                while (optIndex < optionArray.Length)
                                 {
-                                    options.Add(optionArray[optIndex]);
+                                    if (optionArray[optIndex] != "")
+                                    {
+                                        options.Add(optionArray[optIndex]);
+                                    }
+                                    optIndex++;
                                 }
-                                optIndex++;
                             }
+
+                            MenuItemInfo loadedItem = new MenuItemInfo(
+                                parts[1], parts[2], price, options
+                            );
+
+                            bool isAvailable = true;
+                            bool.TryParse(parts[4], out isAvailable);
+                            loadedItem.IsAvailable = isAvailable;
+
+                            menuItems.Add(loadedItem);
+                        }
+                        index++;
+                    }
+
+                    Console.WriteLine("Successfully loaded " + menuItems.Count + " menu items from CSV.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while loading menu from CSV: " + e.Message);
+                }
+            }
+            else if (format.ToUpper() == "XML")
+            {
+                try
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(filePath);
+                    XmlNodeList nodes = doc.SelectNodes("/MenuItems/MenuItem");
+
+                    int index = 0;
+                    while (index < nodes.Count)
+                    {
+                        XmlNode node = nodes[index];
+
+                        double price = 0;
+                        double.TryParse(node["Price"]?.InnerText, out price);
+
+                        List<string> options = new List<string>();
+                        XmlNodeList optionNodes = node.SelectNodes("Options/Option");
+                        int optIndex = 0;
+                        while (optIndex < optionNodes.Count)
+                        {
+                            options.Add(optionNodes[optIndex].InnerText);
+                            optIndex++;
                         }
 
-                        // MODEL LINK: Rebuilding the MenuItemInfo object
                         MenuItemInfo loadedItem = new MenuItemInfo(
-                            parts[1], parts[2], price, options
+                            node["Name"]?.InnerText,
+                            node["Category"]?.InnerText,
+                            price,
+                            options
                         );
 
-                        // MODEL LINK: Explicitly sets the IsAvailable property
                         bool isAvailable = true;
-                        bool.TryParse(parts[4], out isAvailable);
+                        bool.TryParse(node["IsAvailable"]?.InnerText, out isAvailable);
                         loadedItem.IsAvailable = isAvailable;
 
                         menuItems.Add(loadedItem);
+                        index++;
                     }
-                    index++;
-                }
 
-                Console.WriteLine("Successfully loaded " + menuItems.Count + " menu items.");
-                return true;
+                    Console.WriteLine("Successfully loaded " + menuItems.Count + " menu items from XML.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while loading menu from XML: " + e.Message);
+                }
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine("Exception caught while loading menu: " + e.Message);
-                return false;
+                Console.WriteLine("Error: Unsupported format. Use 'CSV' or 'XML'.");
             }
+
+            return isSuccessful;
         }
     }
 }

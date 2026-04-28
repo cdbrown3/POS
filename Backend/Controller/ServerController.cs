@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Backend.Model; // Imports the Model folder so the Controller can see the data structures
+using System.IO;
+using System.Xml;
+using Backend.Model;
 
 namespace Backend.Controller
 {
@@ -20,156 +22,6 @@ namespace Backend.Controller
             return (this.customers);
         }
 
-        // GUI Link: Triggered by a "Save" or "Submit" button on a "New Customer Registration" form.
-        // Takes all the text boxes (first name, last name, etc.) as parameters.
-        public bool CreateCustomer(string first, string last, string phone, string email, AddressInfo address, int historyCount, string notes)
-        {
-            // Expanded if-statement validations preventing empty inputs before hitting the Model
-            if (first == "")
-            {
-                Console.WriteLine("Error: First name was not provided for the customer.");
-                return false; // Tells the GUI that creation failed
-            }
-
-            if (last == "")
-            {
-                Console.WriteLine("Error: Last name was not provided for the customer.");
-                return false;
-            }
-
-            if (address == null)
-            {
-                Console.WriteLine("Error: Address is missing for the customer.");
-                return false;
-            }
-
-            try
-            {
-                // MODEL LINK: Calls the CustomerInfo constructor. This automatically links back 
-                // to the UserInfo base constructor and generates a unique CustomerID.
-                CustomerInfo newCustomer = new CustomerInfo(first, last, phone, email, address, historyCount, notes);
-
-                // Adds the newly created model to the Controller's running list
-                customers.Add(newCustomer);
-                return true; // Tells the GUI that creation succeeded (e.g., to close the form)
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught: " + e.Message);
-                return false;
-            }
-        }
-
-        // GUI Link: Triggered by a "Start Order" button on the main POS screen after the 
-        // server selects a specific Customer from a dropdown list.
-        public OrderInfo StartNewOrder(CustomerInfo customer, EmployeeInfo server)
-        {
-            if (customer == null)
-            {
-                Console.WriteLine("Error: Valid customer required to start order.");
-                return null;
-            }
-
-            if (server == null)
-            {
-                Console.WriteLine("Error: Valid server employee required to start order.");
-                return null;
-            }
-
-            try
-            {
-                // MODEL LINK: Calls the OrderInfo constructor. Sets the status to "New" and 
-                // generates a unique OrderID (e.g., O00001).
-                OrderInfo newOrder = new OrderInfo(customer, server, "New");
-                activeOrders.Add(newOrder);
-
-                // Returns the actual order object back to the GUI so the GUI knows which 
-                // order to start adding items to.
-                return newOrder;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught: " + e.Message);
-                return null;
-            }
-        }
-
-        // GUI Link: Triggered when a user clicks a specific food item button on the menu screen.
-        public bool AddItemToOrder(OrderInfo order, MenuItemInfo item, int quantity, List<string> options)
-        {
-            if (order == null)
-            {
-                Console.WriteLine("Error: The selected order does not exist.");
-                return false;
-            }
-
-            if (item == null)
-            {
-                Console.WriteLine("Error: The selected menu item does not exist.");
-                return false;
-            }
-
-            if (quantity <= 0)
-            {
-                Console.WriteLine("Error: Quantity must be at least 1.");
-                return false;
-            }
-
-            try
-            {
-                // MODEL LINK: 1. Creates a new OrderItemInfo object using the menu item
-                OrderItemInfo orderItem = new OrderItemInfo(item, quantity, options);
-
-                // MODEL LINK: 2. Uses the AddItem() method inside the OrderInfo model. 
-                // This method automatically recalculates the Subtotal, Tax, and Total inside the model!
-                order.AddItem(orderItem);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught: " + e.Message);
-                return false;
-            }
-        }
-
-        // GUI Link: Triggered by a "Process Payment" or "Swipe Card" button on the checkout screen.
-        public bool CheckoutOrder(OrderInfo order, string cardNumber)
-        {
-            if (order == null)
-            {
-                Console.WriteLine("Error: Cannot checkout a null order.");
-                return false;
-            }
-
-            if (cardNumber == "")
-            {
-                Console.WriteLine("Error: Card number is required for checkout.");
-                return false;
-            }
-
-            try
-            {
-                // MODEL LINK: 1. Creates a new PaymentInfo object and links it to the specific order.
-                PaymentInfo payment = new PaymentInfo(order, cardNumber);
-
-                // MODEL LINK: 2. Calls ProcessPayment() which sets AmountPaid = Order.Total
-                payment.ProcessPayment();
-
-                // MODEL LINK: 3. Updates the order status from "New" to "Paid"
-                order.SetStatusToPaid();
-
-                // MODEL LINK: 4. Increments the customer's loyalty/history count
-                order.Customer.AddOrderToHistory();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught: " + e.Message);
-                return false;
-            }
-        }
-
-        // GUI Link: Used when opening a "View All Orders" or "Customer Database" window to populate the tables.
         public List<OrderInfo> GetAllActiveOrders()
         {
             return activeOrders;
@@ -180,89 +32,306 @@ namespace Backend.Controller
             return customers;
         }
 
-        // === CSV SAVING METHODS ===
+        // === CORE CREATION METHODS ===
 
-        // GUI Link: Triggered by a manual "Backup Data" button in settings, or automatically when the app closes.
-        public bool SaveCustomersToCSV(string filePath)
+        public bool CreateCustomer(string first, string last, string phone, string email, AddressInfo address, int historyCount, string notes)
         {
+            bool isSuccessful = false;
+
+            if (first == "")
+            {
+                Console.WriteLine("Error: First name was not provided for the customer.");
+            }
+            else if (last == "")
+            {
+                Console.WriteLine("Error: Last name was not provided for the customer.");
+            }
+            else if (address == null)
+            {
+                Console.WriteLine("Error: Address is missing for the customer.");
+            }
+            else
+            {
+                try
+                {
+                    CustomerInfo newCustomer = new CustomerInfo(first, last, phone, email, address, historyCount, notes);
+                    customers.Add(newCustomer);
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught: " + e.Message);
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public OrderInfo StartNewOrder(CustomerInfo customer, EmployeeInfo server)
+        {
+            OrderInfo createdOrder = null;
+
+            if (customer == null)
+            {
+                Console.WriteLine("Error: Valid customer required to start order.");
+            }
+            else if (server == null)
+            {
+                Console.WriteLine("Error: Valid server employee required to start order.");
+            }
+            else
+            {
+                try
+                {
+                    createdOrder = new OrderInfo(customer, server, "New");
+                    activeOrders.Add(createdOrder);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught: " + e.Message);
+                }
+            }
+
+            return createdOrder;
+        }
+
+        public bool AddItemToOrder(OrderInfo order, MenuItemInfo item, int quantity, List<string> options)
+        {
+            bool isSuccessful = false;
+
+            if (order == null)
+            {
+                Console.WriteLine("Error: The selected order does not exist.");
+            }
+            else if (item == null)
+            {
+                Console.WriteLine("Error: The selected menu item does not exist.");
+            }
+            else if (quantity <= 0)
+            {
+                Console.WriteLine("Error: Quantity must be at least 1.");
+            }
+            else
+            {
+                try
+                {
+                    OrderItemInfo orderItem = new OrderItemInfo(item, quantity, options);
+                    order.AddItem(orderItem);
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught: " + e.Message);
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public bool CheckoutOrder(OrderInfo order, string cardNumber)
+        {
+            bool isSuccessful = false;
+
+            if (order == null)
+            {
+                Console.WriteLine("Error: Cannot checkout a null order.");
+            }
+            else if (cardNumber == "")
+            {
+                Console.WriteLine("Error: Card number is required for checkout.");
+            }
+            else
+            {
+                try
+                {
+                    PaymentInfo payment = new PaymentInfo(order, cardNumber);
+                    payment.ProcessPayment();
+                    order.SetStatusToPaid();
+                    order.Customer.AddOrderToHistory();
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught: " + e.Message);
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        // === SAVING AND LOADING METHODS (CSV & XML) ===
+
+        public bool SaveCustomers(string filePath, string format)
+        {
+            bool isSuccessful = false;
+
             if (filePath == "")
             {
                 Console.WriteLine("Error: File path cannot be empty.");
-                return false;
             }
-
-            try
+            else if (format.ToUpper() == "CSV")
             {
-                List<string> lines = new List<string>();
-                lines.Add("UserID,FirstName,LastName,Phone,Email,Street,City,State,Zip,CustomerID,OrderHistoryCount,Notes");
-
-                int index = 0;
-                while (index < customers.Count)
+                try
                 {
-                    // MODEL LINK: Calls the overridden ToCSV() method inside CustomerInfo.cs.
-                    // That method also reaches into the base UserInfo class and AddressInfo class to grab all the strings.
-                    lines.Add(customers[index].ToCSV());
-                    index++;
-                }
+                    List<string> lines = new List<string>();
+                    lines.Add("UserID,FirstName,LastName,Phone,Email,Street,City,State,Zip,CustomerID,OrderHistoryCount,Notes");
 
-                System.IO.File.WriteAllLines(filePath, lines);
-                Console.WriteLine("Successfully saved " + customers.Count + " customers.");
-                return true;
+                    int index = 0;
+                    while (index < customers.Count)
+                    {
+                        lines.Add(customers[index].ToCSV());
+                        index++;
+                    }
+
+                    File.WriteAllLines(filePath, lines);
+                    Console.WriteLine("Successfully saved " + customers.Count + " customers to CSV.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while saving customers to CSV: " + e.Message);
+                }
             }
-            catch (Exception e)
+            else if (format.ToUpper() == "XML")
             {
-                Console.WriteLine("Exception caught while saving customers: " + e.Message);
-                return false;
+                try
+                {
+                    using (StreamWriter writer = new StreamWriter(filePath))
+                    {
+                        writer.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+                        writer.WriteLine("<Customers>");
+
+                        int index = 0;
+                        while (index < customers.Count)
+                        {
+                            writer.WriteLine("  <Customer>");
+                            writer.WriteLine("    <UserID>" + customers[index].UserID + "</UserID>");
+                            writer.WriteLine("    <FirstName>" + customers[index].FirstName + "</FirstName>");
+                            writer.WriteLine("    <LastName>" + customers[index].LastName + "</LastName>");
+                            writer.WriteLine("    <Phone>" + customers[index].PhoneNumber + "</Phone>");
+                            writer.WriteLine("    <Email>" + customers[index].Email + "</Email>");
+                            writer.WriteLine("    <Street>" + customers[index].Address.Street + "</Street>");
+                            writer.WriteLine("    <City>" + customers[index].Address.City + "</City>");
+                            writer.WriteLine("    <State>" + customers[index].Address.StateAbbreviation + "</State>");
+                            writer.WriteLine("    <Zip>" + customers[index].Address.ZipCode + "</Zip>");
+                            writer.WriteLine("    <CustomerID>" + customers[index].CustomerID + "</CustomerID>");
+                            writer.WriteLine("    <OrderHistoryCount>" + customers[index].OrderHistoryCount + "</OrderHistoryCount>");
+                            writer.WriteLine("    <Notes>" + customers[index].Notes + "</Notes>");
+                            writer.WriteLine("  </Customer>");
+                            index++;
+                        }
+                        writer.WriteLine("</Customers>");
+                    }
+                    Console.WriteLine("Successfully saved " + customers.Count + " customers to XML.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while saving customers to XML: " + e.Message);
+                }
             }
+            else
+            {
+                Console.WriteLine("Error: Unsupported format. Use 'CSV' or 'XML'.");
+            }
+
+            return isSuccessful;
         }
 
-        // === CSV LOADING METHODS ===
-
-        // GUI Link: Triggered automatically during the application startup/loading screen before the user sees the main menu.
-        public bool LoadCustomersFromCSV(string filePath)
+        public bool LoadCustomers(string filePath, string format)
         {
-            if (!System.IO.File.Exists(filePath))
+            bool isSuccessful = false;
+
+            if (!File.Exists(filePath))
             {
-                Console.WriteLine("Error: Customer CSV file not found at " + filePath);
-                return false;
+                Console.WriteLine("Error: Customer file not found at " + filePath);
             }
-
-            try
+            else if (format.ToUpper() == "CSV")
             {
-                string[] lines = System.IO.File.ReadAllLines(filePath);
-                int index = 1; // Skips the header row
-
-                while (index < lines.Length)
+                try
                 {
-                    string[] parts = lines[index].Split(',');
+                    string[] lines = File.ReadAllLines(filePath);
+                    int index = 1;
 
-                    if (parts.Length == 12)
+                    while (index < lines.Length)
                     {
-                        // MODEL LINK: Reconstructs the AddressInfo object first because CustomerInfo requires it
-                        AddressInfo address = new AddressInfo(parts[5], parts[6], parts[7], parts[8]);
+                        string[] parts = lines[index].Split(',');
 
-                        int historyCount = 0;
-                        int.TryParse(parts[10], out historyCount);
+                        if (parts.Length == 12)
+                        {
+                            AddressInfo address = new AddressInfo(parts[5], parts[6], parts[7], parts[8]);
 
-                        // MODEL LINK: Reconstructs the CustomerInfo object using the parsed data
-                        CustomerInfo loadedCustomer = new CustomerInfo(
-                            parts[1], parts[2], parts[3], parts[4],
-                            address, historyCount, parts[11]
+                            int historyCount = 0;
+                            int.TryParse(parts[10], out historyCount);
+
+                            CustomerInfo loadedCustomer = new CustomerInfo(
+                                parts[1], parts[2], parts[3], parts[4],
+                                address, historyCount, parts[11]
+                            );
+
+                            customers.Add(loadedCustomer);
+                        }
+                        index++;
+                    }
+
+                    Console.WriteLine("Successfully loaded " + customers.Count + " customers from CSV.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while loading customers from CSV: " + e.Message);
+                }
+            }
+            else if (format.ToUpper() == "XML")
+            {
+                try
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(filePath);
+                    XmlNodeList nodes = doc.SelectNodes("/Customers/Customer");
+
+                    int index = 0;
+                    while (index < nodes.Count)
+                    {
+                        XmlNode node = nodes[index];
+                        AddressInfo address = new AddressInfo(
+                            node["Street"]?.InnerText,
+                            node["City"]?.InnerText,
+                            node["State"]?.InnerText,
+                            node["Zip"]?.InnerText
                         );
 
-                        customers.Add(loadedCustomer); // Adds the loaded model back into the running list
-                    }
-                    index++;
-                }
+                        int historyCount = 0;
+                        int.TryParse(node["OrderHistoryCount"]?.InnerText, out historyCount);
 
-                Console.WriteLine("Successfully loaded " + customers.Count + " customers.");
-                return true;
+                        CustomerInfo loadedCustomer = new CustomerInfo(
+                            node["FirstName"]?.InnerText,
+                            node["LastName"]?.InnerText,
+                            node["Phone"]?.InnerText,
+                            node["Email"]?.InnerText,
+                            address,
+                            historyCount,
+                            node["Notes"]?.InnerText
+                        );
+
+                        customers.Add(loadedCustomer);
+                        index++;
+                    }
+
+                    Console.WriteLine("Successfully loaded " + customers.Count + " customers from XML.");
+                    isSuccessful = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught while loading customers from XML: " + e.Message);
+                }
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine("Exception caught while loading customers: " + e.Message);
-                return false;
+                Console.WriteLine("Error: Unsupported format. Use 'CSV' or 'XML'.");
             }
+
+            return isSuccessful;
         }
     }
 }
