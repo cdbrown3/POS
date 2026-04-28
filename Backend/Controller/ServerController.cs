@@ -15,6 +15,8 @@ namespace Backend.Controller
             this.customers = new List<CustomerInfo>();
         }
 
+        // --- CORE CREATION & ORDER METHODS ---
+
         public bool CreateCustomer(string first, string last, string phone, string email, AddressInfo address, int historyCount, string notes)
         {
             if (first == "")
@@ -133,6 +135,102 @@ namespace Backend.Controller
             catch (Exception e)
             {
                 Console.WriteLine("Exception caught: " + e.Message);
+                return false;
+            }
+        }
+
+        // --- RETRIEVAL METHODS ---
+
+        public List<OrderInfo> GetAllActiveOrders()
+        {
+            return activeOrders;
+        }
+
+        public List<CustomerInfo> GetAllCustomers()
+        {
+            return customers;
+        }
+
+        // --- CSV SAVING METHODS ---
+
+        public bool SaveCustomersToCSV(string filePath)
+        {
+            if (filePath == "")
+            {
+                Console.WriteLine("Error: File path cannot be empty.");
+                return false;
+            }
+
+            try
+            {
+                List<string> lines = new List<string>();
+                lines.Add("UserID,FirstName,LastName,Phone,Email,Street,City,State,Zip,CustomerID,OrderHistoryCount,Notes");
+
+                int index = 0;
+                while (index < customers.Count)
+                {
+                    lines.Add(customers[index].ToCSV());
+                    index++;
+                }
+
+                System.IO.File.WriteAllLines(filePath, lines);
+                Console.WriteLine("Successfully saved " + customers.Count + " customers.");
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception caught while saving customers: " + e.Message);
+                return false;
+            }
+        }
+
+        // --- CSV LOADING METHODS ---
+
+        public bool LoadCustomersFromCSV(string filePath)
+        {
+            if (!System.IO.File.Exists(filePath))
+            {
+                Console.WriteLine("Error: Customer CSV file not found at " + filePath);
+                return false;
+            }
+
+            try
+            {
+                string[] lines = System.IO.File.ReadAllLines(filePath);
+                int index = 1;
+
+                while (index < lines.Length)
+                {
+                    string[] parts = lines[index].Split(',');
+
+                    if (parts.Length == 12)
+                    {
+                        AddressInfo address = new AddressInfo(parts[5], parts[6], parts[7], parts[8]);
+
+                        int historyCount = 0;
+                        int.TryParse(parts[10], out historyCount);
+
+                        CustomerInfo loadedCustomer = new CustomerInfo(
+                            parts[1],
+                            parts[2],
+                            parts[3],
+                            parts[4],
+                            address,
+                            historyCount,
+                            parts[11]
+                        );
+
+                        customers.Add(loadedCustomer);
+                    }
+                    index++;
+                }
+
+                Console.WriteLine("Successfully loaded " + customers.Count + " customers.");
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception caught while loading customers: " + e.Message);
                 return false;
             }
         }
