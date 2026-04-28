@@ -13,12 +13,11 @@
   </ItemGroup>
   
   <ItemGroup>
-	  <None Include="..\Backend\Model\states.csv">
-		<Link>states.csv</Link>
-		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		<TargetPath>states.csv</TargetPath>
-	  </None>
-  </ItemGroup>
+  <None Include="..\Backend\Model\states.csv">
+    <Link>states.csv</Link>
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
