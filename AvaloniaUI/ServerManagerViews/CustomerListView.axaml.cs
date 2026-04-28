@@ -18,6 +18,7 @@ public partial class CustomerListView : UserControl
     {
         Customers = customers;
         customersListBox.ItemsSource = Customers;
+        
     }
 
     public void Customer_SelectionChanged(object? sender, SelectionChangedEventArgs e)

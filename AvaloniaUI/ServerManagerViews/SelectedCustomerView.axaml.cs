@@ -13,7 +13,7 @@ public partial class SelectedCustomerView : UserControl
         InitializeComponent();
     }
 
-    public SelectedCustomerView(CustomerInfo selectedCustomer)
+    public SelectedCustomerView(CustomerInfo selectedCustomer) : this()
     {
         customer = selectedCustomer;
     }
@@ -21,5 +21,6 @@ public partial class SelectedCustomerView : UserControl
     public void LoadSelectedCustomer()
     {
         this.selectedCustomerTextBlock.Text = customer.CustomerID;
+        this.selectedCustomerTextBlock.Text = customer.ToString();
     }
 }

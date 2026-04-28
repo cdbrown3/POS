@@ -124,8 +124,7 @@ namespace AvaloniaUI
             }
             else if (role == Backend.Models.UserRoles.Employee)
             {
-                MainContent.Content = new EmployeeView();
-                SelectedContent.Content = new SelectedCustomerView();
+                MainContent.Content = new EmployeeView(this);
             }
             else if (role == Backend.Models.UserRoles.Customer)
             {
