@@ -1,0 +1,11 @@
+UserID,FirstName,LastName,Phone,Email,Street,City,State,Zip,EmployeeID,Position,HourlyRate,IsActive
+U00001,John,Doe,205-111-2222,john.doe@email.com,123 Main St,Birmingham,AL,35210,E00001,Cook,14.50,true
+U00002,Jane,Smith,205-333-4444,jane.smith@email.com,456 Oak Ave,Hoover,AL,35226,E00002,Manager,21.75,true
+U00003,Mike,Johnson,205-555-6666,mike.j@email.com,789 Pine Rd,Trussville,AL,35173,E00003,Server,12.25,false
+U00004,Emily,Davis,205-777-8888,emily.d@email.com,321 Maple Dr,Irondale,AL,35210,E00004,Server,13.00,true
+U00005,Chris,Brown,205-999-0000,chris.b@email.com,654 Cedar St,Leeds,AL,35094,E00005,Cook,15.25,true
+U00006,Sarah,Wilson,205-888-7777,sarah.w@email.com,987 Lake Dr,Pell City,AL,35125,E00006,Manager,22.50,true
+U00007,David,Moore,205-444-5555,david.m@email.com,741 Hill Rd,Moody,AL,35004,E00007,Cook,16.00,true
+U00008,Ashley,Taylor,205-222-1111,ashley.t@email.com,852 River St,Center Point,AL,35215,E00008,Server,11.75,true
+U00009,Brandon,White,205-666-9999,brandon.w@email.com,963 Forest Ave,Bessemer,AL,35020,E00009,Cook,14.00,false
+U00010,Megan,Harris,205-101-2020,megan.h@email.com,159 Sunset Blvd,Homewood,AL,35209,E00010,Manager,24.00,true

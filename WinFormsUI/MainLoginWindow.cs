@@ -24,7 +24,7 @@ namespace WinFormsUI
         {
             SelectedTitle = Title.Employee;
             ManagerController controller = new ManagerController();
-            controller.LoadEmployeesFromCSV("employees2.txt");
+            controller.LoadEmployeesFromCSV("Employees2.txt");
             employees = controller.GetAllEmployees();
             AddressInfo address = employees[0].Address;
             test = new EmployeeInfo("C", "D", "555", "123@gmail.com", address, "Manager", "Username", "1234", 18.50);

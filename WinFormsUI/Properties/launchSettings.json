@@ -1,16 +1,19 @@
 {
   "profiles": {
     "WinFormsUI_Manage": {
-      "commandName": "Project",
-      "commandLineArgs": "/Manage_Login"
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\carso\\Documents\\EE333\\Final\\POS\\WinFormsUI\\bin\\Debug\\net8.0-windows\\WinFormsUI.exe",
+      "commandLineArgs": "/manage_login"
     },
     "WinFormsUI_Cook": {
-      "commandName": "Project",
-      "commandLineArgs": "/Cook_Login"
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\carso\\Documents\\EE333\\Final\\POS\\WinFormsUI\\bin\\Debug\\net8.0-windows\\WinFormsUI.exe",
+      "commandLineArgs": "/cook_login"
     },
     "WinFormsUI_Kiosk": {
-      "commandName": "Project",
-      "commandLineArgs": "/Kiosk_Login"
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\carso\\Documents\\EE333\\Final\\POS\\WinFormsUI\\bin\\Debug\\net8.0-windows\\WinFormsUI.exe",
+      "commandLineArgs": "/kiosk_login"
     }
   }
 }
