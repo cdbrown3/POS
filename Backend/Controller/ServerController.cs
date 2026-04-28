@@ -6,9 +6,6 @@ namespace Backend.Controller
 {
     public class ServerController
     {
-        // --- DATA STORAGE ---
-        // These lists act as the temporary "database" while the application is running.
-        // GUI Link: These lists are what you will use to populate UI elements like DataGrids, ListViews, or ComboBoxes.
         private List<OrderInfo> activeOrders;
         private List<CustomerInfo> customers;
 
@@ -17,8 +14,6 @@ namespace Backend.Controller
             this.activeOrders = new List<OrderInfo>();
             this.customers = new List<CustomerInfo>();
         }
-
-        // --- CORE CREATION & ORDER METHODS ---
 
         // GUI Link: Triggered by a "Save" or "Submit" button on a "New Customer Registration" form.
         // Takes all the text boxes (first name, last name, etc.) as parameters.
@@ -169,8 +164,6 @@ namespace Backend.Controller
             }
         }
 
-        // --- RETRIEVAL METHODS ---
-
         // GUI Link: Used when opening a "View All Orders" or "Customer Database" window to populate the tables.
         public List<OrderInfo> GetAllActiveOrders()
         {
@@ -182,7 +175,7 @@ namespace Backend.Controller
             return customers;
         }
 
-        // --- CSV SAVING METHODS ---
+        // === CSV SAVING METHODS ===
 
         // GUI Link: Triggered by a manual "Backup Data" button in settings, or automatically when the app closes.
         public bool SaveCustomersToCSV(string filePath)
@@ -218,7 +211,7 @@ namespace Backend.Controller
             }
         }
 
-        // --- CSV LOADING METHODS ---
+        // === CSV LOADING METHODS ===
 
         // GUI Link: Triggered automatically during the application startup/loading screen before the user sees the main menu.
         public bool LoadCustomersFromCSV(string filePath)

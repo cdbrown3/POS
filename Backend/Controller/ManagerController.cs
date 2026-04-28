@@ -106,7 +106,7 @@ namespace Backend.Controller
             int index = 0;
 
             // Loops through the entire staff list until the username matches.
-            // Uses boolean flags instead of a 'break' statement.
+            // Uses boolean instead of a 'break' statement.
             while (index < employees.Count && isFound == false)
             {
                 // MODEL LINK: Accesses the Username property getter in the EmployeeInfo model
@@ -121,7 +121,7 @@ namespace Backend.Controller
             return foundEmployee; // Returns the full employee object back to the GUI for the next step (PIN validation)
         }
 
-        // --- RETRIEVAL METHODS ---
+        // === RETRIEVAL METHODS ===
 
         // GUI Link: Used to populate ListViews/DataGrids on the Manager Dashboard.
         public List<EmployeeInfo> GetAllEmployees()
@@ -134,7 +134,7 @@ namespace Backend.Controller
             return menuItems;
         }
 
-        // --- CSV SAVING METHODS ---
+        // === CSV SAVING METHODS ===
 
         // GUI Link: Triggered by a background autosave timer or manual "Save All Data" button.
         public bool SaveEmployeesToCSV(string filePath)
@@ -203,7 +203,7 @@ namespace Backend.Controller
             }
         }
 
-        // --- CSV LOADING METHODS ---
+        // === CSV LOADING METHODS ===
 
         // GUI Link: Called during application startup to load the staff database into memory.
         public bool LoadEmployeesFromCSV(string filePath)
